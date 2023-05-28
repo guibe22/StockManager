@@ -1,8 +1,10 @@
 
 <button  >
-    <span class="box" style="background-color:@ColorParameter">
-        @TextParameter
-    </span>
+    <span class="box" style="background-color:@ColorParameter; display: flex; align-items: center;">
+    <RadzenIcon Icon="@IconParameter" style="margin-right: 5px;" />
+    <RadzenLabel Text="@TextParameter" />
+</span>
+
 </button>
 
 @code {
@@ -11,6 +13,9 @@
 
     [Parameter]
     public string? TextParameter { get; set; }
+    [Parameter]
+    public string? IconParameter { get; set; }
+
 }
 
 
@@ -29,6 +34,7 @@
   background: transparent;
   text-transform: uppercase;
   font-weight: 900;
+  border-radius: 10px;
 }
 
 .box:before {

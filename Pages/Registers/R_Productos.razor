@@ -43,15 +43,15 @@
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
-                       <RadzenDatePicker TValue="DateTime"  class="w-150 zoom " />
+                       <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;"/>
                 </RadzenColumn>
             </RadzenRow>
 
         </RadzenCard>
         <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0">
-            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" />
-            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" />
-            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" />
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" />
+            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete"/>
         </RadzenStack>
     </RadzenCard>
 </RadzenStack>

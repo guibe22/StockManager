@@ -1,19 +1,70 @@
 ﻿@inherits LayoutComponentBase
 
 <PageTitle>StockManager</PageTitle>
+<RadzenDialog/>
+<RadzenNotification/>
+<RadzenContextMenu/>
+<RadzenTooltip/>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+<RadzenLayout  >
+    <RadzenHeader>
+         <RadzenMenu class="fs-5" >
+            <RadzenMenuItem Text="Inicio" Icon="home" Path="/"></RadzenMenuItem>
+            <RadzenMenuItem Text="Productos" Icon="store">
+                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
+            </RadzenMenuItem>
+            <RadzenMenuItem Text="Categorias" Icon="category">
+                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
+            </RadzenMenuItem>
+            <RadzenMenuItem Text="Compras" Icon="shopping_cart">
+                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
+            </RadzenMenuItem>
+            <RadzenMenuItem Text="Ventas" Icon="money">
+                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
+            </RadzenMenuItem>
+            <RadzenMenuItem Text="Clientes" Icon="person">
+                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
+            </RadzenMenuItem>
+            <RadzenMenuItem Text="Provedoores" Icon="business">
+                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
+            </RadzenMenuItem>
+         </RadzenMenu>
+    </RadzenHeader>
+   
+    <RadzenBody class="content" >
             @Body
-        </article>
-    </main>
-</div>
+    </RadzenBody>
+    <RadzenFooter class="sticky-footer">
+        Footer
+    </RadzenFooter>
+</RadzenLayout>
+
+<style>
+    .sticky-footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+         z-index: 10;
+    }
+    .sidebar-content {
+     
+         height: 100vh !important;
+         z-index: 5;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+}
+
+</style>

@@ -1,6 +1,6 @@
 @page "/R_Productos"
 <div class="d-flex justify-content-end ">
-    <div class="carta">
+    <div class="zoom">
         <RadzenTextBox Placeholder="Buscar Producto..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
         <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" />
     </div>
@@ -11,39 +11,39 @@
 
 
 <RadzenStack >  
-    <RadzenCard Class="rz-my-auto rz-mx-auto " style="background-color:#04658b;"> 
+    <RadzenCard Class="rz-my-auto rz-mx-auto " style=" background: linear-gradient(to right, #00417a, #70B4E2);"> 
         <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
             <RadzenLabel Text="REGISTRO DE PRODUCTOS" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:white;" />
         </RadzenStack>
-        <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8" style="margin: 1rem calc(-1 * var(--rz-card-padding));">
+        <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8" style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-color:#ecebea;">
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Nombre:</RadzenText>
-                    <RadzenTextBox  class="w-200 carta " />
+                    <RadzenTextBox  class="w-200 zoom " />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Categoria:</RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-200 carta" />
+                    <RadzenDropDown TValue="int"  class="w-200 zoom" />
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
-                    <RadzenTextBox  class="w-200 carta " />
+                    <RadzenTextBox  class="w-200 zoom " />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
-                    <RadzenTextBox  class="w-200 carta " />
+                    <RadzenTextBox  class="w-200 zoom " />
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Provedoor:</RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-200 carta " />
+                    <RadzenDropDown TValue="int"  class="w-200 zoom " />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
-                       <RadzenDatePicker TValue="DateTime"  class="w-150 carta " />
+                       <RadzenDatePicker TValue="DateTime"  class="w-150 zoom " />
                 </RadzenColumn>
             </RadzenRow>
 

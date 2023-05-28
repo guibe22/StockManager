@@ -71,11 +71,11 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
-.carta {
+.zoom {
     transition: all 300ms;
     }
        
-.carta:hover {
+.zoom:hover {
     opacity: 0.8;
     transform: scale(1.10);
 }

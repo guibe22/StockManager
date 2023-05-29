@@ -1,0 +1,31 @@
+@page "/C_Productos"
+
+
+  <RadzenCard Class="rz-my-auto rz-mx-auto bordes " style=" background-image: linear-gradient(180deg, #3066be 60%, #b4c5e4  100%);;"> 
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
+            <RadzenLabel Text="CONSULTA DE PRODUCTOS" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:white;" />
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
+         <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+            Data="@lista"  LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"  >
+        <Columns>
+            <RadzenDataGridColumn TItem="string" Title="ID"   Filterable="false"/>
+            <RadzenDataGridColumn TItem="string" Title="Nombre"  />
+            <RadzenDataGridColumn TItem="string" Title="Categoria" />
+            <RadzenDataGridColumn TItem="string" Title="Precio" />
+            <RadzenDataGridColumn TItem="string" Title="Costo" />
+            <RadzenDataGridColumn TItem="string" Title="Proveedor" />
+            <RadzenDataGridColumn TItem="string" Title="Cantidad" />
+            <RadzenDataGridColumn TItem="string" Title="Fecha"  FormatString="{0:d}"/>
+        </Columns> 
+        </RadzenDataGrid>  
+          
+    </RadzenStack>
+
+
+ </RadzenCard>
+
+
+@code{
+    List<String> lista = new List<String>();
+}

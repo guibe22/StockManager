@@ -1,85 +1,53 @@
-<div class="card">
-
+<div class="carta">
+  <div class="carta2">
+    <RadzenRow RowGap="5">
+      <RadzenColumn SizeSM="4" style="margin-top: 30px;">
+        <RadzenImage Src="@Image" Width="80" Height="80" />
+      </RadzenColumn>
+      <RadzenColumn SizeSM="8">
+        <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+          <h3 style="font-weight: bold; margin-bottom: 5px;">@Title</h3>
+          <h5 style="margin: 0;">@Data</h5>
+        </div>
+      </RadzenColumn>
+    </RadzenRow>
+  </div>
 </div>
 
+@code{
+    [Parameter]
+    public string? Title { get; set; }
+     [Parameter]
+    public string? Data { get; set; }
+     [Parameter]
+    public string? Image { get; set; }
+
+}
+
 <style>
-  .card {
- --primary-clr: #1C204B;
- --dot-clr: #BBC0FF;
- --play: hsl(195, 74%, 62%);
- width: 200px;
- height: 170px;
- border-radius: 10px;
-}
+  .carta {
+    width: 240px;
+    height: 160px;
+    background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+    border-radius: 20px;
+    transition: all .3s;
+  }
 
-.card {
- font-family: "Arial";
- color: #fff;
- display: grid;
- cursor: pointer;
- grid-template-rows: 50px 1fr;
-}
+  .carta2 {
+    display: flex;
+    width: 240px;
+    height: 160px;
+    background-image: linear-gradient(163deg, #b4c5e4 0%, #fbfff1 100%);
+    border-radius: 20px;
+    transition: all .2s;
+  }
 
-.card:hover .img-section {
- transform: translateY(1em);
-}
+  .carta2:hover {
+    transform: scale(0.98);
+    border-radius: 20px;
+  }
 
-.card-desc {
- border-radius: 10px;
- padding: 15px;
- position: relative;
- top: -10px;
- display: grid;
- gap: 10px;
- background: var(--primary-clr);
-}
-
-.card-time {
- font-size: 1.7em;
- font-weight: 500;
-}
-
-.img-section {
- transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
- border-top-left-radius: 10px;
- border-top-right-radius: 10px;
- background: hsl(195, 74%, 62%);
-}
-
-.card-header {
- display: flex;
- align-items: center;
- width: 100%;
-}
-
-.card-title {
- flex: 1;
- font-size: 0.9em;
- font-weight: 500;
-}
-
-.card-menu {
- display: flex;
- gap: 4px;
- margin-inline: auto;
-}
-
-.card svg {
- float: right;
- max-width: 100%;
- max-height: 100%;
-}
-
-.card .dot {
- width: 5px;
- height: 5px;
- border-radius: 50%;
- background: var(--dot-clr);
-}
-
-.card .recent {
- line-height: 0;
- font-size: 0.8em;
-}
-
+  .carta:hover {
+    box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+  }
 </style>

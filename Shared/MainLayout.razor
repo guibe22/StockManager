@@ -7,16 +7,15 @@
 <RadzenTooltip/>
 
 <RadzenLayout  >
-    <RadzenHeader>
-         <RadzenMenu class="fs-5" >
-            <RadzenLink Path="/" class="d-inline-block align-text-top">
-                <RadzenImage Src="logo.png" Width="200" Height="70" />
-            </RadzenLink>
-            <RadzenMenuItem Text="Productos" Icon="store">
-                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
-                <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
-            </RadzenMenuItem>
-            <RadzenMenuItem Text="Categorias" Icon="category">
+    <RadzenHeader style="background-color: #b4c5e4;">
+         <RadzenMenu class="fs-5 custom-menu" style="display: flex; justify-content: flex-end;  background-color: #b4c5e4; color:black" >
+
+            <div style="margin-right: auto; ">
+                <RadzenLink Path="/" class="d-inline-block align-text-top">
+                    <RadzenImage Src="logo.png" Width="200" Height="70" />
+                </RadzenLink>
+            </div>
+            <RadzenMenuItem Text="Productos" Icon="store"  >
                 <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
                 <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
             </RadzenMenuItem>
@@ -29,20 +28,22 @@
                 <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
             </RadzenMenuItem>
             <RadzenMenuItem Text="Clientes" Icon="person">
-                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Registro" Path="/R_Clientes"></RadzenMenuItem>
                 <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
             </RadzenMenuItem>
             <RadzenMenuItem Text="Provedoores" Icon="business">
-                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Registro" Path="/R_Provedores"></RadzenMenuItem>
                 <RadzenMenuItem Text="Consulta" Path="C_productos"></RadzenMenuItem>
             </RadzenMenuItem>
          </RadzenMenu>
     </RadzenHeader>
    
-    <RadzenBody>
+    <RadzenBody style=" background-image: linear-gradient(220deg, #3c3744 30%, #3066be 70%);">
             @Body
     </RadzenBody>
-    
+    @* <RadzenFooter class="sticky-footer">
+        Footer
+    </RadzenFooter> *@
 </RadzenLayout>
 
 <style>
@@ -58,6 +59,9 @@
          height: 100vh !important;
          z-index: 5;
     }
+    .custom-menu {
+    color: black !important; 
+  }
 
 
 </style>

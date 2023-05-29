@@ -1,58 +1,97 @@
 <div class="panel">
-    <p><span>HOVER ME</span></p>
-    <p><span>HOVER ME</span></p>
-    <p><span>HOVER ME</span></p>
-    <p><span>HOVER ME</span></p>
-    <p><span>HOVER ME</span></p>
-    <p><span>HOVER ME</span></p>
-    <p><span>HOVER ME</span></p>
-    <p><span>HOVER ME</span></p>
-    <p><span>HOVER ME</span></p>
+  <div class="item">
+    <img src="https://blog.deacero.com/hs-fs/hubfs/productos%20de%20ferreteria%20herramientas%20manuales.jpg?width=755&name=productos%20de%20ferreteria%20herramientas%20manuales.jpg" alt="Imagen 1">
+    <h1>Productos</h1>
+  </div>
+  <div class="item">
+    <img src="https://retos-operaciones-logistica.eae.es/wp-content/uploads/2020/01/red-de-ventas.jpg" alt="Imagen 2">
+    <h1>Clientes</h1>
+  </div>
+  <div class="item">
+    <img src="https://thelogisticsworld.com/wp-content/uploads/2020/09/proveedores-e1663621176409.jpeg" alt="Imagen 3">
+    <h1>Proveedores</h1>
+  </div>
+  <div class="item">
+    <img src="https://impulsapopular.com/wp-content/uploads/2018/12/4299-Qu%C3%A9-tener-en-cuenta-al-seleccionar-un-sistema-de-punto-de-venta.jpg" alt="Imagen 4">
+    <h1>Ventas</h1>
+  </div>
+  <div class="item">
+    <img src="https://thelogisticsworld.com/wp-content/uploads/2021/08/concepto-de-compras-digitales.jpg" alt="Imagen 4">
+    <h1>Compras</h1>
+  </div>
 </div>
 
-
 <style>
-    .panel {
-  width: 500px;
-  height: 300px;
+ .panel {
+  width: 750px;
+  height: 350px;
   border-radius: 4px;
-  background: #212121;
+  background-image: linear-gradient(163deg, #b4c5e4 0%, #fbfff1 100%);
   display: flex;
   gap: 5px;
   padding: .4em;
 }
 
-.panel p {
-  height: 100%;
+.item {
+  position: relative;
   flex: 1;
   overflow: hidden;
   cursor: pointer;
   border-radius: 2px;
   transition: all .5s;
-  background: #212121;
-  border: 1px solid #ff5a91;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-image: linear-gradient(163deg, #b4c5e4 0%, #fbfff1 100%);
+  border: 1px solid #ffffff;
+   display: flex; /* Agrega display: flex */
+
 }
 
-.panel p:hover {
-  flex: 10;
+.item:hover {
+  flex: 3; /* Ajusta este valor según tus preferencias */
 }
 
-.panel p span {
-  min-width: em;
-  padding: .5em;
-  text-align: center;
+.image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  flex: 1;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  
+}
+
+.item h1 {
+  position: absolute;
+  top: 100%;
+  left: 0;
   transform: rotate(-90deg);
-  transition: all .5s;
+  opacity: 1;
+  transition: opacity .5s;
+  color: #000000;
+  text-align: center;
   text-transform: uppercase;
-  color: #ff568e;
   letter-spacing: .1em;
+  white-space: nowrap;
+  font-weight: bold;
+  transform-origin: top left;
+  font-size: 2em;
+  background-color: rgba(128, 128, 128, 0.5);
+   padding: 5px; 
 }
 
-.panel p:hover span {
-  transform: rotate(0);
+.item:hover h1 {
+  opacity: 1;
+  writing-mode: horizontal-tb;
+  transform: translate(-50%, -50%) rotate(0deg);
+  white-space: normal;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
 }
 </style>
-

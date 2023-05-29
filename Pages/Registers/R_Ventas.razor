@@ -1,0 +1,87 @@
+@page "/R_Ventas"
+<div class="d-flex justify-content-end ">
+    <div class="zoom">
+        <RadzenTextBox Placeholder="Buscar Venta..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
+        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" />
+    </div>
+</div>
+
+<RadzenStack >  
+    <RadzenCard Class="rz-my-auto rz-mx-auto bordes " style=" background-image: linear-gradient(180deg, #3066be 60%, #b4c5e4  100%);;"> 
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
+            <RadzenLabel Text="REGISTRO DE VENTAS" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:white;" />
+        </RadzenStack>
+        <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8" style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(163deg, #b4c5e4 0%, #fbfff1 100%);">
+            <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
+                    <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;"/>
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cliente:</RadzenText>
+                    <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                </RadzenColumn>
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Concepto:</RadzenText>
+                    <RadzenTextBox  class="w-200 zoom " />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow RowGap="1">
+                 <div style="margin-right: 50px;">
+                <RadzenColumn SizeSM="5">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
+                     <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                </RadzenColumn>
+                </div>
+                <div  class=" d-flex align-items-end justify-content-end">
+                    <div style="margin-right: 15px;">
+                        <RadzenColumn SizeSM="5" >
+                            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
+                            <RadzenTextBox  class="w-150 zoom " />
+                        </RadzenColumn>
+                    </div>
+                    <RadzenColumn SizeSM="4"  >
+                        <RadzenButton Icon="add"  Style=" width: 30px;  height: 30px; font-size: 16px; zoom;" />
+                    </RadzenColumn>
+               </div>
+            </RadzenRow>
+
+            <RadzenRow RowGap="5">
+              <table class="table">
+                <thead>
+                     <tr>
+                           <th>Producto</th>
+                           <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                            <th></th>
+                     </tr>
+                </thead>
+                 <tbody>
+                  
+                 </tbody>
+                    
+              </table>
+            </RadzenRow>
+             <RadzenRow RowGap="5">
+               <RadzenLabel Text="Total: 0.00$" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px;" />
+             </RadzenRow>
+
+
+        </RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0" >
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" />
+            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete"/>
+        </RadzenStack>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+
+
+  
+}
+

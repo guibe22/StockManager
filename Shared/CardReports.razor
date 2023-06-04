@@ -1,0 +1,61 @@
+    <div class="cards">
+        <div class="card fondo">
+            <p class="tip">@TextParameter</p>
+            <p class="second-text">Desde @FechaInicio hasta @FechaFinal</p>
+        </div>
+    </div>
+
+
+<style>
+    
+.cards {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.cards .fondo {
+  background-color: #535353a6;
+}
+
+.cards .card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  height: 100px;
+  width: 250px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: 400ms;
+}
+
+.cards .card p.tip {
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.cards .card p.second-text {
+  font-size: .7em;
+}
+
+.cards .card:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.cards:hover > .card:not(:hover)
+{
+  transform: scale(0.9, 0.9);
+}
+</style>
+
+@code {
+    [Parameter]
+    public string? TextParameter { get; set; }
+    [Parameter]
+    public string? FechaInicio { get; set; }
+    [Parameter]
+    public string? FechaFinal { get; set; }
+}

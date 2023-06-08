@@ -15,10 +15,8 @@ builder.Services.AddScoped<TooltipService>();
 builder.Services.AddScoped<ContextMenuService>();
 
 //-------------------------------------------------------//
-builder.Services.AddDbContext<Contexto>(options =>
-{
-    options.UseSqlite(ConStr);
-});
+var ConStr = builder.Configuration.GetConnectionString("ConStr");
+builder.Services.AddDbContext<Contexto>(options =>options.UseSqlite(ConStr));
 //-------------------------------------------------------//
 
 var app = builder.Build();

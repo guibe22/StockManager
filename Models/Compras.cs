@@ -20,7 +20,10 @@ public class Compra
     public int Cantidad { get; set; }
     
     [Required(ErrorMessage = "El Proveedor es requerido")]
-    public string ProveedorId { get; set; }
+    public int ProveedorId { get; set; }
     
     public DateTime Fecha { get; set; }
+
+    [ForeignKey("CompraId")]
+    public virtual List<DetallesCompras> detallescompras { get; set; } = new List<DetallesCompras>();
 }

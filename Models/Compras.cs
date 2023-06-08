@@ -15,7 +15,7 @@ public class Compra
     public int ProductoId { get; set; }
     
     [Required(ErrorMessage = "El Concepto es requerido")]
-    public string Concepto { get; set; }
+    public string? Concepto { get; set; }
     
     [Required(ErrorMessage = "Especifique la cantidad")]
     public int Cantidad { get; set; }

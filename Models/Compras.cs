@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Compra
 {
@@ -25,5 +26,5 @@ public class Compra
     public DateTime Fecha { get; set; }
 
     [ForeignKey("CompraId")]
-    public virtual List<DetallesCompras> detallescompras { get; set; } = new List<DetallesCompras>();
+    public virtual List<DetalleCompras> detallescompras { get; set; } = new List<DetalleCompras>();
 }

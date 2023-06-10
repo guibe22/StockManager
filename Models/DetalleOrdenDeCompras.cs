@@ -12,6 +12,7 @@ public class DetalleOrdenDeCompras
     public int CategoriaId { get; set; }
     public int ProveedorId { get; set; }
     [Required]
+    public String? Solicitante { get; set; }
     public int Cantidad { get; set; }
  
 

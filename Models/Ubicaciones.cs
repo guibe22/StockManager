@@ -7,4 +7,5 @@ public class Ubicaciones
     public string? Pasillo { get; set; }
     public string? Estante { get; set; }
     public int Nivel { get; set; }
+    public bool Eliminado { get; set; } = false;
 }

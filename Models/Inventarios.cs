@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-class Inventarios
+public class Inventarios
 {
     [Key]
     public int InventarioId { get; set; }
@@ -15,10 +15,16 @@ class Inventarios
     public String? Concepto { get; set; }
     [Required(ErrorMessage = "Especifique la cantidad")]
     public int Cantidad { get; set; }
-     [Required(ErrorMessage = "Especifique la cantidad Minima")]
+    [Required(ErrorMessage = "Especifique la cantidad Minima")]
     public int CantidadMinima { get; set; }
     public DateTime FechaIngreso { get; set; }
     public DateTime FechaActualizado { get; set; }
     public int UbicacionId { get; set; }
+
+    [Required(ErrorMessage = "El producto requiere un Precio.")]
+    public double Precio { get; set; }
+
+    [Required(ErrorMessage = "El producto requiere un Costo.")]
+    public double Costo { get; set; }
     public bool Eliminado { get; set; } = false;
 }

@@ -9,7 +9,7 @@ public class DetalleCompras
     public int ProductoId { get; set; }
     public int ProveedorId { get; set; }
     public int Cantidad { get; set; }
-    public double Precio { get; set; }    
+    public double Precio { get; set; }
     public double SubTotal { get; set; }
-    
+
 }

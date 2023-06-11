@@ -1,21 +1,23 @@
 using Microsoft.EntityFrameworkCore;
 
-public class Contexto:DbContext
+public class Contexto : DbContext
 {
-    public DbSet<Clientes> Clientes {get; set;}
-    public DbSet<Productos> Productos {get; set;}
-    public DbSet<Proveedores> Proveedores {get; set;}
-    public DbSet<Ventas> Ventas {get; set;}
-    public DbSet<Compras> Compras {get; set;}
-    public DbSet<Categorias> Categorias {get; set;}
-    public DbSet<OrdenDeCompras> OrdenDeCompras {get; set;}
-    public DbSet<Catalogos> Catalogos {get; set;}
-    public DbSet<Ubicaciones>Ubicaciones {get; set;}
-    
+    public DbSet<Clientes> Clientes { get; set; }
+    public DbSet<Productos> Productos { get; set; }
+    public DbSet<Proveedores> Proveedores { get; set; }
+    public DbSet<Ventas> Ventas { get; set; }
+    public DbSet<Compras> Compras { get; set; }
+    public DbSet<Categorias> Categorias { get; set; }
+    public DbSet<OrdenDeCompras> OrdenDeCompras { get; set; }
+    public DbSet<Catalogos> Catalogos { get; set; }
+    public DbSet<Ubicaciones> Ubicaciones { get; set; }
+    public DbSet<Inventarios> Inventarios { get; set; }
 
-    public Contexto(DbContextOptions<Contexto>options) :base(options)
+
+
+    public Contexto(DbContextOptions<Contexto> options) : base(options)
     {
-        
+
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -15,15 +15,10 @@ public class Productos
     public string? Descripcion { get; set; }
 
     [Required(ErrorMessage = "Campo obligatorio.")]
-    public int CategoriaId { get; set; } 
+    public int CategoriaId { get; set; }
 
-    [Required(ErrorMessage = "El producto requiere un Precio.")]
-    public double Precio { get; set; }
-
-    [Required(ErrorMessage = "El producto requiere un Costo.")]
-    public double Costo { get; set; }
     [Required(ErrorMessage = "Debe especificar la  fecha.")]
-    public DateTime Fecha { get; set; } 
-   
+    public DateTime Fecha { get; set; }
+
     public bool Eliminado { get; set; } = false;
 }

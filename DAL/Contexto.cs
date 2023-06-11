@@ -8,6 +8,10 @@ public class Contexto:DbContext
     public DbSet<Ventas> Ventas {get; set;}
     public DbSet<Compras> Compras {get; set;}
     public DbSet<Categorias> Categorias {get; set;}
+    public DbSet<OrdenDeCompras> OrdenDeCompras {get; set;}
+    public DbSet<Catalogos> Catalogos {get; set;}
+    public DbSet<Ubicaciones>Ubicaciones {get; set;}
+    
 
     public Contexto(DbContextOptions<Contexto>options) :base(options)
     {

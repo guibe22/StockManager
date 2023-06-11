@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-class Ubicaciones
+public class Ubicaciones
 {
     [Key]
     public int UbicacionId { get; set; }

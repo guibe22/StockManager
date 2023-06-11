@@ -43,7 +43,8 @@ public class ClientesBLL
     }
 
      public bool Eliminar (Clientes cliente){
-         _Contexto.Entry(cliente).State = EntityState.Deleted;
+          cliente.Eliminado= true;
+         _Contexto.Entry(cliente).State = EntityState.Modified;
          bool save = _Contexto.SaveChanges() >0;
          _Contexto.Entry(cliente).State = EntityState.Detached;
          return save;

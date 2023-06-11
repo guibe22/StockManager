@@ -38,7 +38,8 @@ public class ProductosBLL
     }
 
      public bool Eliminar (Productos producto){
-         _Contexto.Entry(producto).State = EntityState.Deleted;
+          producto.Eliminado = true;
+         _Contexto.Entry(producto).State = EntityState.Modified;
          bool save = _Contexto.SaveChanges() >0;
          _Contexto.Entry(producto).State = EntityState.Detached;
          return save;

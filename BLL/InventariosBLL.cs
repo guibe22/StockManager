@@ -51,7 +51,8 @@ public class InventariosBLL
 
     public bool Eliminar(Inventarios Inventario)
     {
-        _Contexto.Entry(Inventario).State = EntityState.Deleted;
+        Inventario.Eliminado = true;
+        _Contexto.Entry(Inventario).State = EntityState.Modified;
         bool save = _Contexto.SaveChanges() > 0;
         _Contexto.Entry(Inventario).State = EntityState.Detached;
         return save;

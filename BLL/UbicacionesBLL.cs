@@ -51,7 +51,8 @@ public class UbicacionesBLL
 
     public bool Eliminar(Ubicaciones Ubicacion)
     {
-        _Contexto.Entry(Ubicacion).State = EntityState.Deleted;
+        Ubicacion.Eliminado = true;
+        _Contexto.Entry(Ubicacion).State = EntityState.Modified;
         bool save = _Contexto.SaveChanges() > 0;
         _Contexto.Entry(Ubicacion).State = EntityState.Detached;
         return save;

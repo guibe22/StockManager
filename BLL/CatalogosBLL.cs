@@ -51,7 +51,8 @@ public class CatalogosBLL
 
     public bool Eliminar(Catalogos Catalogo)
     {
-        _Contexto.Entry(Catalogo).State = EntityState.Deleted;
+        Catalogo.Eliminado = true;
+        _Contexto.Entry(Catalogo).State = EntityState.Modified;
         bool save = _Contexto.SaveChanges() > 0;
         _Contexto.Entry(Catalogo).State = EntityState.Detached;
         return save;

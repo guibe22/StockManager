@@ -51,7 +51,8 @@ public class CategoriasBLL
 
     public bool Eliminar(Categorias Categoria)
     {
-        _Contexto.Entry(Categoria).State = EntityState.Deleted;
+        Categoria.Eliminado= true;
+        _Contexto.Entry(Categoria).State = EntityState.Modified;
         bool save = _Contexto.SaveChanges() > 0;
         _Contexto.Entry(Categoria).State = EntityState.Detached;
         return save;

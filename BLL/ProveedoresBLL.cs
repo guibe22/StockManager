@@ -51,7 +51,8 @@ public class ProveedoresBLL
 
     public bool Eliminar(Proveedores Proveedor)
     {
-        _Contexto.Entry(Proveedor).State = EntityState.Deleted;
+        Proveedor.Eliminado = true;
+        _Contexto.Entry(Proveedor).State = EntityState.Modified;
         bool save = _Contexto.SaveChanges() > 0;
         _Contexto.Entry(Proveedor).State = EntityState.Detached;
         return save;

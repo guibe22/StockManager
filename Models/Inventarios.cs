@@ -4,7 +4,10 @@ class Inventarios
 {
     [Key]
     public int InventarioId { get; set; }
+    [Required]
+    public int CatalogoId { get; set; }
     [Required(ErrorMessage = "El Producto es requerido")]
+    
     public int ProductoId { get; set; }
     [Required(ErrorMessage = "El Proveedor es requerido")]
     public int ProveedorId { get; set; }

@@ -8,49 +8,50 @@
 
 <RadzenLayout   >
     <RadzenHeader style="background-color: #f6f6f6;">
-         <RadzenMenu class="fs-5 custom-menu" style="display: flex; justify-content: flex-end;  background-color: rgba(130, 101, 72, 0); color:rgb(198, 21, 21)" >
+         <RadzenMenu class="fs-5 custom-menu" style="display: flex; justify-content: flex-end;  background-color: rgba(183, 179, 176, 0); color:rgb(198, 21, 21)" >
 
             <div style="margin-right: auto; ">
                 <RadzenLink Path="/" class="d-inline-block align-text-top">
                     <RadzenImage Src="logo.png" Width="200" Height="40"  />
                 </RadzenLink>
             </div>
-            <RadzenMenuItem  Text="Productos" Icon="store"  >
-                <RadzenMenuItem Text="Registro" Path="/R_Productos"></RadzenMenuItem>
-                <RadzenMenuItem Text="Consulta" Path="/C_Productos"></RadzenMenuItem>
-                <RadzenMenuItem Text="Reporte" Path="/RP_Productos"></RadzenMenuItem>
-            </RadzenMenuItem>
-            <RadzenMenuItem Text="Compras" Icon="shopping_cart">
-                <RadzenMenuItem Text="Registro" Path="/R_Compras"></RadzenMenuItem>
-                <RadzenMenuItem Text="Consulta" Path="C_Compras"></RadzenMenuItem>
+            <RadzenMenuItem  Text="Registros" Icon="store"  >
+                <RadzenMenuItem Text="Productos" Icon="front_loader" Path="/R_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Ventas" Icon=" price_change" Path="/R_Ventas"></RadzenMenuItem>
+             <RadzenMenuItem Text="Clientes" Icon=" face" Path="/R_Clientes"></RadzenMenuItem>
+             <RadzenMenuItem Text="Proveedores" Icon="contact_page" Path="/R_Provedores"></RadzenMenuItem>
+                <RadzenMenuItem Text="Compra" Icon="local_shipping"Path="/R_Compras"></RadzenMenuItem>
 
-            </RadzenMenuItem>
-            <RadzenMenuItem Text="Ventas" Icon="money">
-                <RadzenMenuItem Text="Registro" Path="/R_Ventas"></RadzenMenuItem>
-                <RadzenMenuItem Text="Consulta" Path="C_Ventas"></RadzenMenuItem>
 
+               
             </RadzenMenuItem>
-            <RadzenMenuItem Text="Clientes" Icon="person">
-                <RadzenMenuItem Text="Registro" Path="/R_Clientes"></RadzenMenuItem>
-                <RadzenMenuItem Text="Consulta" Path="/C_Clientes"></RadzenMenuItem>
-            <RadzenMenuItem Text="Reporte" Path="/RP_Clientes"></RadzenMenuItem>
 
-         </RadzenMenuItem>
-            <RadzenMenuItem Text="Provedoores" Icon="business">
-                <RadzenMenuItem Text="Registro" Path="/R_Provedores"></RadzenMenuItem>
-                <RadzenMenuItem Text="Consulta" Path="C_Proveedores"></RadzenMenuItem>
-                <RadzenMenuItem Text="Reporte" Path="/RP_Proveedores"></RadzenMenuItem>
+            <RadzenMenuItem Text="Consultas" Icon="chrome_reader_mode">
+                <RadzenMenuItem Text="Productos" Path="/C_Productos"></RadzenMenuItem>
+                <RadzenMenuItem Text="Ventas" Path="C_Ventas"></RadzenMenuItem>
+               <RadzenMenuItem Text="Clientes" Path="/C_Clientes"></RadzenMenuItem> 
+                <RadzenMenuItem Text="Provedores" Path="C_Proveedores"></RadzenMenuItem>
+                <RadzenMenuItem Text="Compras" Path="C_Compras"></RadzenMenuItem>
+            </RadzenMenuItem>
+
+           
+            
+            <RadzenMenuItem Text="Reportes" Icon="book">
+               <RadzenMenuItem Text="Productos" Path="/RP_Productos"></RadzenMenuItem>
+
+                <RadzenMenuItem Text="Clientes" Path="/RP_Clientes"></RadzenMenuItem>
+                <RadzenMenuItem Text="Proveedores" Path="/RP_Proveedores"></RadzenMenuItem>
 
             </RadzenMenuItem>
          </RadzenMenu>
     </RadzenHeader>
    
-<RadzenBody style="background-image: url('https://i.imgur.com/j6uKyU2.png'); background-size: cover;">
+<RadzenBody style="background-image: url('https://i.imgur.com/j6uKyU2.png'); background-size: cover;">@*Imagen de de fondo*@
             @Body
     </RadzenBody>
-    @* <RadzenFooter class="sticky-footer">
+    <RadzenFooter class="sticky-footer">
         Footer
-    </RadzenFooter> *@
+    </RadzenFooter> 
 </RadzenLayout>
 
 <style>

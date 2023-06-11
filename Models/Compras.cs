@@ -12,7 +12,7 @@ public class Compras
     public int ClienteId { get; set; }
 
     [Required(ErrorMessage = "El Producto es requerido")]
-    public int ProductoId { get; set; }
+    public int InventarioId{ get; set; }
 
     [Required(ErrorMessage = "El Concepto es requerido")]
     public string? Concepto { get; set; }
@@ -26,6 +26,6 @@ public class Compras
     public DateTime Fecha { get; set; }
 
     [ForeignKey("CompraId")]
-    public virtual List<DetalleCompras> detallescompras { get; set; } = new List<DetalleCompras>();
+    public virtual List<DetallesCompras> DetallesCompras { get; set; } = new List<DetallesCompras>();
     public bool Eliminado { get; set; } = false;
 }

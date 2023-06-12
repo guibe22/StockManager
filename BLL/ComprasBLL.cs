@@ -24,7 +24,7 @@ class ComprasBLL
             var Inventario = _Contexto.Inventarios.AsNoTracking().FirstOrDefault(o => o.InventarioId == detalle.InventarioId);
             if (Inventario != null)
             {
-                Inventario.Cantidad -= detalle.Cantidad;
+                Inventario.Cantidad += detalle.Cantidad;
                 _Contexto.Entry(Inventario).State = EntityState.Modified;
                 _Contexto.SaveChanges();
                 _Contexto.Entry(Inventario).State = EntityState.Detached;
@@ -52,7 +52,7 @@ class ComprasBLL
                 var Inventario = _Contexto.Inventarios.AsNoTracking().FirstOrDefault(o => o.InventarioId == detalle.InventarioId);
                 if (Inventario != null)
                 {
-                    Inventario.Cantidad += detalle.Cantidad;
+                    Inventario.Cantidad -= detalle.Cantidad;
                     _Contexto.Entry(Inventario).State = EntityState.Modified;
                     _Contexto.SaveChanges();
                     _Contexto.Entry(Inventario).State = EntityState.Detached;
@@ -67,7 +67,7 @@ class ComprasBLL
             var Inventario = _Contexto.Inventarios.Find(detalle.InventarioId);
             if (Inventario != null)
             {
-                Inventario.Cantidad -= detalle.Cantidad;
+                Inventario.Cantidad += detalle.Cantidad;
                 _Contexto.Entry(Inventario).State = EntityState.Modified;
                 _Contexto.SaveChanges();
                 _Contexto.Entry(Inventario).State = EntityState.Detached;

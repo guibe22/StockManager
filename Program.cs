@@ -16,6 +16,13 @@ builder.Services.AddScoped<ContextMenuService>();
 //-------------------------------------------------------//
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
 builder.Services.AddDbContext<Contexto>(options =>options.UseSqlite(ConStr));
+builder.Services.AddScoped<ProductosBLL>();
+builder.Services.AddScoped<CategoriasBLL>();
+builder.Services.AddScoped<CatalogosBLL>();
+builder.Services.AddScoped<ClientesBLL>();
+builder.Services.AddScoped<ComprasBLL>();
+builder.Services.AddScoped<InventariosBLL>();
+builder.Services.AddScoped<Proveedores>();
 //-------------------------------------------------------//
 
 var app = builder.Build();

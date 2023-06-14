@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using StockManager.Data;
+//using StockManager.Data;
 using Radzen;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);

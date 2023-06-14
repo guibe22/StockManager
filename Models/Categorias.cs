@@ -11,7 +11,6 @@ public class Categorias
 
     [Required(ErrorMessage = "Se debe agregar la descripción de la categoría.")]
     public string? Descripcion { get; set; }
-    [Required(ErrorMessage = "Se debe agregar la SubCategoria.")]
-    public string? Subcategoria { get; set; }
+
     public bool Eliminado { get; set; } = false;
 }

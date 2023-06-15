@@ -1,0 +1,115 @@
+@page "/R_Inventarios"
+@inject InventariosBLL InventariosBLL
+@inject UbicacionesBLL ubicacionesBLL
+@inject ProductosBLL productosBLL
+@inject CatalogosBLL catalogosBLL
+@inject ProveedoresBLL proveedoresBLL
+
+<div class="d-flex justify-content-end ">
+    <div class="zoom">
+        <RadzenTextBox Placeholder="Buscar Inventario..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
+        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" />
+    </div>
+</div>
+
+
+<RadzenStack >  
+    <RadzenCard Class="rz-my-auto rz-mx-auto bordes " style=" background-image: linear-gradient(to right, #343433 , rgb(23, 93, 125)  );"> 
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
+            <RadzenLabel Text="REGISTRO DE INVENTARIOS" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:white;" />
+        </RadzenStack>
+        <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8" style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient( #b4c5e499 0%, #42433fa7 );">
+            <RadzenRow RowGap="7">
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Catalogo: 
+                    </RadzenText>
+                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                        Data=@catalogos TextProperty="Nombre" ValueProperty="CatalogoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        
+                    />
+                </RadzenColumn>
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
+                    <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                </RadzenColumn>
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
+                    <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow RowGap="7">
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Concepto:</RadzenText>
+                    <RadzenTextBox  class="w-200 zoom " />
+                </RadzenColumn>
+
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
+                    <RadzenTextBox  class="w-200 zoom " />
+                </RadzenColumn>
+
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad Minima:</RadzenText>
+                    <RadzenTextBox  class="w-200 zoom " />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha Ingreso:</RadzenText>
+                    <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;"/>
+                </RadzenColumn>
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Ubicacion:</RadzenText>
+                       <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                </RadzenColumn>
+            </RadzenRow>
+
+             <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
+                    <RadzenTextBox  class="w-200 zoom " />
+                </RadzenColumn>
+                <RadzenColumn SizeSM="4">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
+                       <RadzenTextBox  class="w-200 zoom " />
+                </RadzenColumn>
+            </RadzenRow>
+
+
+        </RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0">
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" />
+            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete"/>
+        </RadzenStack>
+    </RadzenCard>
+</RadzenStack>
+
+
+@code{
+    List<Productos> productos = new List<Productos>();
+    List<Ubicaciones> ubicaciones = new List<Ubicaciones>();
+    List<Catalogos> catalogos = new List<Catalogos>();
+    List<Proveedores> proveedores = new List<Proveedores>();
+    string? searchTextStatus;
+    RadzenDropDown<string>? radzenDropDown;
+
+    protected override void OnInitialized()
+    {
+        productos =  productosBLL.GetList(o=> o.Eliminado==false);
+        ubicaciones = ubicacionesBLL.GetList(o=> o.Eliminado==false && o.Ocupado==false);
+        catalogos = catalogosBLL.GetList(o=> o.Eliminado==false);
+        proveedores = proveedoresBLL.GetList(o=> o.Eliminado==false);
+    }
+
+     void searchTextChanged(string text)
+    {
+        searchTextStatus = $"Search text: {text}";
+
+        Console.WriteLine($"Search text: {radzenDropDown.SearchText}");
+
+        StateHasChanged();
+    }
+
+}

@@ -22,7 +22,8 @@ builder.Services.AddScoped<CatalogosBLL>();
 builder.Services.AddScoped<ClientesBLL>();
 builder.Services.AddScoped<ComprasBLL>();
 builder.Services.AddScoped<InventariosBLL>();
-builder.Services.AddScoped<Proveedores>();
+builder.Services.AddScoped<ProveedoresBLL>();
+builder.Services.AddScoped<UbicacionesBLL>();
 //-------------------------------------------------------//
 
 var app = builder.Build();

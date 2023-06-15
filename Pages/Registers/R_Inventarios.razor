@@ -5,6 +5,8 @@
 @inject CatalogosBLL catalogosBLL
 @inject ProveedoresBLL proveedoresBLL
 
+    @*<EditForm Model="inventario" OnValidSubmit="Guardar"></EditForm>*@
+
 <div class="d-flex justify-content-end ">
     <div class="zoom">
         <RadzenTextBox Placeholder="Buscar Inventario..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
@@ -47,16 +49,20 @@
             <RadzenRow RowGap="7">
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Concepto:</RadzenText>
+                     <input type="text"   @bind-value="inventario.Concepto">
                     <RadzenTextBox  class="w-200 zoom " />
                 </RadzenColumn>
 
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
+                     <InputNumber class="form-control" @bind-Value="inventario.Cantidad" />
+
                     <RadzenTextBox  class="w-200 zoom " />
                 </RadzenColumn>
 
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad Minima:</RadzenText>
+                     <InputNumber class="form-control" @bind-Value="inventario.CantidadMinima" />
                     <RadzenTextBox  class="w-200 zoom " />
                 </RadzenColumn>
             </RadzenRow>
@@ -77,10 +83,13 @@
              <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
+                 <input type="number"   class="form-control" @bind-value="inventario.Precio"  >
+
                     <RadzenTextBox  class="w-200 zoom " />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
+                    <input type="number"   class="form-control" @bind-value="inventario.Costo"  >
                        <RadzenTextBox  class="w-200 zoom " />
                 </RadzenColumn>
             </RadzenRow>
@@ -97,6 +106,9 @@
 
 
 @code{
+
+
+  public Inventarios inventario { get; set; } = new Inventarios();  
     List<Productos> productos = new List<Productos>();
     List<Ubicaciones> ubicaciones = new List<Ubicaciones>();
     List<Catalogos> catalogos = new List<Catalogos>();

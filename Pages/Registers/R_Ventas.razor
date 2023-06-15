@@ -1,4 +1,6 @@
 @page "/R_Ventas"
+@page "/R_Ventas/{VentaId:int}"
+
 @inject ClientesBLL clientesBLL
 @inject ProductosBLL productosBLL
 <div class="d-flex justify-content-end ">
@@ -31,6 +33,8 @@
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Concepto:</RadzenText>
+                    @*<input type="text"  id="txtEjemplo" class="form-control" @bind-value="ventas.Concepto">*@
+
                     <RadzenTextBox  class="w-200 zoom " />
                 </RadzenColumn>
             </RadzenRow>
@@ -90,6 +94,7 @@
 </RadzenStack>
 
 @code {
+
 List<Clientes> clientes = new List<Clientes>();
  List<Productos> productos = new List<Productos>();
     

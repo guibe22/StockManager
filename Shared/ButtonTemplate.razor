@@ -1,5 +1,5 @@
 
-<button  >
+<button @onclick="OnClickHandler" >
     <span class="box" style="background-color:@ColorParameter; display: flex; align-items: center;">
     <RadzenIcon Icon="@IconParameter" style="margin-right: 5px;" />
     <RadzenLabel Text="@TextParameter" />
@@ -15,6 +15,9 @@
     public string? TextParameter { get; set; }
     [Parameter]
     public string? IconParameter { get; set; }
+
+    [Parameter]
+    public EventCallback OnClickHandler { get; set; }
 
 }
 

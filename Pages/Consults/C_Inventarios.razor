@@ -1,0 +1,72 @@
+@page "/C_Inventarios"
+@inject InventariosBLL inventariosBLL
+@inject ProductosBLL productosBLL
+@inject ProveedoresBLL proveedoresBLL
+@inject UbicacionesBLL ubicacionesBLL
+@inject CatalogosBLL catalogosBLL
+
+
+<RadzenCard Class=" bordes" style="background-image: linear-gradient(75deg, #6b6e73cc 30%, #0a2d50bf 100%);">
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0">
+        <RadzenLabel Text="CONSULTA DE INVENTARIOS" Style="font-size: 25px; font-weight: bold; font-style: italic; margin-bottom: 10px; color:rgb(255, 255, 255); font-family: 'Times new roman', serif; " />
+    </RadzenStack>
+
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" 
+     >
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Center" ShowPagingSummary="true"
+            Data="@lista" LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" TItem="Inventarios"
+             Scrollable="true" style="max-width: 1300px;  left: 50%; transform: translate( -50%);" >
+            <Columns>
+                <RadzenDataGridColumn TItem="Inventarios" Property="InventarioId" Title="InventarioId" Filterable="false" Width="120px"  Frozen="true" />
+                <RadzenDataGridColumn TItem="Inventarios" Property="CatalogoId" Title="CatalogoId" Filterable="false" Width="200px"  Frozen="true">
+                    <Template Context="Inventario">
+                        @Inventario.CatalogoId  @(catalogosBLL.Buscar(Inventario.CatalogoId)?.Nombre) 
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Inventarios" Property="ProductoId" Title="ProductoId" Filterable="false" Width="200px"   Frozen="true">
+                    <Template Context="Inventario">
+                        @Inventario.ProductoId  @(productosBLL.Buscar(Inventario.ProductoId)?.Nombre) 
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Inventarios" Property="ProveedorId" Title="ProveedorId" Filterable="false" Width="300px"  Frozen="true" >
+                     <Template Context="Inventario">
+                        @Inventario.ProveedorId  @(proveedoresBLL.Buscar(Inventario.ProveedorId )?.Nombre) 
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Inventarios" Property="Concepto" Title="Concepto"  Width="200px" />
+                <RadzenDataGridColumn TItem="Inventarios" Property="Cantidad" Title="Cantidad" />
+                <RadzenDataGridColumn TItem="Inventarios" Property="CantidadMinima" Title="CantidadMinima" Width="200px" />
+                <RadzenDataGridColumn TItem="Inventarios" Property="FechaIngreso" Title="FechaIngreso" />
+                <RadzenDataGridColumn TItem="Inventarios" Property="FechaActualizado" Title="FechaActualizado" />
+                <RadzenDataGridColumn TItem="Inventarios" Property="UbicacionId" Title="UbicacionId" Filterable="false" Width="300px" >
+                <Template Context="Inventario">
+                        @Inventario.ProveedorId  Pasillo: @(ubicacionesBLL.Buscar(Inventario.ProveedorId )?.Pasillo),
+                         Estante: @(ubicacionesBLL.Buscar(Inventario.ProveedorId )?.Estante),
+                          Nivel: @(ubicacionesBLL.Buscar(Inventario.ProveedorId )?.Nivel) 
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Inventarios" Property="Precio" Title="Precio" Width="200px" />
+                <RadzenDataGridColumn TItem="Inventarios" Property="Costo" Title="Costo" Width="200px" />
+                <RadzenDataGridColumn TItem="Inventarios" Filterable="false" Width="50px"   >
+                    <Template Context="Inventario">
+                        <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Inventarios/{Inventario.InventarioId}")" />
+                            
+                        
+                        
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns> 
+        </RadzenDataGrid>  
+    </RadzenStack>
+</RadzenCard>
+
+@code{
+    List<Inventarios> lista = new List<Inventarios>();
+
+    protected override void OnInitialized()
+        {
+        lista = inventariosBLL.GetList(o=> o.Eliminado==false);
+         }
+
+}

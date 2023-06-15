@@ -1,8 +1,7 @@
 @page "/R_Ventas"
-@page "/R_Ventas/{VentaId:int}"
 
-@inject ClientesBLL clientesBLL
-@inject ProductosBLL productosBLL
+
+
 <div class="d-flex justify-content-end ">
     <div class="zoom">
         <RadzenTextBox Placeholder="Buscar Venta..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
@@ -103,9 +102,7 @@ List<Clientes> clientes = new List<Clientes>();
 
     protected override void OnInitialized()
     {
-               productos =  productosBLL.GetList(o=> o.Eliminado==false);
-
-        clientes = clientesBLL.GetList(o=> o.Eliminado==false);
+              
     }
 
      void searchTextChanged(string text)

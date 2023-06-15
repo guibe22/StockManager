@@ -1,4 +1,5 @@
 @page "/R_Inventarios"
+@page "/R_Inventarios/{InventarioId:int}"
 @inject InventariosBLL InventariosBLL
 @inject UbicacionesBLL ubicacionesBLL
 @inject ProductosBLL productosBLL
@@ -8,9 +9,13 @@
     @*<EditForm Model="inventario" OnValidSubmit="Guardar"></EditForm>*@
 
 <div class="d-flex justify-content-end ">
-    <div class="zoom">
-        <RadzenTextBox Placeholder="Buscar Inventario..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
-        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" />
+    <div class="zoom d-flex">
+      <RadzenDropDown TValue="int" class="w-100 zoom "  @ref=@radzenDropDown 
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+            Data=@inventarios TextProperty="Concepto" ValueProperty="InventarioId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+            @bind-value="InventarioId"
+                    />
+        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" Click="Buscar" />
     </div>
 </div>
 
@@ -25,24 +30,27 @@
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Catalogo: 
                     </RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int"  class="w-100 zoom "  @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@catalogos TextProperty="Nombre" ValueProperty="CatalogoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        @bind-Value="@inventario.CatalogoId" 
                         
                     />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int" class="w-100 zoom "  @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        @bind-Value="@inventario.ProductoId"
                     />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                       @bind-Value="@inventario.ProveedorId"
                     />
                 </RadzenColumn>
             </RadzenRow>
@@ -68,14 +76,25 @@
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha Ingreso:</RadzenText>
-                    <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;"/>
+                    <RadzenDatePicker TValue="DateTime" class="w-100 zoom "  Format="dd/MM/yyyy" @bind-Value="inventario.FechaIngreso"/>
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Ubicacion:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data=@ubicaciones TextProperty="Pasillo" ValueProperty="UbicacionId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                    />
+                        Data=@ubicaciones  AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))" ValueProperty="UbicacionId"
+                       @bind-Value="@inventario.UbicacionId"
+                    >
+                     <Template>
+                            @{
+                                if (context != null)
+                                {
+                                    <div>Pasillo: @context.Pasillo, Estante: @context.Estante, Nivel: @context.Nivel</div>
+                                }
+                            }
+                        </Template>
+                    </RadzenDropDown>
+                
                 </RadzenColumn>
             </RadzenRow>
 
@@ -95,24 +114,27 @@
 
         </RadzenCard>
         <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0">
-            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" />
-            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" />
-            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete"/>
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" OnClickHandler="Nuevo"  />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" OnClickHandler="Guardar"  />
+            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete" OnClickHandler="Eliminar" />
         </RadzenStack>
     </RadzenCard>
 </RadzenStack>
 
 
 @code{
+    [Parameter]
+    public int InventarioId { get; set; }
+    public int prueba{ get; set; } = 7;
 
-
-  public Inventarios inventario { get; set; } = new Inventarios();  
+    public Inventarios inventario { get; set; } = new Inventarios();  
     List<Productos> productos = new List<Productos>();
     List<Ubicaciones> ubicaciones = new List<Ubicaciones>();
     List<Catalogos> catalogos = new List<Catalogos>();
     List<Proveedores> proveedores = new List<Proveedores>();
+    List<Inventarios> inventarios = new List<Inventarios>();
     string? searchTextStatus;
-    RadzenDropDown<string>? radzenDropDown;
+    RadzenDropDown<int>? radzenDropDown;
 
     protected override void OnInitialized()
     {
@@ -120,6 +142,16 @@
         ubicaciones = ubicacionesBLL.GetList(o=> o.Eliminado==false && o.Ocupado==false);
         catalogos = catalogosBLL.GetList(o=> o.Eliminado==false);
         proveedores = proveedoresBLL.GetList(o=> o.Eliminado==false);
+        inventarios = InventariosBLL.GetList(o=> o.Eliminado==false);
+        if(InventarioId>0){
+            Buscar();
+
+        }
+        else{
+            inventario.FechaIngreso = DateTime.Now;
+        }
+        
+
     }
 
      void searchTextChanged(string text)
@@ -128,4 +160,52 @@
         StateHasChanged();
     }
 
+    void Guardar(){
+        if(!Validar()){return;}
+
+        if(InventariosBLL.Guardar(inventario)){
+            
+            Nuevo();
+        }
+       
+    }
+
+    void Nuevo(){
+        inventario = new Inventarios();
+        inventario.FechaIngreso = DateTime.Now;
+        StateHasChanged();
+    }
+
+    void Eliminar(){
+        if(InventariosBLL.Eliminar(inventario)){
+            Nuevo();
+        }
+    }
+
+    bool Validar(){
+        bool esValido = true;
+
+        if(inventario.ProductoId==0){esValido = false;}
+        if(inventario.ProveedorId==0){esValido = false;}
+        if(inventario.UbicacionId==0){esValido = false;}
+        if(inventario.Cantidad==0){esValido = false;}
+        if(inventario.CantidadMinima==0){esValido = false;}
+        if(inventario.Precio==0){ esValido = false;}
+        if(inventario.Costo==0){ esValido = false;}
+        return esValido;
+    }
+
+    void Buscar(){
+        var inventarioFound = InventariosBLL.Buscar(this.InventarioId);
+        if(inventarioFound!=null){
+            inventario = inventarioFound;
+        }
+        Console.WriteLine(inventario.ProductoId);
+        Console.WriteLine(inventario.ProveedorId);
+        Console.WriteLine(inventario.UbicacionId);
+        
+        
+    }
+
 }
+

@@ -31,11 +31,17 @@
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                        Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                    />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                        Data=@proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                    />
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="7">
@@ -61,7 +67,10 @@
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Ubicacion:</RadzenText>
-                       <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                        Data=@ubicaciones TextProperty="Pasillo" ValueProperty="UbicacionId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                    />
                 </RadzenColumn>
             </RadzenRow>
 
@@ -106,9 +115,6 @@
      void searchTextChanged(string text)
     {
         searchTextStatus = $"Search text: {text}";
-
-        Console.WriteLine($"Search text: {radzenDropDown.SearchText}");
-
         StateHasChanged();
     }
 

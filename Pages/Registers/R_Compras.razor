@@ -1,4 +1,6 @@
 @page "/R_Compras"
+@inject ProveedoresBLL proveedoresBLL
+@inject ProductosBLL productosBLL
 <div class="d-flex justify-content-end ">
     <div class="zoom">
         <RadzenTextBox Placeholder="Buscar Compra..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
@@ -21,7 +23,11 @@
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                        Data=@proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        
+                    />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Concepto:</RadzenText>
@@ -32,7 +38,11 @@
                  <div style="margin-right: 50px;">
                 <RadzenColumn SizeSM="5">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
-                     <RadzenDropDown TValue="int"  class="w-200 zoom " />
+                     <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                        Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        
+                    />
                 </RadzenColumn>
                 </div>
                 <div  class=" d-flex align-items-end justify-content-end">
@@ -81,6 +91,27 @@
 </RadzenStack>
 
 @code {
+
+    List<Proveedores> proveedores = new List<Proveedores>();
+        List<Productos> productos = new List<Productos>();
+    
+    string? searchTextStatus;
+    RadzenDropDown<string>? radzenDropDown;
+
+    protected override void OnInitialized()
+    {
+               productos =  productosBLL.GetList(o=> o.Eliminado==false);
+
+        proveedores = proveedoresBLL.GetList(o=> o.Eliminado==false);
+    }
+
+     void searchTextChanged(string text)
+    {
+        searchTextStatus = $"Search text: {text}";
+
+
+        StateHasChanged();
+    }
 
 
   

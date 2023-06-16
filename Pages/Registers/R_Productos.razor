@@ -87,7 +87,7 @@
             Buscar();
         }
         else{
-            producto.Fecha = DateTime.Now;
+            producto.Fecha=DateTime.Now;
         }
     }
     void searchTextChanged(string text)
@@ -99,6 +99,7 @@
         if(!Validar()){return;}
         if(productosBLL.Guardar(producto)){
             Nuevo();
+            productos = productosBLL.GetList(o=> o.Eliminado==false);
         }
     }
     void Nuevo(){
@@ -109,6 +110,7 @@
     void Eliminar(){
         if(productosBLL.Eliminar(producto)){
             Nuevo();
+            productos = productosBLL.GetList(o=> o.Eliminado==false);
         }
     }
     bool Validar(){

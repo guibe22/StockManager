@@ -1,0 +1,104 @@
+@using System
+    @*CODIGO DE PRUEBA*@
+<RadzenButton Shade="Shade.Dark" Click="@TogglePanel" Text="Panel" ButtonStyle="ButtonStyle.Info" />
+
+@if (mostrarPanel)
+{
+    <div class="panel">
+        <h3 style="color: black;">Panel</h3>
+        <div class="form-group">
+            <input id="numeroPrincipal" type="number" class="input-small" @bind="numeroPrincipal" />
+            <button class="button-add" @onclick="Add">ADD</button>
+        </div>
+        <div class="form-group">
+            <input id="numeroSecundario" type="number" class="input-small" @bind="numeroSecundario" />
+            <button class="button-suma" @onclick="Sumar">Suma</button>
+            <button class="button-resta" @onclick="Restar">Resta</button>
+        </div>
+        <h4 style="color: white;">Cantidad A añadir: @resultado</h4>
+    </div>
+}
+
+<style>
+    .panel {
+        background-color: #5a5757;
+        padding: 20px;
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .input-small {
+        width: 70px;
+        height: 30px;
+        padding: 5px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    .button-add {
+        background-color: #36c9a7;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+    
+    .button-suma {
+        background-color: #f93e3e;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+    
+    .button-resta {
+        background-color: #fca130;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+    
+    .form-group {
+        margin-bottom: 10px;
+    }
+</style>
+
+@code {
+    bool mostrarPanel = false;
+    int numeroPrincipal = 0;
+    int numeroSecundario = 0;
+    int resultado = 0;
+
+    void TogglePanel()
+    {
+        mostrarPanel = !mostrarPanel;
+    }
+
+    void Add()
+    {
+        resultado = numeroPrincipal;
+    }
+
+    void Sumar()
+    {
+        resultado = numeroPrincipal + numeroSecundario;
+    }
+
+    void Restar()
+    {
+        resultado = numeroPrincipal - numeroSecundario;
+    }
+}

@@ -106,11 +106,16 @@
         producto.Fecha = DateTime.Now;
         StateHasChanged();
     }
-    void Eliminar(){
-        if(productosBLL.Eliminar(producto)){
+   
+      void Eliminar(){
+        if(productosBLL.Existe(producto.ProductoId)){
+
+         if(productosBLL.Eliminar(producto)){
             Nuevo();
-        }
     }
+    }
+    }
+
     bool Validar(){
         bool esValido = true;
         

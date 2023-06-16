@@ -5,28 +5,28 @@
 @if (mostrarPanel)
 {
     <div class="panel">
-        <h3 style="color: black;">Panel</h3>
+        <h4 style="color: rgb(255, 255, 255);">Panel</h4>
         <div class="form-group">
             <input id="numeroPrincipal" type="number" class="input-small" @bind="numeroPrincipal" />
-            <button class="button-add" @onclick="Add">ADD</button>
+            <button class="button-add" @onclick="Add">Actualizar</button>
         </div>
         <div class="form-group">
             <input id="numeroSecundario" type="number" class="input-small" @bind="numeroSecundario" />
             <button class="button-suma" @onclick="Sumar">Suma</button>
             <button class="button-resta" @onclick="Restar">Resta</button>
         </div>
-        <h4 style="color: white;">Cantidad A añadir: @resultado</h4>
+        <h5 style="color: white;">Total: @resultado</h5>
     </div>
 }
 
 <style>
     .panel {
-        background-color: #5a5757;
+        background-color: #dcaf77;
         padding: 20px;
         margin-top: 20px;
         border: 1px solid #ccc;
         border-radius: 6px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.904);
     }
     
     .input-small {

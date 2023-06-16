@@ -180,9 +180,12 @@
     }
 
     void Eliminar(){
-        if(InventariosBLL.Eliminar(inventario)){
+        if(InventariosBLL.Existe(inventario.InventarioId)){
+
+         if(InventariosBLL.Eliminar(inventario)){
             Nuevo();
-        }
+    }
+    }
     }
 
     bool Validar(){

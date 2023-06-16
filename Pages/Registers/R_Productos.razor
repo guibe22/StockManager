@@ -1,4 +1,5 @@
 @page "/R_Productos"
+@page "/R_Productos/{ProductoId:int}"
 
 @inject CategoriasBLL categoriasBLL
 @inject ProveedoresBLL proveedoresBLL
@@ -69,6 +70,7 @@
 </RadzenStack>
 
 @code {
+    [Parameter]
     public int productoId { get; set; }
     public Productos producto { get; set; } = new Productos();  
 
@@ -81,6 +83,12 @@
     {
         categorias = categoriasBLL.GetList(o=> o.Eliminado==false);
         productos = productosBLL.GetList(o=> o.Eliminado==false);
+        if(productoId!=0){
+            Buscar();
+        }
+        else{
+            producto.Fecha = DateTime.Now;
+        }
     }
     void searchTextChanged(string text)
     {

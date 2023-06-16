@@ -1,5 +1,6 @@
 @page "/C_Productos"
 @inject ProductosBLL productosBLL
+@inject CategoriasBLL categoriasBLL
 
 
 
@@ -11,20 +12,26 @@
          <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
             Data="@lista"  LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"  >
         <Columns>
-            <RadzenDataGridColumn TItem="string" Title="ID"   Filterable="false"/>
-            <RadzenDataGridColumn TItem="string" Title="Nombre"  />
-            <RadzenDataGridColumn TItem="string" Title="Categoria" />
-            <RadzenDataGridColumn TItem="string" Title="Precio" />
-            <RadzenDataGridColumn TItem="string" Title="Costo" />
-            <RadzenDataGridColumn TItem="string" Title="Proveedor" />
-            <RadzenDataGridColumn TItem="string" Title="Cantidad" />
-            <RadzenDataGridColumn TItem="string" Title="Fecha"  FormatString="{0:d}"/>
+            <RadzenDataGridColumn TItem="Productos" Title="ID" Property="ProductoId"   Filterable="false"/>
+             <RadzenDataGridColumn TItem="Productos" Title="Codigo Producto" Property="CodigoProducto"  />
+            <RadzenDataGridColumn TItem="Productos" Title="Codigo Barra" Property="CodigoBarra" />
+            <RadzenDataGridColumn TItem="Productos" Title="Nombre" Property="Nombre"  />
+            <RadzenDataGridColumn TItem="Productos" Property="CategoriaId" Title="CategoriaId" Filterable="false" Width="300px" >
+                     <Template Context="producto">
+                        @producto.CategoriaId  @(categoriasBLL.Buscar(producto.CategoriaId  )?.Nombre) 
+                    </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Productos" Title="Nombre" Property="Descripcion"  />
+            <RadzenDataGridColumn TItem="Productos" Title="Fecha" Property="Fecha"  FormatString="{0:d}"/>
+            <RadzenDataGridColumn TItem="Productos" Filterable="false" Width="50px"   >
+                    <Template Context="Producto">
+                        <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Productos/{Producto.ProductoId}")" />
+                    </Template>
+            </RadzenDataGridColumn>
         </Columns> 
         </RadzenDataGrid>  
           
     </RadzenStack>
-
-
  </RadzenCard>
 
 

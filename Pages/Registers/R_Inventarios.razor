@@ -21,11 +21,11 @@
 
 
 <RadzenStack >  
-    <RadzenCard Class="rz-my-auto rz-mx-auto bordes " style=" background-image: linear-gradient(to right, #343433 , rgb(23, 93, 125)  );"> 
-        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
-            <RadzenLabel Text="REGISTRO DE INVENTARIOS" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:white;" />
+<RadzenCard Class="rz-my-auto rz-mx-auto bordes " style=" background-image: linear-gradient(to right, #9d8f82 , rgb(195, 105, 36)  );"> 
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " > 
+       <RadzenLabel Text="REGISTRO DE INVENTARIOS" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:white;" />
         </RadzenStack>
-        <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8" style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient( #b4c5e499 0%, #42433fa7 );">
+        <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8 " style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(173deg, #ce9051ac 0%, #fbfff1 100%);">
             <RadzenRow RowGap="7">
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Catalogo: 
@@ -65,6 +65,7 @@
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
                      <InputNumber class="form-control" @bind-Value="inventario.Cantidad" />
 
+
                     
                 </RadzenColumn>
 
@@ -103,10 +104,12 @@
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
                  <input type="number"   class="form-control" @bind-value="inventario.Precio"  >
 
+
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
                     <input type="number"   class="form-control" @bind-value="inventario.Costo"  >
+
                       
                 </RadzenColumn>
             </RadzenRow>
@@ -127,6 +130,7 @@
     public int InventarioId { get; set; }
     public int prueba{ get; set; } = 7;
 
+  
     public Inventarios inventario { get; set; } = new Inventarios();  
     List<Productos> productos = new List<Productos>();
     List<Ubicaciones> ubicaciones = new List<Ubicaciones>();

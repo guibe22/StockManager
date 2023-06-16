@@ -1,16 +1,20 @@
 @page "/R_Productos"
+@page "/R_Productos/{ProductoId:int}"
 
 @inject CategoriasBLL categoriasBLL
 @inject ProveedoresBLL proveedoresBLL
 @inject ProductosBLL productosBLL
 
 <div class="d-flex justify-content-end ">
-    <div class="zoom">
-        <RadzenTextBox Placeholder="Buscar Producto..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
-        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px; color:#090c9b" />
+    <div class="zoom d-flex">
+      <RadzenDropDown TValue="int" class="w-100 zoom "  @ref=@radzenDropDown 
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+            Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+            @bind-value="productoId"
+                    />
+        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" Click="Buscar" />
     </div>
 </div>
-
 
   
 
@@ -21,41 +25,38 @@
             <RadzenLabel Text="REGISTRO DE PRODUCTOS" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:rgb(245, 242, 242);" />
         </RadzenStack>
         <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8 " style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(173deg, #ce9051ac 0%, #fbfff1 100%);">
+             <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Codigo Producto:</RadzenText>
+                    <RadzenTextBox  class="w-100 zoom " @bind-Value="producto.CodigoProducto" />
+                </RadzenColumn>
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Codigo Barra:</RadzenText>
+                    <RadzenTextBox  class="w-100 zoom " @bind-Value="producto.CodigoBarra" />
+                </RadzenColumn>
+            </RadzenRow>
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Nombre:</RadzenText>
-                   
-                    <RadzenTextBox  class="w-200 zoom " />
+                    <RadzenTextBox  class="w-100 zoom " @bind-Value="producto.Nombre" />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Categoria:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@categorias TextProperty="Nombre" ValueProperty="CategoriaId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        @bind-Value="@producto.CategoriaId"
                     />
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
-                    <RadzenTextBox  class="w-200 zoom " />
-                </RadzenColumn>
-                <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
-                    <RadzenTextBox  class="w-200 zoom " />
-                </RadzenColumn>
-            </RadzenRow>
-            <RadzenRow RowGap="5">
-                <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Provedoor:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data=@proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                    />
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Descripcion:</RadzenText>
+                    <RadzenTextBox  class="w-100 zoom " @bind-Value="producto.Descripcion" />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
-                       <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;"/>
+                    <RadzenDatePicker TValue="DateTime"   class="w-100 zoom "  style="width: 190px;" @bind-Value="producto.Fecha"/>
                 </RadzenColumn>
             </RadzenRow>
 
@@ -69,19 +70,25 @@
 </RadzenStack>
 
 @code {
+    [Parameter]
     public int productoId { get; set; }
     public Productos producto { get; set; } = new Productos();  
 
     List<Categorias> categorias = new List<Categorias>();
-    List<Proveedores> proveedores = new List<Proveedores>();
     List<Productos> productos = new List<Productos>();
 
     string? searchTextStatus;
-    RadzenDropDown<string>? radzenDropDown;
+    RadzenDropDown<int>? radzenDropDown;
     protected override void OnInitialized()
     {
         categorias = categoriasBLL.GetList(o=> o.Eliminado==false);
-        proveedores = proveedoresBLL.GetList(o=> o.Eliminado==false);
+        productos = productosBLL.GetList(o=> o.Eliminado==false);
+        if(productoId!=0){
+            Buscar();
+        }
+        else{
+            producto.Fecha = DateTime.Now;
+        }
     }
     void searchTextChanged(string text)
     {
@@ -106,7 +113,7 @@
     }
     bool Validar(){
         bool esValido = true;
-        if(producto.ProductoId==0){esValido = false;}
+        
         if(producto.CategoriaId==0){esValido = false;}
         return esValido;
     }

@@ -47,7 +47,7 @@
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int"  class="w-100 " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
                        @bind-Value="@inventario.ProveedorId"
@@ -128,7 +128,6 @@
     [Parameter]
     public int InventarioId { get; set; }
     public int prueba{ get; set; } = 7;
-
   
     public Inventarios inventario { get; set; } = new Inventarios();  
     List<Productos> productos = new List<Productos>();
@@ -169,6 +168,7 @@
         if(InventariosBLL.Guardar(inventario)){
             
             Nuevo();
+            inventarios = InventariosBLL.GetList(o=> o.Eliminado==false);
         }
        
     }
@@ -184,7 +184,7 @@
 
          if(InventariosBLL.Eliminar(inventario)){
             Nuevo();
-    }
+        }
     }
     }
 

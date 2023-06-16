@@ -87,7 +87,7 @@
             Buscar();
         }
         else{
-            producto.Fecha = DateTime.Now;
+            producto.Fecha=DateTime.Now;
         }
     }
     void searchTextChanged(string text)
@@ -99,6 +99,7 @@
         if(!Validar()){return;}
         if(productosBLL.Guardar(producto)){
             Nuevo();
+            productos = productosBLL.GetList(o=> o.Eliminado==false);
         }
     }
     void Nuevo(){
@@ -112,6 +113,11 @@
 
          if(productosBLL.Eliminar(producto)){
             Nuevo();
+<<<<<<< HEAD
+=======
+            productos = productosBLL.GetList(o=> o.Eliminado==false);
+        }
+>>>>>>> 04691786557ddb4d3f54db5028f9eb8241ab1e08
     }
     }
     }

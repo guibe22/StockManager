@@ -51,9 +51,6 @@
                 <RadzenDataGridColumn TItem="Inventarios" Filterable="false" Width="50px"   >
                     <Template Context="Inventario">
                         <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Inventarios/{Inventario.InventarioId}")" />
-                            
-                        
-                        
                     </Template>
                 </RadzenDataGridColumn>
             </Columns> 
@@ -65,8 +62,8 @@
     List<Inventarios> lista = new List<Inventarios>();
 
     protected override void OnInitialized()
-        {
+    {
         lista = inventariosBLL.GetList(o=> o.Eliminado==false);
-         }
+    }
 
 }

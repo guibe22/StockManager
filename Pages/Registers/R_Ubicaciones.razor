@@ -1,0 +1,107 @@
+@page "/R_Ubicaciones"
+@page "/R_Ubicaciones/{ubicacionId:int}"
+@inject UbicacionesBLL ubicacionesBLL
+
+
+<div class="d-flex justify-content-end ">
+    <div class="zoom d-flex">
+      <RadzenDropDown TValue="int" class="w-100 zoom "  @ref=@radzenDropDown 
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+            Data=@ubicaciones TextProperty="Pasillo" ValueProperty="UbicacionId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+            @bind-value="ubicacionId"
+                    />
+        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" Click="Buscar" />
+    </div>
+</div>
+
+
+<RadzenStack >  
+    <RadzenCard Class="rz-my-auto rz-mx-auto bordes " style=" background-image: linear-gradient(to right, #9d8f82 , rgb(195, 105, 36)  );"> 
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
+            <RadzenLabel Text="REGISTRO DE UBICACIONES" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:rgb(245, 242, 242);" />
+        </RadzenStack>
+        <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8 " style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(173deg, #ce9051ac 0%, #fbfff1 100%);">
+             <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Pasillo:</RadzenText>
+                    <RadzenTextBox  class="w-100 zoom " @bind-Value="ubicacione.Pasillo" />
+                </RadzenColumn>
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Estante:</RadzenText>
+                    <RadzenTextBox  class="w-100 zoom " @bind-Value="ubicacione.Estante" />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Nivel:</RadzenText>
+                    <RadzenNumeric class="w-100 zoom" @bind-Value="ubicacione.Nivel"/>
+                </RadzenColumn>
+            </RadzenRow>
+
+        </RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0">
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" OnClickHandler="Nuevo"  />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" OnClickHandler="Guardar"  />
+            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete" OnClickHandler="Eliminar" />
+        </RadzenStack>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    [Parameter]
+    public int ubicacionId { get; set; }
+    public Ubicaciones ubicacione { get; set; } = new Ubicaciones();  
+    List<Ubicaciones> ubicaciones = new List<Ubicaciones>();
+    string? searchTextStatus;
+    RadzenDropDown<int>? radzenDropDown;
+    protected override void OnInitialized()
+    {
+        ubicaciones = ubicacionesBLL.GetList(o=> o.Eliminado==false);
+        if(ubicacionId!=0){
+            Buscar();
+        }
+        else{
+        }
+    }
+    void searchTextChanged(string text)
+    {
+        searchTextStatus = $"Search text: {text}";
+        StateHasChanged();
+    }
+    void Guardar(){
+        if(!Validar()){return;}
+        if(ubicacionesBLL.Guardar(ubicacione)){
+            Nuevo();
+            ubicaciones = ubicacionesBLL.GetList(o=> o.Eliminado==false);
+        }
+    }
+    void Nuevo(){
+        ubicacione = new Ubicaciones();
+        StateHasChanged();
+    }
+   
+      void Eliminar(){
+        if(ubicacionesBLL.Existe(ubicacione.UbicacionId)){
+
+         if(ubicacionesBLL.Eliminar(ubicacione)){
+            Nuevo();
+    }
+    }
+    }
+
+    bool Validar(){
+        bool esValido = true;
+        
+        if(ubicacione.Nivel==0){esValido = false;}
+        return esValido;
+    }
+    void Buscar(){
+        var UbicacionFound = ubicacionesBLL.Buscar(this.ubicacionId);
+
+        if(UbicacionFound!=null){
+            ubicacione = UbicacionFound;
+        }
+        Console.WriteLine(ubicacione.UbicacionId);
+    }
+}
+

@@ -16,8 +16,6 @@
     </div>
 </div>
 
-  
-
 
 <RadzenStack >  
     <RadzenCard Class="rz-my-auto rz-mx-auto bordes " style=" background-image: linear-gradient(to right, #9d8f82 , rgb(195, 105, 36)  );"> 
@@ -42,17 +40,21 @@
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
-                    <RadzenNumeric  class="w-100 zoom " @bind-Value="producto.Precio" />
-                </RadzenColumn>
-                <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Categoria:</RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data=@categorias TextProperty="Nombre" ValueProperty="CategoriaId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                        @bind-Value="@producto.CategoriaId"
-                    />
+                    <RadzenNumeric Disabled="true" class="w-100 zoom" @bind-Value="producto.Precio"/>
                 </RadzenColumn>
             </RadzenRow>
+
+            <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Descripcion:</RadzenText>
+                    <RadzenTextBox  class="w-100 zoom " @bind-Value="producto.Descripcion" />
+                </RadzenColumn>
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Margen:</RadzenText>
+                    <RadzenNumeric class="w-100 zoom" @bind-Value="producto.margen"/>
+                </RadzenColumn>
+            </RadzenRow>
+
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>

@@ -10,15 +10,14 @@ public class Productos
     [Required(ErrorMessage = "Se debe agregar nombre al producto.")]
     [MinLength(2)]
     public string? Nombre { get; set; }
-
-    [Required(ErrorMessage = "Se debe agregar una descripcion al producto.")]
+    public decimal Precio { get; set; }
     public string? Descripcion { get; set; }
 
     [Required(ErrorMessage = "Campo obligatorio.")]
     public int CategoriaId { get; set; }
+    public decimal margen { get; set; }
 
     [Required(ErrorMessage = "Debe especificar la  fecha.")]
     public DateTime Fecha { get; set; }
-
     public bool Eliminado { get; set; } = false;
 }

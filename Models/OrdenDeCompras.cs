@@ -7,14 +7,13 @@ public class OrdenDeCompras
 
     [Key]
     public int OrdenDeCompraId { get; set; }
-
-    [Required(ErrorMessage = "El campo {0} es obligatorio")]
-    public DateTime Fecha { get; set; }
-
-    public double CostoTotal { get; set; }
-
-    [ForeignKey("OrdenDeCompraId")]
-    public virtual List<DetalleOrdenDeCompras> DetalleOrdenDeCompras { get; set; } = new List<DetalleOrdenDeCompras>();
+    public string? Consepto { get; set; }
+    public int? CantidadTotal { get; set; }
+    public decimal? CostoTotal { get; set; }
+    public string? Detalle { get; set; }
     public bool Eliminado { get; set; } = false;
+    public bool status { get; set; } = false;
+
+     public virtual List<DetalleOrdenDeCompras> DetalleOrdenDeCompras { get; set; } = new List<DetalleOrdenDeCompras>();
 
 }

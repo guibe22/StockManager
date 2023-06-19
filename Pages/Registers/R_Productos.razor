@@ -41,6 +41,10 @@
                     <RadzenTextBox  class="w-100 zoom " @bind-Value="producto.Nombre" />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
+                    <RadzenNumeric  class="w-100 zoom " @bind-Value="producto.Precio" />
+                </RadzenColumn>
+                <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Categoria:</RadzenText>
                     <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
@@ -50,10 +54,6 @@
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="5">
-                <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Descripcion:</RadzenText>
-                    <RadzenTextBox  class="w-100 zoom " @bind-Value="producto.Descripcion" />
-                </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
                     <RadzenDatePicker TValue="DateTime"   class="w-100 zoom "  style="width: 190px;" @bind-Value="producto.Fecha"/>

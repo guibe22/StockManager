@@ -8,14 +8,17 @@ public class DetalleOrdenDeCompras
     public int OrdenDeCompraId { get; set; }
     [Required]
     public int ProductoId { get; set; }
-
     [Required]
     public int ProveedorId { get; set; }
-    [Required(ErrorMessage = "El campo {0} es obligatorio")]
-    public String? Solicitante { get; set; }
-    [Required(ErrorMessage = "El campo {0} es obligatorio")]
+    [Required (ErrorMessage = "Campo obligatorio.")]
     public int Cantidad { get; set; }
+    public decimal CostoTotal { get; set; }
+    public bool Eliminado { get; set; } = false;
+    [Required(ErrorMessage = "Debe especificar la  fecha.")]
+    public DateTime Fecha { get; set; }
 
+    
+    
 
 
 }

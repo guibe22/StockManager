@@ -17,7 +17,7 @@ public class InventariosBLL
 
     private bool Insertar(Inventarios Inventario)
     {
-        Inventario.FechaActualizado = DateTime.Now;
+        Inventario.Fecha = DateTime.Now;
         Ubicaciones? ubicacion= _Contexto.Ubicaciones.AsNoTracking().FirstOrDefault(o => o.UbicacionId == Inventario.InventarioId);
         
         if(ubicacion!=null){
@@ -35,7 +35,7 @@ public class InventariosBLL
 
     private bool Modificar(Inventarios Inventario)
     {
-        Inventario.FechaActualizado = DateTime.Now;
+        Inventario.Fecha = DateTime.Now;
         Inventarios? InventarioAnterior = _Contexto.Inventarios
                .Where(o => o.InventarioId == Inventario.InventarioId)
                .AsNoTracking()

@@ -3,10 +3,9 @@
 @inject ProductosBLL productosBLL
 @inject ProveedoresBLL proveedoresBLL
 @inject UbicacionesBLL ubicacionesBLL
-@inject CatalogosBLL catalogosBLL
 @if (radzenCardVisible)
   {
-<RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-4" JustifyContent="JustifyContent.Center" style="background-image: linear-gradient(#b4c5e499 0%, #42433fa7); width: 30%; margin: 0 auto;">
+<RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-4" JustifyContent="JustifyContent.Center" style="background-image: linear-gradient(#dde4f099 0%, #cf853ba7); width: 30%; margin: 0 auto;">
     <RadzenRow RowGap="10">
         <RadzenColumn SizeSM="12">
             <RadzenLabel Text="@($"CANTIDAD ACTUAL DEL INVENTARIO: {inventario.Cantidad}")" Style="font-size: 15px; font-weight: bold; font-style: italic; margin-bottom: 10px;" />
@@ -35,9 +34,9 @@
 
 }
 
-<RadzenCard Class=" bordes" style="background-image: linear-gradient(75deg, #6b6e73cc 30%, #0a2d50bf 100%);">
+<RadzenCard Class=" bordes" style="background-image: linear-gradient(90deg, #ced1d6cc 10%, #c1872bbf 100%);">
     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0">
-        <RadzenLabel Text="CONSULTA DE INVENTARIOS" Style="font-size: 25px; font-weight: bold; font-style: italic; margin-bottom: 10px; color:rgb(255, 255, 255); font-family: 'Times new roman', serif; " />
+        <RadzenLabel Text="CONSULTA DE INVENTARIOS" Style="font-size: 25px; font-weight: bold; font-style: italic; margin-bottom: 10px; color:rgb(58, 58, 58); font-family: 'Times new roman', serif; " />
     </RadzenStack>
 
     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" 
@@ -46,23 +45,14 @@
             Data="@lista" LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" TItem="Inventarios"
              Scrollable="true" style="max-width: 1300px;  left: 50%; transform: translate( -50%);" >
             <Columns>
-                <RadzenDataGridColumn TItem="Inventarios" Property="InventarioId" Title="InventarioId" Filterable="false" Width="120px"  Frozen="true" />
-                <RadzenDataGridColumn TItem="Inventarios" Property="CatalogoId" Title="CatalogoId" Filterable="false" Width="200px"  Frozen="true">
-                    <Template Context="Inventario">
-                        @Inventario.CatalogoId  @(catalogosBLL.Buscar(Inventario.CatalogoId)?.Nombre) 
-                    </Template>
-                </RadzenDataGridColumn>
+             
 
                 <RadzenDataGridColumn TItem="Inventarios" Property="ProductoId" Title="ProductoId" Filterable="false" Width="200px"   Frozen="true">
                     <Template Context="Inventario">
                         @Inventario.ProductoId  @(productosBLL.Buscar(Inventario.ProductoId)?.Nombre) 
                     </Template>
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="Inventarios" Property="ProveedorId" Title="ProveedorId" Filterable="false" Width="300px"  Frozen="true" >
-                     <Template Context="Inventario">
-                        @Inventario.ProveedorId  @(proveedoresBLL.Buscar(Inventario.ProveedorId )?.Nombre) 
-                    </Template>
-                </RadzenDataGridColumn>
+                
                 <RadzenDataGridColumn TItem="Inventarios" Property="Concepto" Title="Concepto"  Width="200px" />
                 <RadzenDataGridColumn TItem="Inventarios" Property="Cantidad" Title="Cantidad" />
                 <RadzenDataGridColumn TItem="Inventarios" Property="CantidadMinima" Title="CantidadMinima" Width="200px" />
@@ -70,9 +60,9 @@
                 <RadzenDataGridColumn TItem="Inventarios" Property="FechaActualizado" Title="FechaActualizado" />
                 <RadzenDataGridColumn TItem="Inventarios" Property="UbicacionId" Title="UbicacionId" Filterable="false" Width="300px" >
                 <Template Context="Inventario">
-                        @Inventario.ProveedorId  Pasillo: @(ubicacionesBLL.Buscar(Inventario.ProveedorId )?.Pasillo),
-                         Estante: @(ubicacionesBLL.Buscar(Inventario.ProveedorId )?.Estante),
-                          Nivel: @(ubicacionesBLL.Buscar(Inventario.ProveedorId )?.Nivel) 
+                        @Inventario.ProductoId  Pasillo: @(ubicacionesBLL.Buscar(Inventario.ProductoId )?.Pasillo),
+                         Estante: @(ubicacionesBLL.Buscar(Inventario.ProductoId )?.Estante),
+                          Nivel: @(ubicacionesBLL.Buscar(Inventario.ProductoId )?.Nivel) 
                     </Template>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="Inventarios" Property="Precio" Title="Precio" Width="200px" />

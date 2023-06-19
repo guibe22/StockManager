@@ -3,7 +3,6 @@
 @inject InventariosBLL InventariosBLL
 @inject UbicacionesBLL ubicacionesBLL
 @inject ProductosBLL productosBLL
-@inject CatalogosBLL catalogosBLL
 @inject ProveedoresBLL proveedoresBLL
 
     @*<EditForm Model="inventario" OnValidSubmit="Guardar"></EditForm>*@
@@ -27,16 +26,7 @@
         </RadzenStack>
         <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8 " style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(173deg, #ce9051ac 0%, #fbfff1 100%);">
             <RadzenRow RowGap="7">
-                <RadzenColumn SizeSM="4">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Catalogo: 
-                    </RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-100 zoom "  @ref=@radzenDropDown 
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data=@catalogos TextProperty="Nombre" ValueProperty="CatalogoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                        @bind-Value="@inventario.CatalogoId" 
-                        
-                    />
-                </RadzenColumn>
+               
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
                     <RadzenDropDown TValue="int" class="w-100 zoom "  @ref=@radzenDropDown 
@@ -45,14 +35,8 @@
                         @bind-Value="@inventario.ProductoId"
                     />
                 </RadzenColumn>
-                <RadzenColumn SizeSM="4">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-100 " @ref=@radzenDropDown 
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data=@proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                       @bind-Value="@inventario.ProveedorId"
-                    />
-                </RadzenColumn>
+                
+              
             </RadzenRow>
             <RadzenRow RowGap="7">
                 <RadzenColumn SizeSM="4">
@@ -69,15 +53,12 @@
                     
                 </RadzenColumn>
 
-                <RadzenColumn SizeSM="4">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad Minima:</RadzenText>
-                     <InputNumber class="form-control" @bind-Value="inventario.CantidadMinima" />
-                </RadzenColumn>
+                
             </RadzenRow>
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha Ingreso:</RadzenText>
-                    <RadzenDatePicker TValue="DateTime" class="w-100 zoom "  Format="dd/MM/yyyy" @bind-Value="inventario.FechaIngreso"/>
+                    <RadzenDatePicker TValue="DateTime" class="w-100 zoom "  Format="dd/MM/yyyy" @bind-Value="inventario.Fecha"/>
                 </RadzenColumn>
                 <RadzenColumn SizeSM="4">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Ubicacion:</RadzenText>
@@ -100,16 +81,8 @@
             </RadzenRow>
 
              <RadzenRow RowGap="5">
-                <RadzenColumn SizeSM="4">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
-                 <input type="number"   class="form-control" @bind-value="inventario.Precio"  >
-
-
-                </RadzenColumn>
-                <RadzenColumn SizeSM="4">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
-                    <input type="number"   class="form-control" @bind-value="inventario.Costo"  >
-                </RadzenColumn>
+                
+               
                 <Panel> </Panel>
 
             </RadzenRow>
@@ -132,7 +105,6 @@
     public Inventarios inventario { get; set; } = new Inventarios();  
     List<Productos> productos = new List<Productos>();
     List<Ubicaciones> ubicaciones = new List<Ubicaciones>();
-    List<Catalogos> catalogos = new List<Catalogos>();
     List<Proveedores> proveedores = new List<Proveedores>();
     List<Inventarios> inventarios = new List<Inventarios>();
     string? searchTextStatus;
@@ -142,7 +114,6 @@
     {
         productos =  productosBLL.GetList(o=> o.Eliminado==false);
         ubicaciones = ubicacionesBLL.GetList(o=> o.Eliminado==false && o.Ocupado==false);
-        catalogos = catalogosBLL.GetList(o=> o.Eliminado==false);
         proveedores = proveedoresBLL.GetList(o=> o.Eliminado==false);
         inventarios = InventariosBLL.GetList(o=> o.Eliminado==false);
         if(InventarioId>0){
@@ -150,7 +121,7 @@
 
         }
         else{
-            inventario.FechaIngreso = DateTime.Now;
+            inventario.Fecha = DateTime.Now;
         }
         
 
@@ -175,7 +146,6 @@
 
     void Nuevo(){
         inventario = new Inventarios();
-        inventario.FechaIngreso = DateTime.Now;
         StateHasChanged();
     }
 
@@ -192,12 +162,8 @@
         bool esValido = true;
 
         if(inventario.ProductoId==0){esValido = false;}
-        if(inventario.ProveedorId==0){esValido = false;}
         if(inventario.UbicacionId==0){esValido = false;}
         if(inventario.Cantidad==0){esValido = false;}
-        if(inventario.CantidadMinima==0){esValido = false;}
-        if(inventario.Precio==0){ esValido = false;}
-        if(inventario.Costo==0){ esValido = false;}
         return esValido;
     }
 
@@ -207,7 +173,6 @@
             inventario = inventarioFound;
         }
         Console.WriteLine(inventario.ProductoId);
-        Console.WriteLine(inventario.ProveedorId);
         Console.WriteLine(inventario.UbicacionId);
         
         

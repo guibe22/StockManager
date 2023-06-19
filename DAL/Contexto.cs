@@ -6,12 +6,12 @@ public class Contexto : DbContext
     public DbSet<Productos> Productos { get; set; }
     public DbSet<Proveedores> Proveedores { get; set; }
     public DbSet<Ventas> Ventas { get; set; }
-    public DbSet<Compras> Compras { get; set; }
     public DbSet<Categorias> Categorias { get; set; }
     public DbSet<OrdenDeCompras> OrdenDeCompras { get; set; }
-    public DbSet<Catalogos> Catalogos { get; set; }
+
     public DbSet<Ubicaciones> Ubicaciones { get; set; }
     public DbSet<Inventarios> Inventarios { get; set; }
+    public DbSet<RelacionProductoProveedor> RelacionProductoProveedor { get; set; }
 
 
 
@@ -66,21 +66,21 @@ public class Contexto : DbContext
         ); 
 
         modelBuilder.Entity<Productos>().HasData(
-            new Productos{ ProductoId = 1, CodigoBarra = "123456789",CodigoProducto = "ABC123", Nombre = "Martillo", Descripcion = "Martillo de acero con mango de madera", CategoriaId = 1, Fecha = DateTime.Now, Eliminado = false},
-            new Productos{ ProductoId = 2, CodigoBarra = "987654321", CodigoProducto = "XYZ789", Nombre = "Taladro", Descripcion = "Taladro eléctrico de alta potencia",CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false },
-            new Productos{ ProductoId = 3, CodigoBarra = "789123456", CodigoProducto = "DEF456", Nombre = "Destornillador", Descripcion = "Destornillador magnético con puntas intercambiables", CategoriaId = 1, Fecha = DateTime.Now, Eliminado = false},
-            new Productos{ ProductoId = 4, CodigoBarra = "654789123", CodigoProducto = "GHI789", Nombre = "Sierra Circular", Descripcion = "Sierra circular de alta velocidad para cortes precisos", CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false},
-            new Productos { ProductoId = 5, CodigoBarra = "246813579", CodigoProducto = "JKL321", Nombre = "Cinta Métrica", Descripcion = "Cinta métrica retráctil de 5 metros", CategoriaId = 20, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 6, CodigoBarra = "135792468", CodigoProducto = "MNO987", Nombre = "Pintura Blanca", Descripcion = "Pintura blanca mate para interiores", CategoriaId = 4, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 7, CodigoBarra = "369258147", CodigoProducto = "PQR654", Nombre = "Llave Ajustable", Descripcion = "Llave ajustable de 10 pulgadas", CategoriaId = 9, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 8, CodigoBarra = "258741369", CodigoProducto = "STU321", Nombre = "Broca para Madera", Descripcion = "Broca de 8 mm para perforar madera", CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 9, CodigoBarra = "987123654", CodigoProducto = "VWX987", Nombre = "Guantes de Trabajo", Descripcion = "Guantes de trabajo resistentes al corte, talla L", CategoriaId = 10, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 10, CodigoBarra = "741852963", CodigoProducto = "XYZ123", Nombre = "Aspiradora Robot", Descripcion = "Aspiradora robot inteligente con función de mapeo y limpieza programada", CategoriaId = 28, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 11, CodigoBarra = "963258741", CodigoProducto = "BCD789", Nombre = "Pistola de Calor", Descripcion = "Pistola de calor de 2000W para trabajos de secado y desoldado", CategoriaId = 6, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 12, CodigoBarra = "147852369", CodigoProducto = "EFG987", Nombre = "Cerradura de Seguridad", Descripcion = "Cerradura de seguridad para puertas con sistema de doble cerrojo", CategoriaId = 7, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 13, CodigoBarra = "369741852", CodigoProducto = "HIJ321", Nombre = "Tubería de PVC", Descripcion = "Tubería de PVC de 2 pulgadas, resistente a la corrosión", CategoriaId = 5, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 14, CodigoBarra = "852963741", CodigoProducto = "KLM654", Nombre = "Rodillo de Pintura", Descripcion = "Rodillo de pintura de 9 pulgadas con mango ergonómico", CategoriaId = 21, Fecha = DateTime.Now, Eliminado = false },
-            new Productos { ProductoId = 15, CodigoBarra = "963741852", CodigoProducto = "NOP789", Nombre = "Cinta de Doble Cara", Descripcion = "Cinta adhesiva de doble cara de alta resistencia, 5 metros", CategoriaId = 3, Fecha = DateTime.Now, Eliminado = false }
+            new Productos{ ProductoId = 1, CodigoBarra = "123456789",CodigoProducto = "ABC123", Nombre = "Martillo", CategoriaId = 1, Fecha = DateTime.Now, Eliminado = false},
+            new Productos{ ProductoId = 2, CodigoBarra = "987654321", CodigoProducto = "XYZ789", Nombre = "Taladro",CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false },
+            new Productos{ ProductoId = 3, CodigoBarra = "789123456", CodigoProducto = "DEF456", Nombre = "Destornillador", CategoriaId = 1, Fecha = DateTime.Now, Eliminado = false},
+            new Productos{ ProductoId = 4, CodigoBarra = "654789123", CodigoProducto = "GHI789", Nombre = "Sierra Circular",  CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false},
+            new Productos { ProductoId = 5, CodigoBarra = "246813579", CodigoProducto = "JKL321", Nombre = "Cinta Métrica",  CategoriaId = 20, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 6, CodigoBarra = "135792468", CodigoProducto = "MNO987", Nombre = "Pintura Blanca",  CategoriaId = 4, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 7, CodigoBarra = "369258147", CodigoProducto = "PQR654", Nombre = "Llave Ajustable", CategoriaId = 9, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 8, CodigoBarra = "258741369", CodigoProducto = "STU321", Nombre = "Broca para Madera",  CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 9, CodigoBarra = "987123654", CodigoProducto = "VWX987", Nombre = "Guantes de Trabajo",CategoriaId = 10, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 10, CodigoBarra = "741852963", CodigoProducto = "XYZ123", Nombre = "Aspiradora Robot", CategoriaId = 28, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 11, CodigoBarra = "963258741", CodigoProducto = "BCD789", Nombre = "Pistola de Calor" , CategoriaId = 6, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 12, CodigoBarra = "147852369", CodigoProducto = "EFG987", Nombre = "Cerradura de Seguridad",CategoriaId = 7, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 13, CodigoBarra = "369741852", CodigoProducto = "HIJ321", Nombre = "Tubería de PVC", CategoriaId = 5, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 14, CodigoBarra = "852963741", CodigoProducto = "KLM654", Nombre = "Rodillo de Pintura",  CategoriaId = 21, Fecha = DateTime.Now, Eliminado = false },
+            new Productos { ProductoId = 15, CodigoBarra = "963741852", CodigoProducto = "NOP789", Nombre = "Cinta de Doble Cara", CategoriaId = 3, Fecha = DateTime.Now, Eliminado = false }
 
         );
         modelBuilder.Entity<Clientes>().HasData(
@@ -102,41 +102,25 @@ public class Contexto : DbContext
       );
 
       modelBuilder.Entity<Proveedores>().HasData(
-        new Proveedores { ProveedorId = 1, Nombre = "ElectroSuministros S.A.", Descripcion = "Proveedor de productos eléctricos", Telefono = "555-1234", Direccion = "123 Main Street", RNC = "123456789", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 2, Nombre = "ConstruMateriales C. por A.", Descripcion = "Proveedor de materiales de construcción", Telefono = "555-5678", Direccion = "456 Oak Avenue", RNC = "987654321", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 3, Nombre = "Herramientas Profesionales SRL", Descripcion = "Proveedor de herramientas", Telefono = "555-9012", Direccion = "789 Pine Lane", RNC = "456789123", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 4, Nombre = "Productos Químicos Industriales SA", Descripcion = "Proveedor de productos químicos", Telefono = "555-3456", Direccion = "987 Elmwood Drive", RNC = "321098765", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 5, Nombre = "Suministros Industriales del Este", Descripcion = "Proveedor de suministros industriales", Telefono = "555-7890", Direccion = "543 Maple Avenue", RNC = "654321098", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 6, Nombre = "Ferretería La Construcción", Descripcion = "Proveedor de productos de ferretería", Telefono = "555-2345", Direccion = "321 Cedar Street", RNC = "876543210", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 7, Nombre = "Suministros Eléctricos García", Descripcion = "Proveedor de suministros eléctricos", Telefono = "555-6789", Direccion = "654 Oakwood Avenue", RNC = "210987654", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 8, Nombre = "Herramientas Martínez", Descripcion = "Proveedor de herramientas de mano", Telefono = "555-0123", Direccion = "987 Elm Street", RNC = "543210987", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 9, Nombre = "Materiales y Acabados Modernos", Descripcion = "Proveedor de materiales de construcción y acabados", Telefono = "555-4567", Direccion = "123 Pine Avenue", RNC = "876543219", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 10, Nombre = "Suministros Industriales del Oeste", Descripcion = "Proveedor de suministros industriales y herramientas", Telefono = "555-8901", Direccion = "543 Maple Street", RNC = "219876543", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 11, Nombre = "Ferretería González", Descripcion = "Proveedor de productos de ferretería y herramientas", Telefono = "555-1234", Direccion = "789 Oakwood Avenue", RNC = "765432109", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 12, Nombre = "Distribuidora Industrial Rodríguez", Descripcion = "Proveedor de suministros industriales y equipos", Telefono = "555-5678", Direccion = "987 Cedar Street", RNC = "109876543", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 13, Nombre = "Materiales de Construcción Hernández", Descripcion = "Proveedor de materiales de construcción y acabados", Telefono = "555-9012", Direccion = "456 Elm Street", RNC = "432109876", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 14, Nombre = "Suministros Eléctricos Sánchez", Descripcion = "Proveedor de suministros eléctricos y equipos", Telefono = "555-3456", Direccion = "210 Maple Avenue", RNC = "321098765", Fecha = DateTime.Now, Eliminado = false },
-        new Proveedores { ProveedorId = 15, Nombre = "Herramientas y Equipos Jiménez", Descripcion = "Proveedor de herramientas y equipos industriales", Telefono = "555-7890", Direccion = "654 Pine Street", RNC = "654321098", Fecha = DateTime.Now, Eliminado = false }
+        new Proveedores { ProveedorId = 1, Nombre = "ElectroSuministros S.A.", Telefono = "555-1234", Direccion = "123 Main Street", RNC = "123456789", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 2, Nombre = "ConstruMateriales C. por A.",  Telefono = "555-5678", Direccion = "456 Oak Avenue", RNC = "987654321", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 3, Nombre = "Herramientas Profesionales SRL", Telefono = "555-9012", Direccion = "789 Pine Lane", RNC = "456789123", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 4, Nombre = "Productos Químicos Industriales SA",  Telefono = "555-3456", Direccion = "987 Elmwood Drive", RNC = "321098765", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 5, Nombre = "Suministros Industriales del Este",Telefono = "555-7890", Direccion = "543 Maple Avenue", RNC = "654321098", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 6, Nombre = "Ferretería La Construcción",  Telefono = "555-2345", Direccion = "321 Cedar Street", RNC = "876543210", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 7, Nombre = "Suministros Eléctricos García", Telefono = "555-6789", Direccion = "654 Oakwood Avenue", RNC = "210987654", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 8, Nombre = "Herramientas Martínez", Telefono = "555-0123", Direccion = "987 Elm Street", RNC = "543210987", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 9, Nombre = "Materiales y Acabados Modernos", Telefono = "555-4567", Direccion = "123 Pine Avenue", RNC = "876543219", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 10, Nombre = "Suministros Industriales del Oeste", Telefono = "555-8901", Direccion = "543 Maple Street", RNC = "219876543", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 11, Nombre = "Ferretería González", Telefono = "555-1234", Direccion = "789 Oakwood Avenue", RNC = "765432109", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 12, Nombre = "Distribuidora Industrial Rodríguez",  Telefono = "555-5678", Direccion = "987 Cedar Street", RNC = "109876543", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 13, Nombre = "Materiales de Construcción Hernández",  Telefono = "555-9012", Direccion = "456 Elm Street", RNC = "432109876", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 14, Nombre = "Suministros Eléctricos Sánchez", Telefono = "555-3456", Direccion = "210 Maple Avenue", RNC = "321098765", Fecha = DateTime.Now, Eliminado = false },
+        new Proveedores { ProveedorId = 15, Nombre = "Herramientas y Equipos Jiménez",Telefono = "555-7890", Direccion = "654 Pine Street", RNC = "654321098", Fecha = DateTime.Now, Eliminado = false }
 
       );
 
-       modelBuilder.Entity<Catalogos>().HasData(
-        new Catalogos { CatalogoId = 1, Nombre = "Catálogo de Verano", Descripcion = "Productos destacados para la temporada de verano", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 2, Nombre = "Ofertas de Invierno", Descripcion = "Grandes descuentos en productos de invierno", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 3, Nombre = "Catálogo de Electrónicos", Descripcion = "Los últimos dispositivos electrónicos y gadgets", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 4, Nombre = "Promociones de Primavera", Descripcion = "Promociones especiales para la temporada de primavera", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 5, Nombre = "Catálogo de Moda", Descripcion = "Tendencias de moda para hombres y mujeres", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 6, Nombre = "Catálogo de Decoración", Descripcion = "Ideas y productos para decorar tu hogar", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 7, Nombre = "Promociones de Otoño", Descripcion = "Descuentos especiales en productos de temporada", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 8, Nombre = "Catálogo de Juguetes", Descripcion = "Los juguetes más populares para todas las edades", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 9, Nombre = "Ofertas de Black Friday", Descripcion = "Grandes descuentos en el día de Black Friday", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 10, Nombre = "Catálogo de Tecnología", Descripcion = "Los últimos avances en tecnología y electrónica", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 11, Nombre = "Catálogo de Moda Primavera-Verano", Descripcion = "Las últimas tendencias en moda para la temporada primavera-verano", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 12, Nombre = "Catálogo de Electrodomésticos", Descripcion = "Amplia selección de electrodomésticos para el hogar", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 13, Nombre = "Ofertas de Fin de Año", Descripcion = "Descuentos especiales para cerrar el año con grandes ahorros", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 14, Nombre = "Catálogo de Libros", Descripcion = "Los mejores libros para disfrutar y ampliar tu biblioteca", Fecha = DateTime.Now, Eliminado = false },
-        new Catalogos { CatalogoId = 15, Nombre = "Promociones de Verano", Descripcion = "Ofertas irresistibles para disfrutar del verano al máximo", Fecha = DateTime.Now, Eliminado = false }
-       );
+      
 
         modelBuilder.Entity<Ubicaciones>().HasData(
             new Ubicaciones { UbicacionId = 1, Pasillo = "A", Estante = "E1", Nivel = 1, Ocupado = false, Eliminado = false },

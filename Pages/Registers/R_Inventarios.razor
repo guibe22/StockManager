@@ -27,7 +27,7 @@
         <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8 " style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(173deg, #ce9051ac 0%, #fbfff1 100%);">
             <RadzenRow RowGap="7">
                
-                <RadzenColumn SizeSM="4">
+                <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
                     <RadzenDropDown TValue="int" class="w-100 zoom "  @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
@@ -39,13 +39,13 @@
               
             </RadzenRow>
             <RadzenRow RowGap="7">
-                <RadzenColumn SizeSM="4">
+                <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Concepto:</RadzenText>
                      <input class="form-control"   @bind-value="inventario.Concepto">
                     
                 </RadzenColumn>
 
-                <RadzenColumn SizeSM="4">
+                <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
                      <InputNumber class="form-control" @bind-Value="inventario.Cantidad" />
 
@@ -56,11 +56,11 @@
                 
             </RadzenRow>
             <RadzenRow RowGap="5">
-                <RadzenColumn SizeSM="4">
+                <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha Ingreso:</RadzenText>
                     <RadzenDatePicker TValue="DateTime" class="w-100 zoom "  Format="dd/MM/yyyy" @bind-Value="inventario.Fecha"/>
                 </RadzenColumn>
-                <RadzenColumn SizeSM="4">
+                <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Ubicacion:</RadzenText>
                     <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"

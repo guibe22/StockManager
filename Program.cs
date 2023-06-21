@@ -22,6 +22,10 @@ builder.Services.AddScoped<ClientesBLL>();
 builder.Services.AddScoped<InventariosBLL>();
 builder.Services.AddScoped<ProveedoresBLL>();
 builder.Services.AddScoped<UbicacionesBLL>();
+builder.Services.AddScoped<RelacionBLL>();
+
+
+
 //-------------------------------------------------------//
 
 var app = builder.Build();

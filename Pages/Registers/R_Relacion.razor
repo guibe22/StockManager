@@ -1,0 +1,133 @@
+@page "/R_Relacion"
+@page "/R_Relacion/{RelacionProductoProveedorId:int}"
+@inject RelacionBLL relacionBLL
+@inject ProveedoresBLL proveedoresBLL
+@inject ProductosBLL productosBLL
+
+<div class="d-flex justify-content-end ">
+    <div class="zoom d-flex">
+      <RadzenDropDown TValue="int" class="w-100 zoom "  @ref=@radzenDropDown 
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+            Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+            @bind-value="productoId"
+                    />
+        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" Click="Buscar" />
+    </div>
+</div>
+
+
+<RadzenStack >  
+    <RadzenCard Class="rz-my-auto rz-mx-auto bordes " style=" background-image: linear-gradient(to right, #9d8f82 , rgb(195, 105, 36)  );"> 
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
+            <RadzenLabel Text="Relacion Producto-Proveedor" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:rgb(245, 242, 242);" />
+        </RadzenStack>
+        <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8 " style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(173deg, #ce9051ac 0%, #fbfff1 100%);">
+             <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="5">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
+                     <RadzenDropDown TValue="int"  class="w-200 zoom " @ref=@radzenDropDown 
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                        Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        
+                    />
+                </RadzenColumn>
+                  <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
+                    <RadzenDropDown TValue="int"  class="w-200 zoom " @ref=@radzenDropDown 
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                        Data=@Proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        
+                    />
+                </RadzenColumn>
+            </RadzenRow>
+
+            <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
+                    <RadzenDatePicker TValue="DateTime"   class="w-100 zoom "  style="width: 190px;" @bind-Value="producto.Fecha"/>
+                </RadzenColumn>
+            </RadzenRow>
+            
+            <RadzenRow RowGap="5">
+            <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
+                    <RadzenNumeric class="w-100 zoom" @bind-Value="relacionProductoProveedor.costo"/>
+                </RadzenColumn>
+                 </RadzenRow>
+
+        </RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0">
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" OnClickHandler="Nuevo"  />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" OnClickHandler="Guardar"  />
+            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete" OnClickHandler="Eliminar" />
+        </RadzenStack>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    [Parameter]
+    public int relacionProductoProveedorId { get; set; }
+    public int productoId { get; set; }
+     public int ProveedorId { get; set; }
+    public Productos producto { get; set; } = new Productos();  
+    public Proveedores proveedores { get; set; } = new Proveedores(); 
+    public RelacionProductoProveedor relacionProductoProveedor { get; set; } = new RelacionProductoProveedor();
+    
+    List<RelacionProductoProveedor> relacionProductoProveedors = new List<RelacionProductoProveedor>();
+
+    List<Proveedores> Proveedores = new List<Proveedores>();
+    List<Productos> productos = new List<Productos>();
+
+    string? searchTextStatus;
+    RadzenDropDown<int>? radzenDropDown;
+    protected override void OnInitialized()
+    {
+        relacionProductoProveedors = relacionBLL.GetList(o=> o.Eliminado==false);
+        Proveedores = proveedoresBLL.GetList(o=> o.Eliminado==false);
+        productos = productosBLL.GetList(o=> o.Eliminado==false);
+    }
+    void searchTextChanged(string text)
+    {
+        searchTextStatus = $"Search text: {text}";
+        StateHasChanged();
+    }
+    void Guardar(){
+        if(!Validar()){return;}
+        if(relacionBLL.Guardar(relacionProductoProveedor)){
+            Nuevo();
+            relacionProductoProveedors = relacionBLL.GetList(o=> o.Eliminado==false);
+        }
+    }
+
+    void Nuevo(){
+        relacionProductoProveedor = new RelacionProductoProveedor();
+        relacionProductoProveedor.Fecha = DateTime.Now;
+        StateHasChanged();
+
+    }
+   
+      void Eliminar(){
+        if(relacionBLL.Existe(relacionProductoProveedor.RelacionProductoProveedorId)){
+           
+            if(relacionBLL.Eliminar (relacionProductoProveedor)){
+            Nuevo();
+    }
+    }
+    }
+
+    bool Validar(){
+        bool esValido = true;
+        
+        if(relacionProductoProveedor.ProductoId==0 && relacionProductoProveedor.ProveedorId==0 ){esValido = false;}
+        return esValido;
+    }
+    void Buscar(){
+        var RelacionFound = relacionBLL.Buscar(this.relacionProductoProveedorId);
+
+        if(RelacionFound!=null){
+            relacionProductoProveedor = RelacionFound;
+        }
+        Console.WriteLine(relacionProductoProveedor.RelacionProductoProveedorId);
+    }
+}
+

@@ -1,0 +1,40 @@
+@page "/C_Relacion"
+
+@inject RelacionBLL relacionBLL
+@inject ProductosBLL productosBLL
+@inject CategoriasBLL categoriasBLL
+
+<RadzenCard Class=" bordes" style="background-image: linear-gradient(90deg, #818182cc 16%, #eaa04bc0 100%);">
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0">    
+                <RadzenLabel Text="CONSULTA DE RELACION PRODUCTO-PROVEEDOR" Style="font-size: 25px; font-weight: bold; font-style: italic; margin-bottom: 10px; color:rgb(147, 112, 77); font-family: 'Times new roman', serif;" />
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
+         <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+            Data="@lista"  LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"  >
+        <Columns>
+            <RadzenDataGridColumn TItem="RelacionProductoProveedor" Title="ID" Property="RelacionProductoProveedorId"   Filterable="false"/>
+             <RadzenDataGridColumn TItem="RelacionProductoProveedor" Title="Producto" Property="ProductoId"  />
+            <RadzenDataGridColumn TItem="RelacionProductoProveedor" Title="Proveedor" Property="ProveedorId" />
+            <RadzenDataGridColumn TItem="RelacionProductoProveedor" Title="Costo" Property="costo" />
+            <RadzenDataGridColumn TItem="RelacionProductoProveedor" Title="Fecha" Property="Fecha"  FormatString="{0:d}"/>
+            <RadzenDataGridColumn TItem="RelacionProductoProveedor" Filterable="false" Width="50px"   >
+                    <Template Context="RelacionProductoProveedor">
+                        <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Relacion/{RelacionProductoProveedor.RelacionProductoProveedorId}")" />
+                    </Template>
+            </RadzenDataGridColumn>
+        </Columns> 
+        </RadzenDataGrid>  
+          
+    </RadzenStack>
+ </RadzenCard>
+
+
+@code{
+    List<RelacionProductoProveedor> lista = new List<RelacionProductoProveedor>();
+
+    protected override void OnInitialized()
+    {
+        lista = relacionBLL.GetList(o=> o.Eliminado==false);
+    }
+
+}

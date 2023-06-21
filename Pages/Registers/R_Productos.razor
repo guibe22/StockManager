@@ -2,7 +2,6 @@
 @page "/R_Productos/{ProductoId:int}"
 
 @inject CategoriasBLL categoriasBLL
-@inject ProveedoresBLL proveedoresBLL
 @inject ProductosBLL productosBLL
 
 <div class="d-flex justify-content-end ">
@@ -56,9 +55,21 @@
                     <RadzenNumeric class="w-100 zoom" @bind-Value="producto.margen"/>
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Categoria:</RadzenText>
+                    <RadzenDropDown TValue="int" class="w-100 zoom "  @ref=@radzenDropDown 
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+            Data=@categorias TextProperty="Nombre" ValueProperty="CategoriaId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+            @bind-value="@producto.CategoriaId"
+                    />
+                    
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow>
+                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
                     <RadzenDatePicker TValue="DateTime"   class="w-100 zoom "  style="width: 190px;" @bind-Value="producto.Fecha"/>
-                </RadzenColumn>
+
+                 </RadzenColumn>
             </RadzenRow>
 
         </RadzenCard>

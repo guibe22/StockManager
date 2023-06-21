@@ -23,9 +23,9 @@
         </RadzenStack>
         <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8 " style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(173deg, #ce9051ac 0%, #fbfff1 100%);">
              <RadzenRow RowGap="5">
-                <RadzenColumn SizeSM="5">
+                <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
-                     <RadzenDropDown TValue="int"  class="w-200 zoom " @ref=@radzenDropDown 
+                     <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
                         
@@ -33,7 +33,7 @@
                 </RadzenColumn>
                   <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
-                    <RadzenDropDown TValue="int"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@Proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
                         
@@ -46,12 +46,15 @@
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
                     <RadzenDatePicker TValue="DateTime"   class="w-100 zoom "  style="width: 190px;" @bind-Value="producto.Fecha"/>
                 </RadzenColumn>
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
+                    <RadzenNumeric class="w-100 zoom" @bind-Value="relacionProductoProveedor.costo"/>
+                </RadzenColumn>
             </RadzenRow>
             
             <RadzenRow RowGap="5">
             <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
-                    <RadzenNumeric class="w-100 zoom" @bind-Value="relacionProductoProveedor.costo"/>
+                    
                 </RadzenColumn>
                  </RadzenRow>
 

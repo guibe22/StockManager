@@ -54,10 +54,6 @@
                 </RadzenDataGridColumn>
                 
                 <RadzenDataGridColumn TItem="Inventarios" Property="Concepto" Title="Concepto"  Width="200px" />
-                <RadzenDataGridColumn TItem="Inventarios" Property="Cantidad" Title="Cantidad" />
-                <RadzenDataGridColumn TItem="Inventarios" Property="CantidadMinima" Title="CantidadMinima" Width="200px" />
-                <RadzenDataGridColumn TItem="Inventarios" Property="FechaIngreso" Title="FechaIngreso" />
-                <RadzenDataGridColumn TItem="Inventarios" Property="FechaActualizado" Title="FechaActualizado" />
                 <RadzenDataGridColumn TItem="Inventarios" Property="UbicacionId" Title="UbicacionId" Filterable="false" Width="300px" >
                 <Template Context="Inventario">
                         @Inventario.ProductoId  Pasillo: @(ubicacionesBLL.Buscar(Inventario.ProductoId )?.Pasillo),
@@ -65,9 +61,6 @@
                           Nivel: @(ubicacionesBLL.Buscar(Inventario.ProductoId )?.Nivel) 
                     </Template>
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="Inventarios" Property="Precio" Title="Precio" Width="200px" />
-                <RadzenDataGridColumn TItem="Inventarios" Property="Costo" Title="Costo" Width="200px" />
-                <RadzenDataGridColumn TItem="Inventarios" Property="Cantidad" Title="Cantidad" Width="200px" />
                 <RadzenDataGridColumn TItem="Inventarios" Filterable="false" Width="50px"   >
                     <Template Context="Inventario">
                         <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Inventarios/{Inventario.InventarioId}")" />
@@ -75,7 +68,7 @@
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="Inventarios" Filterable="false" Width="50px"  >
                     <Template Context="Inventario">
-                        <RadzenButton   Click="() => mostrarRadzenCard(Inventario)" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" /> />
+                        <RadzenButton   Click="() => mostrarRadzenCard(Inventario)" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" /> 
                     </Template>
                 </RadzenDataGridColumn>
             </Columns> 

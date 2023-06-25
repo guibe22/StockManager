@@ -33,6 +33,7 @@
                     </Template>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="Inventarios" Property="Cantidad" Title="Cantidad"  Width="200px" />
+
                 <RadzenDataGridColumn TItem="Inventarios" Filterable="false" Width="50px"   >
                     <Template Context="Inventario">
                         <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Inventarios/{Inventario.InventarioId}")" />

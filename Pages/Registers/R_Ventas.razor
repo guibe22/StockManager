@@ -51,13 +51,10 @@
                             @{
                                 if (context != null)
                                 {
-                                    int cantidad=0;
+                                  
                                     int ProductoId=context.ProductoId;
-                                    var inventario = inventariosBLL.GetList(x => x.ProductoId == ProductoId).FirstOrDefault();
-                                    if(inventario != null){
-                                        cantidad = inventario.Cantidad;
-                                    }
-                                    <div>@context.Nombre, Precio: @context.Precio, Cantidad: @cantidad</div>
+                                  
+                                    <div>@context.Nombre, Precio: @context.Precio, Cantidad: @inventarios.FirstOrDefault(x => x.ProductoId == ProductoId).Cantidad</div>
                                 }
                             }
                         </Template>
@@ -112,7 +109,7 @@
 
 
         </RadzenCard>
-        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0" >
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" >
             <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add"  OnClickHandler="Nuevo"  />
             <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save"  OnClickHandler="Guardar"  />
             <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete"  OnClickHandler="Eliminar" />
@@ -210,11 +207,13 @@
         venta.Total+=detalleVenta.SubTotal;
         venta.detallesVentas.Add(detalleVenta);
         detalleVenta= new DetallesVenta();
+        StateHasChanged();
     }
     void EliminarDetalle(DetallesVenta detalle){
         inventarios.FirstOrDefault(o=> o.ProductoId== detalle.ProductoId ).Cantidad+=detalle.Cantidad;
         venta.detallesVentas.Remove(detalle);
         venta.Total-=detalle.SubTotal;
+        StateHasChanged();
 
     }
 

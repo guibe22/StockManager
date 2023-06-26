@@ -3,36 +3,7 @@
 @inject ProductosBLL productosBLL
 @inject ProveedoresBLL proveedoresBLL
 @inject UbicacionesBLL ubicacionesBLL
-@if (radzenCardVisible)
-  {
-<RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-4" JustifyContent="JustifyContent.Center" style="background-image: linear-gradient(#dde4f099 0%, #cf853ba7); width: 30%; margin: 0 auto;">
-    <RadzenRow RowGap="10">
-        <RadzenColumn SizeSM="12">
-            <RadzenLabel Text="@($"CANTIDAD ACTUAL DEL INVENTARIO: {inventario.Cantidad}")" Style="font-size: 15px; font-weight: bold; font-style: italic; margin-bottom: 10px;" />
-        </RadzenColumn>
-        
-    </RadzenRow>
-    <RadzenRow RowGap="10"> 
-        <RadzenColumn SizeSM="12">
-            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad a Sumar o Restar:</RadzenText>
-            <RadzenNumeric class="w-100 zoom" @bind-Value="@Cantidad" />   
-        </RadzenColumn>  
-    </RadzenRow>
-    <RadzenRow RowGap="10">
-        <RadzenColumn SizeSM="4">
-            <RadzenButton Text="Canc." ButtonStyle="ButtonStyle.Secondary" Click="ocultarRadzenCard" ButtonSize="ButtonSize.Small" />
-        </RadzenColumn>
-        <RadzenColumn SizeSM="4">
-            <RadzenButton Text="Sumar" ButtonStyle="ButtonStyle.Primary" ButtonSize="ButtonSize.Small" Click="Sumar" />
-        </RadzenColumn>
-        <RadzenColumn SizeSM="4">
-            <RadzenButton Text="Restar" ButtonStyle="ButtonStyle.Danger" ButtonSize="ButtonSize.Small" Click="Restar" />
-        </RadzenColumn>
-    </RadzenRow>
-</RadzenCard>
 
-
-}
 
 <RadzenCard Class=" bordes" style="background-image: linear-gradient(90deg, #ced1d6cc 10%, #c1872bbf 100%);">
     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0">
@@ -61,14 +32,11 @@
                           Nivel: @(ubicacionesBLL.Buscar(Inventario.ProductoId )?.Nivel) 
                     </Template>
                 </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Inventarios" Property="Cantidad" Title="Cantidad"  Width="200px" />
+
                 <RadzenDataGridColumn TItem="Inventarios" Filterable="false" Width="50px"   >
                     <Template Context="Inventario">
                         <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Inventarios/{Inventario.InventarioId}")" />
-                    </Template>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="Inventarios" Filterable="false" Width="50px"  >
-                    <Template Context="Inventario">
-                        <RadzenButton   Click="() => mostrarRadzenCard(Inventario)" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" /> 
                     </Template>
                 </RadzenDataGridColumn>
             </Columns> 
@@ -78,7 +46,7 @@
 
 @code{
     List<Inventarios> lista = new List<Inventarios>();
-    bool radzenCardVisible = false;
+   
     public int Cantidad { get; set; }
     Inventarios inventario = new Inventarios();
     protected override void OnInitialized()
@@ -86,29 +54,8 @@
         lista = inventariosBLL.GetList(o=> o.Eliminado==false);
     }
 
-    void mostrarRadzenCard( Inventarios inv)
-    {
-        inventario = inv;
-        radzenCardVisible = true;
-    }
-    void ocultarRadzenCard()
-    {
-        radzenCardVisible = false;
-        Cantidad = 0;
-    }
-    void Sumar(){
-        inventario.Cantidad += Cantidad;
-        inventariosBLL.Guardar(inventario);
-        radzenCardVisible = false;
-        Cantidad = 0;
-        lista = inventariosBLL.GetList(o=> o.Eliminado==false);
-    }
-    void Restar(){
-        inventario.Cantidad -= Cantidad;
-        inventariosBLL.Guardar(inventario);
-        radzenCardVisible = false;
-        Cantidad = 0;
-        lista = inventariosBLL.GetList(o=> o.Eliminado==false);
-    }
-
+   
+    
+    
+   
 }

@@ -35,10 +35,12 @@
                         @bind-Value="@inventario.ProductoId"
                     />
                 </RadzenColumn>
+
                 <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Concepto:</RadzenText>
-                     <input class="form-control"   @bind-value="inventario.Concepto">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Razón:</RadzenText>
+                    <RadzenDropDown TValue="string" class="w-100 zoom" Data="@razonesInventario" AllowClear="true" @bind-Value="@inventario.Concepto"></RadzenDropDown>
                 </RadzenColumn>
+
             </RadzenRow>
             <RadzenRow RowGap="7">
 
@@ -71,6 +73,12 @@
 
              <RadzenRow RowGap="5">
             </RadzenRow>
+            <RadzenRow>
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
+                    <RadzenNumeric class="w-100 zoom" @bind-Value="inventario.Cantidad"/>
+                </RadzenColumn>
+            </RadzenRow>
 
 
         </RadzenCard>
@@ -86,7 +94,15 @@
     [Parameter]
     public int InventarioId { get; set; }
     public int prueba{ get; set; } = 7;
-  
+    
+    List<string> razonesInventario = new List<string>()
+    {
+        "Compra de nuevos productos",
+        "Venta de productos",
+        "Transferencia de productos entre ubicaciones",
+        "Actualización de inventario físico",
+    };
+
     public Inventarios inventario { get; set; } = new Inventarios();  
     List<Productos> productos = new List<Productos>();
     List<Ubicaciones> ubicaciones = new List<Ubicaciones>();
@@ -148,7 +164,7 @@
 
         if(inventario.ProductoId==0){esValido = false;}
         if(inventario.UbicacionId==0){esValido = false;}
-        if(inventario.Cantidad==0){esValido = false;}
+        
         return esValido;
     }
 

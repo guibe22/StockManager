@@ -1,10 +1,10 @@
-@page "/R_Ventas"
+@page "/R_Facturacion"
 
 
 
 <div class="d-flex justify-content-end ">
     <div class="zoom">
-        <RadzenTextBox Placeholder="Buscar Venta..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
+        <RadzenTextBox Placeholder="Buscar Facturacion..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
         <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" />
     </div>
 </div>
@@ -12,13 +12,17 @@
 <RadzenStack >  
 <RadzenCard Class="rz-my-auto rz-mx-auto bordes " style=" background-image: linear-gradient(to right, #9d8f82 , rgb(195, 105, 36)  );"> 
         <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 " >
-                        <RadzenLabel Text="REGISTRO DE VENTAS" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:white;" />
+                        <RadzenLabel Text="REGISTRO DE FACTURACION" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px; color:white;" />
         </RadzenStack>
         <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8 " style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(173deg, #ce9051ac 0%, #fbfff1 100%);">
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
                     <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;"/>
+                </RadzenColumn>
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Descripción:</RadzenText>
+                    <RadzenDropDown TValue="string" class="w-100 zoom" Data="@DescripcionUsada" AllowClear="true"></RadzenDropDown>
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="5">
@@ -30,43 +34,18 @@
                         
                     />
                 </RadzenColumn>
-                <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Tipo:</RadzenText>
-                    <RadzenDropDown TValue="string" class="w-100 zoom" Data="@Tipos" AllowClear="true"></RadzenDropDown>
-                </RadzenColumn>
             </RadzenRow>
-            <RadzenRow RowGap="1">
-                 <div style="margin-right: 50px;">
-                <RadzenColumn SizeSM="5">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                        
-                    />
-                </RadzenColumn>
-                </div>
-                <div  class=" d-flex align-items-end justify-content-end">
-                    <div style="margin-right: 15px;">
-                        <RadzenColumn SizeSM="5" >
-                            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
-                            <RadzenTextBox  class="w-150 zoom " />
-                        </RadzenColumn>
-                    </div>
-                    <RadzenColumn SizeSM="4"  >
-                        <RadzenButton Icon="add"  Style=" width: 30px;  height: 30px; font-size: 16px; zoom;" />
-                    </RadzenColumn>
-               </div>
-            </RadzenRow>
+
 
             <RadzenRow RowGap="5">
               <table class="table">
                 <thead>
                      <tr>
-                           <th>Producto</th>
-                           <th>Cantidad</th>
-                            <th>Precio</th>
-                            <th>Subtotal</th>
+                           <th>Item</th>
+                           <th>Item</th>
+                            <th>Item</th>
+                            <th>Item</th>
+                            <th>SubTotal</th>
                             <th></th>
                      </tr>
                 </thead>
@@ -94,11 +73,20 @@
 
 List<Clientes> clientes = new List<Clientes>();
 List<Productos> productos = new List<Productos>();
-    List<string> Tipos = new List<string>()
-    {
-        "Contado",
-        "Credito",
-    };
+List<string> DescripcionUsada = new List<string>()
+{
+    "Pago de servicios",
+    "Compra de productos",
+    "Reembolso de gastos",
+    "Devolución de mercancía",
+    "Cancelación de contrato",
+    "Descuento por promoción",
+    "Facturación por honorarios",
+    "Corrección de factura anterior",
+    "Facturación de abono",
+    "Otros"
+};
+
 
     string? searchTextStatus;
     RadzenDropDown<string>? radzenDropDown;

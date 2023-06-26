@@ -7,6 +7,7 @@ public class DetallesVenta
     public int ProductoId { get; set; }
     public int Cantidad { get; set; }
     public decimal SubTotal { get; set; }
+    public decimal Precio { get; set; }
     public DateTime Fecha { get; set; }
     public bool Eliminado { get; set; } = false;
 }

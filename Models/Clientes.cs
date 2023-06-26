@@ -18,7 +18,7 @@ public class Clientes
     [Required(ErrorMessage = "El cliente requiere un Cedula.")]
     public string? Cedula { get; set; }
     [Required(ErrorMessage = "Debe especificar la decha.")]
+    public double Balance { get; set; }
     public DateTime Fecha { get; set; }
-
     public bool Eliminado { get; set; } = false;
 }

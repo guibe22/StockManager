@@ -1,24 +1,18 @@
-
-
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Ventas
+public class Facturacion
 {
     [Key]
-    public int VentaId { get; set; }
+    public int FacturacionId { get; set; }
     [Required(ErrorMessage = "El Cliente es requerido")]
     [Range(1, int.MaxValue, ErrorMessage = "El Cliente es Requerido")]
     public int ClienteId { get; set; }
-
-    [Required(ErrorMessage = "Campo requerido")]
-    public String? Tipo { get; set; }
     [Required]
     public double Total { get; set; }
- 
+    [Required]
     public DateTime Fecha { get; set; }
- public bool Eliminado { get; set; } = false;
-    [ForeignKey("VentaId")]
-    public virtual List<DetallesVenta> detallesVentas { get; set; } = new List<DetallesVenta>();
-   
+    public bool Eliminado { get; set; } = false;
+    [ForeignKey("FacturacionId")]
+    public virtual List<DetalleFacturacion> detalleFacturacions { get; set; } = new List<DetalleFacturacion>();
 }

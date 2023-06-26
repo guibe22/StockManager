@@ -1,11 +1,12 @@
+
 using System.ComponentModel.DataAnnotations;
 
-public class DetallesVenta
+public class DetalleFacturacion
 {
     [Key]
-    public int DetalleVentaId { get; set; }
-    public int ProductoId { get; set; }
-    public int Cantidad { get; set; }
+    public int DetalleFacturacionId { get; set; }
+    public int FacturacionId { get; set; }
+    public string? Descripcion { get; set; }
     public double SubTotal { get; set; }
     public double Precio { get; set; }
     public DateTime Fecha { get; set; }

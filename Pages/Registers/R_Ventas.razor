@@ -31,10 +31,8 @@
                     />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Concepto:</RadzenText>
-                    @*<input type="text"  id="txtEjemplo" class="form-control" @bind-value="ventas.Concepto">*@
-
-                    <RadzenTextBox  class="w-200 zoom " />
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Tipo:</RadzenText>
+                    <RadzenDropDown TValue="string" class="w-100 zoom" Data="@Tipos" AllowClear="true"></RadzenDropDown>
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="1">
@@ -95,8 +93,13 @@
 @code {
 
 List<Clientes> clientes = new List<Clientes>();
- List<Productos> productos = new List<Productos>();
-    
+List<Productos> productos = new List<Productos>();
+    List<string> Tipos = new List<string>()
+    {
+        "Contado",
+        "Credito",
+    };
+
     string? searchTextStatus;
     RadzenDropDown<string>? radzenDropDown;
 

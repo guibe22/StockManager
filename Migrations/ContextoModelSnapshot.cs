@@ -330,6 +330,9 @@ namespace StockManager.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("Balance")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("Cedula")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -361,10 +364,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 1,
                             Apellido = "Doe",
+                            Balance = 0.0,
                             Cedula = "1234567890",
                             Direccion = "123 Main St",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4786),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4901),
                             Nombre = "John",
                             Telefono = "555-1234"
                         },
@@ -372,10 +376,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 2,
                             Apellido = "Smith",
+                            Balance = 0.0,
                             Cedula = "0987654321",
                             Direccion = "456 Elm St",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4788),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4903),
                             Nombre = "Jane",
                             Telefono = "555-5678"
                         },
@@ -383,10 +388,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 3,
                             Apellido = "Johnson",
+                            Balance = 0.0,
                             Cedula = "9876543210",
                             Direccion = "789 Oak St",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4790),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4905),
                             Nombre = "Michael",
                             Telefono = "555-9012"
                         },
@@ -394,10 +400,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 4,
                             Apellido = "Brown",
+                            Balance = 0.0,
                             Cedula = "0123456789",
                             Direccion = "321 Pine St",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4791),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4906),
                             Nombre = "Emily",
                             Telefono = "555-3456"
                         },
@@ -405,10 +412,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 5,
                             Apellido = "Miller",
+                            Balance = 0.0,
                             Cedula = "4567890123",
                             Direccion = "654 Cedar St",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4793),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4908),
                             Nombre = "David",
                             Telefono = "555-7890"
                         },
@@ -416,10 +424,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 6,
                             Apellido = "Davis",
+                            Balance = 0.0,
                             Cedula = "3210987654",
                             Direccion = "987 Maple Ave",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4794),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4909),
                             Nombre = "Sarah",
                             Telefono = "555-2345"
                         },
@@ -427,10 +436,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 7,
                             Apellido = "Wilson",
+                            Balance = 0.0,
                             Cedula = "6789012345",
                             Direccion = "654 Oakwood Dr",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4795),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4911),
                             Nombre = "Christopher",
                             Telefono = "555-6789"
                         },
@@ -438,10 +448,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 8,
                             Apellido = "Taylor",
+                            Balance = 0.0,
                             Cedula = "3456789012",
                             Direccion = "321 Elmwood Ln",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4796),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4913),
                             Nombre = "Jessica",
                             Telefono = "555-0123"
                         },
@@ -449,10 +460,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 9,
                             Apellido = "Anderson",
+                            Balance = 0.0,
                             Cedula = "8901234567",
                             Direccion = "789 Birchwood Rd",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4798),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4914),
                             Nombre = "Matthew",
                             Telefono = "555-4567"
                         },
@@ -460,10 +472,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 10,
                             Apellido = "Thompson",
+                            Balance = 0.0,
                             Cedula = "5678901234",
                             Direccion = "123 Cedarwood Ave",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4799),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4916),
                             Nombre = "Olivia",
                             Telefono = "555-8901"
                         },
@@ -471,10 +484,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 11,
                             Apellido = "Martinez",
+                            Balance = 0.0,
                             Cedula = "4321098765",
                             Direccion = "456 Pine Lane",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4800),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4917),
                             Nombre = "Daniel",
                             Telefono = "555-3456"
                         },
@@ -482,10 +496,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 12,
                             Apellido = "Garcia",
+                            Balance = 0.0,
                             Cedula = "5678901234",
                             Direccion = "789 Maple Rd",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4802),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4918),
                             Nombre = "Sophia",
                             Telefono = "555-7890"
                         },
@@ -493,10 +508,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 13,
                             Apellido = "Lopez",
+                            Balance = 0.0,
                             Cedula = "8901234567",
                             Direccion = "321 Oakwood Dr",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4803),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4920),
                             Nombre = "Ethan",
                             Telefono = "555-0123"
                         },
@@ -504,10 +520,11 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 14,
                             Apellido = "Rodriguez",
+                            Balance = 0.0,
                             Cedula = "6789012345",
                             Direccion = "654 Elmwood Ln",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4804),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4921),
                             Nombre = "Ava",
                             Telefono = "555-4567"
                         },
@@ -515,13 +532,45 @@ namespace StockManager.Migrations
                         {
                             ClienteId = 15,
                             Apellido = "Hernandez",
+                            Balance = 0.0,
                             Cedula = "3210987654",
                             Direccion = "987 Birchwood Ave",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4807),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4923),
                             Nombre = "Benjamin",
                             Telefono = "555-8901"
                         });
+                });
+
+            modelBuilder.Entity("DetalleFacturacion", b =>
+                {
+                    b.Property<int>("DetalleFacturacionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FacturacionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Precio")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("SubTotal")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("DetalleFacturacionId");
+
+                    b.HasIndex("FacturacionId");
+
+                    b.ToTable("DetalleFacturacion");
                 });
 
             modelBuilder.Entity("DetalleOrdenDeCompras", b =>
@@ -576,11 +625,14 @@ namespace StockManager.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("Precio")
+                        .HasColumnType("REAL");
+
                     b.Property<int>("ProductoId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("SubTotal")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("SubTotal")
+                        .HasColumnType("REAL");
 
                     b.Property<int?>("VentaId")
                         .HasColumnType("INTEGER");
@@ -590,6 +642,29 @@ namespace StockManager.Migrations
                     b.HasIndex("VentaId");
 
                     b.ToTable("DetallesVenta");
+                });
+
+            modelBuilder.Entity("Facturacion", b =>
+                {
+                    b.Property<int>("FacturacionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("FacturacionId");
+
+                    b.ToTable("Facturacion");
                 });
 
             modelBuilder.Entity("Inventarios", b =>
@@ -697,7 +772,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "123456789",
                             CodigoProducto = "ABC123",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4717),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4822),
                             Nombre = "Martillo",
                             Precio = 0m,
                             margen = 0m
@@ -709,7 +784,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "987654321",
                             CodigoProducto = "XYZ789",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4727),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4832),
                             Nombre = "Taladro",
                             Precio = 0m,
                             margen = 0m
@@ -721,7 +796,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "789123456",
                             CodigoProducto = "DEF456",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4729),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4834),
                             Nombre = "Destornillador",
                             Precio = 0m,
                             margen = 0m
@@ -733,7 +808,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "654789123",
                             CodigoProducto = "GHI789",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4730),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4836),
                             Nombre = "Sierra Circular",
                             Precio = 0m,
                             margen = 0m
@@ -745,7 +820,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "246813579",
                             CodigoProducto = "JKL321",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4731),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4837),
                             Nombre = "Cinta Métrica",
                             Precio = 0m,
                             margen = 0m
@@ -757,7 +832,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "135792468",
                             CodigoProducto = "MNO987",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4733),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4839),
                             Nombre = "Pintura Blanca",
                             Precio = 0m,
                             margen = 0m
@@ -769,7 +844,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "369258147",
                             CodigoProducto = "PQR654",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4734),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4840),
                             Nombre = "Llave Ajustable",
                             Precio = 0m,
                             margen = 0m
@@ -781,7 +856,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "258741369",
                             CodigoProducto = "STU321",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4736),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4842),
                             Nombre = "Broca para Madera",
                             Precio = 0m,
                             margen = 0m
@@ -793,7 +868,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "987123654",
                             CodigoProducto = "VWX987",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4763),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4843),
                             Nombre = "Guantes de Trabajo",
                             Precio = 0m,
                             margen = 0m
@@ -805,7 +880,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "741852963",
                             CodigoProducto = "XYZ123",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4765),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4845),
                             Nombre = "Aspiradora Robot",
                             Precio = 0m,
                             margen = 0m
@@ -817,7 +892,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "963258741",
                             CodigoProducto = "BCD789",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4766),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4846),
                             Nombre = "Pistola de Calor",
                             Precio = 0m,
                             margen = 0m
@@ -829,7 +904,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "147852369",
                             CodigoProducto = "EFG987",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4767),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4847),
                             Nombre = "Cerradura de Seguridad",
                             Precio = 0m,
                             margen = 0m
@@ -841,7 +916,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "369741852",
                             CodigoProducto = "HIJ321",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4769),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4848),
                             Nombre = "Tubería de PVC",
                             Precio = 0m,
                             margen = 0m
@@ -853,7 +928,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "852963741",
                             CodigoProducto = "KLM654",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4770),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4850),
                             Nombre = "Rodillo de Pintura",
                             Precio = 0m,
                             margen = 0m
@@ -865,7 +940,7 @@ namespace StockManager.Migrations
                             CodigoBarra = "963741852",
                             CodigoProducto = "NOP789",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4771),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4851),
                             Nombre = "Cinta de Doble Cara",
                             Precio = 0m,
                             margen = 0m
@@ -910,7 +985,7 @@ namespace StockManager.Migrations
                             ProveedorId = 1,
                             Direccion = "123 Main Street",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4822),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4938),
                             Nombre = "ElectroSuministros S.A.",
                             RNC = "123456789",
                             Telefono = "555-1234"
@@ -920,7 +995,7 @@ namespace StockManager.Migrations
                             ProveedorId = 2,
                             Direccion = "456 Oak Avenue",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4823),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4940),
                             Nombre = "ConstruMateriales C. por A.",
                             RNC = "987654321",
                             Telefono = "555-5678"
@@ -930,7 +1005,7 @@ namespace StockManager.Migrations
                             ProveedorId = 3,
                             Direccion = "789 Pine Lane",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4825),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4941),
                             Nombre = "Herramientas Profesionales SRL",
                             RNC = "456789123",
                             Telefono = "555-9012"
@@ -940,7 +1015,7 @@ namespace StockManager.Migrations
                             ProveedorId = 4,
                             Direccion = "987 Elmwood Drive",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4826),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4942),
                             Nombre = "Productos Químicos Industriales SA",
                             RNC = "321098765",
                             Telefono = "555-3456"
@@ -950,7 +1025,7 @@ namespace StockManager.Migrations
                             ProveedorId = 5,
                             Direccion = "543 Maple Avenue",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4827),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4944),
                             Nombre = "Suministros Industriales del Este",
                             RNC = "654321098",
                             Telefono = "555-7890"
@@ -960,7 +1035,7 @@ namespace StockManager.Migrations
                             ProveedorId = 6,
                             Direccion = "321 Cedar Street",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4828),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4945),
                             Nombre = "Ferretería La Construcción",
                             RNC = "876543210",
                             Telefono = "555-2345"
@@ -970,7 +1045,7 @@ namespace StockManager.Migrations
                             ProveedorId = 7,
                             Direccion = "654 Oakwood Avenue",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4829),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4946),
                             Nombre = "Suministros Eléctricos García",
                             RNC = "210987654",
                             Telefono = "555-6789"
@@ -980,7 +1055,7 @@ namespace StockManager.Migrations
                             ProveedorId = 8,
                             Direccion = "987 Elm Street",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4831),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4948),
                             Nombre = "Herramientas Martínez",
                             RNC = "543210987",
                             Telefono = "555-0123"
@@ -990,7 +1065,7 @@ namespace StockManager.Migrations
                             ProveedorId = 9,
                             Direccion = "123 Pine Avenue",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4832),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4949),
                             Nombre = "Materiales y Acabados Modernos",
                             RNC = "876543219",
                             Telefono = "555-4567"
@@ -1000,7 +1075,7 @@ namespace StockManager.Migrations
                             ProveedorId = 10,
                             Direccion = "543 Maple Street",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4833),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4950),
                             Nombre = "Suministros Industriales del Oeste",
                             RNC = "219876543",
                             Telefono = "555-8901"
@@ -1010,7 +1085,7 @@ namespace StockManager.Migrations
                             ProveedorId = 11,
                             Direccion = "789 Oakwood Avenue",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4834),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4951),
                             Nombre = "Ferretería González",
                             RNC = "765432109",
                             Telefono = "555-1234"
@@ -1020,7 +1095,7 @@ namespace StockManager.Migrations
                             ProveedorId = 12,
                             Direccion = "987 Cedar Street",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4835),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4953),
                             Nombre = "Distribuidora Industrial Rodríguez",
                             RNC = "109876543",
                             Telefono = "555-5678"
@@ -1030,7 +1105,7 @@ namespace StockManager.Migrations
                             ProveedorId = 13,
                             Direccion = "456 Elm Street",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4837),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4954),
                             Nombre = "Materiales de Construcción Hernández",
                             RNC = "432109876",
                             Telefono = "555-9012"
@@ -1040,7 +1115,7 @@ namespace StockManager.Migrations
                             ProveedorId = 14,
                             Direccion = "210 Maple Avenue",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4838),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4955),
                             Nombre = "Suministros Eléctricos Sánchez",
                             RNC = "321098765",
                             Telefono = "555-3456"
@@ -1050,7 +1125,7 @@ namespace StockManager.Migrations
                             ProveedorId = 15,
                             Direccion = "654 Pine Street",
                             Eliminado = false,
-                            Fecha = new DateTime(2023, 6, 18, 1, 8, 45, 530, DateTimeKind.Local).AddTicks(4839),
+                            Fecha = new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4957),
                             Nombre = "Herramientas y Equipos Jiménez",
                             RNC = "654321098",
                             Telefono = "555-7890"
@@ -1252,21 +1327,8 @@ namespace StockManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CantidadTotal")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ClienteId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Concepto")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("CostoTotal")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Detalle")
-                        .HasColumnType("TEXT");
 
                     b.Property<bool>("Eliminado")
                         .HasColumnType("INTEGER");
@@ -1274,9 +1336,25 @@ namespace StockManager.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("REAL");
+
                     b.HasKey("VentaId");
 
                     b.ToTable("Ventas");
+                });
+
+            modelBuilder.Entity("DetalleFacturacion", b =>
+                {
+                    b.HasOne("Facturacion", null)
+                        .WithMany("detalleFacturacions")
+                        .HasForeignKey("FacturacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DetalleOrdenDeCompras", b =>
@@ -1291,6 +1369,11 @@ namespace StockManager.Migrations
                     b.HasOne("Ventas", null)
                         .WithMany("detallesVentas")
                         .HasForeignKey("VentaId");
+                });
+
+            modelBuilder.Entity("Facturacion", b =>
+                {
+                    b.Navigation("detalleFacturacions");
                 });
 
             modelBuilder.Entity("OrdenDeCompras", b =>

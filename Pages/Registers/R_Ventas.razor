@@ -1,11 +1,15 @@
 @page "/R_Ventas"
-
+@page "/R_Ventas/{VentaId:int}"
+@inject ProductosBLL productosBLL
+@inject ClientesBLL clientesBLL
+@inject VentasBLL ventasBLL
+@inject InventariosBLL inventariosBLL
 
 
 <div class="d-flex justify-content-end ">
     <div class="zoom">
-        <RadzenTextBox Placeholder="Buscar Venta..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
-        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" />
+        <RadzenNumeric Placeholder="Buscar Venta..."  Style=" width: 250px;  height: 40px; font-size: 16px;" @bind-Value="VentaId" />
+        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" Click="Buscar"/>
     </div>
 </div>
 
@@ -18,45 +22,56 @@
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
-                    <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;"/>
+                    <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;" @bind-Value="venta.Fecha"/>
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6"> 
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cliente:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@clientes TextProperty="Nombre" ValueProperty="ClienteId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                        
+                        @bind-Value="@venta.ClienteId"
                     />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Tipo:</RadzenText>
-                    <RadzenDropDown TValue="string" class="w-100 zoom" Data="@Tipos" AllowClear="true"></RadzenDropDown>
+                    <RadzenDropDown TValue="string" class="w-100 zoom" Data="@Tipos" AllowClear="true" @bind-Value="venta.Tipo"></RadzenDropDown>
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="1">
-                 <div style="margin-right: 50px;">
-                <RadzenColumn SizeSM="5">
+                 
+                <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                        
-                    />
+                        Data=@productos  ValueProperty="ProductoId" AllowClear="true"
+                         SearchTextChanged="@(args => searchTextChanged(args))" @bind-Value="@detalleVenta.ProductoId">
+                        <Template>
+                            @{
+                                if (context != null)
+                                {
+                                    int cantidad=0;
+                                    int ProductoId=context.ProductoId;
+                                    var inventario = inventariosBLL.GetList(x => x.ProductoId == ProductoId).FirstOrDefault();
+                                    if(inventario != null){
+                                        cantidad = inventario.Cantidad;
+                                    }
+                                    <div>@context.Nombre, Precio: @context.Precio, Cantidad: @cantidad</div>
+                                }
+                            }
+                        </Template>
+                        </RadzenDropDown>
                 </RadzenColumn>
-                </div>
-                <div  class=" d-flex align-items-end justify-content-end">
-                    <div style="margin-right: 15px;">
-                        <RadzenColumn SizeSM="5" >
-                            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
-                            <RadzenTextBox  class="w-150 zoom " />
-                        </RadzenColumn>
+              
+                <RadzenColumn SizeSM="6" >
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3" @bind-Value="detalleVenta.Cantidad">Cantidad:</RadzenText>
+                     <div class="input-group zoom">
+                    <RadzenNumeric @bind-Value="detalleVenta.Cantidad" Style=" width: 185px;" />
+                    <RadzenButton Icon="add"  Style=" width: 30px;  height: 30px; font-size: 16px; zoom;" Click="Agregar" />
                     </div>
-                    <RadzenColumn SizeSM="4"  >
-                        <RadzenButton Icon="add"  Style=" width: 30px;  height: 30px; font-size: 16px; zoom;" />
-                    </RadzenColumn>
-               </div>
+                </RadzenColumn>
+             
             </RadzenRow>
 
             <RadzenRow RowGap="5">
@@ -71,43 +86,142 @@
                      </tr>
                 </thead>
                  <tbody>
-                  
+                    @foreach (var detalleVenta in venta.detallesVentas)
+                    { 
+                    <tr>
+                        <td>@productosBLL.Buscar(detalleVenta.ProductoId)?.Nombre</td> 
+                        <td>@detalleVenta.Cantidad</td>
+                        <td>$@detalleVenta.Precio.ToString("N2")</td>
+                        <td>$@detalleVenta.SubTotal.ToString("N2")</td>
+                        <td> <button name="Btn" id="Btn" class="btn btn-danger mr-2" type="button"
+                                 @onclick=@(() =>  EliminarDetalle(detalleVenta))> 
+                                    <span class="oi oi-trash"></span>
+                            </button>
+                        </td>
+                         </tr>
+                    }
                  </tbody>
                     
               </table>
             </RadzenRow>
              <RadzenRow RowGap="5">
-               <RadzenLabel Text="Total: 0.00$" Style=" font-size: 20px; font-weight: bold; margin-bottom: 10px;" />
+               <RadzenLabel Style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">
+                    Total: @(venta.Total.ToString("N2"))$
+                </RadzenLabel>
              </RadzenRow>
 
 
         </RadzenCard>
         <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0" >
-            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" />
-            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" />
-            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete"/>
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add"  OnClickHandler="Nuevo"  />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save"  OnClickHandler="Guardar"  />
+            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete"  OnClickHandler="Eliminar" />
         </RadzenStack>
     </RadzenCard>
 </RadzenStack>
 
 @code {
-
-List<Clientes> clientes = new List<Clientes>();
-List<Productos> productos = new List<Productos>();
-    List<string> Tipos = new List<string>()
-    {
-        "Contado",
-        "Credito",
-    };
-
+    [Parameter]
+    public int VentaId { get; set; }
+    public Ventas venta { get; set; } = new Ventas();
+    public DetallesVenta detalleVenta { get; set; } = new DetallesVenta();
+    List<Clientes> clientes = new List<Clientes>();
+    List<Productos> productos = new List<Productos>();
+    List<Inventarios> inventarios = new List<Inventarios>();
+    List<string> Tipos = new List<string>(){"Contado","Credito",};
     string? searchTextStatus;
-    RadzenDropDown<string>? radzenDropDown;
+    RadzenDropDown<int>? radzenDropDown;
+
+
 
     protected override void OnInitialized()
     {   
+        inventarios = inventariosBLL.GetList(i => i.Cantidad > 0);
+        var inventarioIds = inventarios.Select(i => i.ProductoId).ToList();
+        productos = productosBLL.GetList(p => inventarioIds.Contains(p.ProductoId));
+
+
+        clientes = clientesBLL.GetList(c=>true);
+        if(VentaId>0){
+            //Buscar();
+        }
+        else{
+            venta.Fecha = DateTime.Today;
+        }
+    }
+    void Guardar()
+    {
+        if(!Validar()){return;}
+        if(ventasBLL.Guardar(venta)){
+           
+            Nuevo();
+        }
+    }
+    bool Validar()
+    {
+        bool validacion = true;
+        if(venta.ClienteId<=0){validacion=false;}
+        if(String.IsNullOrEmpty(venta.Tipo)){validacion= false;}
+      
+        return validacion;
+    }
+     void Nuevo(){
+        venta = new Ventas();
+        detalleVenta = new DetallesVenta();
+        venta.Fecha = DateTime.Today;
+        VentaId=0;
+        inventarios = inventariosBLL.GetList(i => i.Cantidad > 0);
+        var inventarioIds = inventarios.Select(i => i.ProductoId).ToList();
+        productos = productosBLL.GetList(p => inventarioIds.Contains(p.ProductoId));
+       
+    }
+    void Eliminar()
+    {
+        if(ventasBLL.Existe(venta.VentaId))
+        {
+            ventasBLL.Eliminar(venta);
+            Nuevo();
+        } 
+    }
+    void Buscar()
+    {
+        var encontrado = ventasBLL.Buscar(VentaId);
+        if(encontrado!=null){
+            venta= encontrado;
+        }
+    }
+    void Agregar()
+    {
+        if(detalleVenta.ProductoId==0){ return;}
+        if(detalleVenta.Cantidad<=0){return;}
+        if(inventarios?.FirstOrDefault(o=> o.ProductoId== detalleVenta.ProductoId)?.Cantidad< detalleVenta.Cantidad)
+        {
+            return;
+        }
+
+        var producto= productosBLL.Buscar(detalleVenta.ProductoId);
+        if(producto!=null)
+        {
+             detalleVenta.Precio = producto.Precio;
+             detalleVenta.SubTotal = detalleVenta.Cantidad * detalleVenta.Precio;
+        }
+        inventarios.FirstOrDefault(o=> o.ProductoId== detalleVenta.ProductoId ).Cantidad-=detalleVenta.Cantidad;
+
+        venta.Total+=detalleVenta.SubTotal;
+        venta.detallesVentas.Add(detalleVenta);
+        detalleVenta= new DetallesVenta();
+    }
+    void EliminarDetalle(DetallesVenta detalle){
+        inventarios.FirstOrDefault(o=> o.ProductoId== detalle.ProductoId ).Cantidad+=detalle.Cantidad;
+        venta.detallesVentas.Remove(detalle);
+        venta.Total-=detalle.SubTotal;
+
     }
 
-     void searchTextChanged(string text)
+
+
+
+    void searchTextChanged(string text)
     {
         searchTextStatus = $"Search text: {text}";
         StateHasChanged();

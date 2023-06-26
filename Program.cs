@@ -23,6 +23,7 @@ builder.Services.AddScoped<InventariosBLL>();
 builder.Services.AddScoped<ProveedoresBLL>();
 builder.Services.AddScoped<UbicacionesBLL>();
 builder.Services.AddScoped<RelacionBLL>();
+builder.Services.AddScoped<VentasBLL>();
 
 
 

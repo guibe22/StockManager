@@ -100,7 +100,7 @@
 
     protected override void OnInitialized()
     {
-               productos =  productosBLL.GetList(o=> o.Eliminado==false);
+        productos =  productosBLL.GetList(o=> o.Eliminado==false);
 
         proveedores = proveedoresBLL.GetList(o=> o.Eliminado==false);
     }

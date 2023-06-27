@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Facturacion
+public class Facturaciones
 {
     [Key]
     public int FacturacionId { get; set; }
@@ -14,5 +14,5 @@ public class Facturacion
     public DateTime Fecha { get; set; }
     public bool Eliminado { get; set; } = false;
     [ForeignKey("FacturacionId")]
-    public virtual List<DetalleFacturacion> detalleFacturacions { get; set; } = new List<DetalleFacturacion>();
+    public virtual List<DetalleFacturacion> detalleFacturaciones { get; set; } = new List<DetalleFacturacion>();
 }

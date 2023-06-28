@@ -1,4 +1,6 @@
 @page "/C_Facturacion"
+@inject FacturacionesBLL facturacionesBLL
+@inject ClientesBLL clientesBLL
 
 <RadzenCard Class=" bordes" style="background-image: linear-gradient(90deg, #818182cc 16%, #eaa04bc0 100%);">
     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0">    
@@ -8,10 +10,19 @@
          <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
             Data="@lista"  LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"  >
         <Columns>
-            <RadzenDataGridColumn TItem="string" Title="ID"   Filterable="false"/>
-            <RadzenDataGridColumn TItem="string" Title="Cliente" />
-            <RadzenDataGridColumn TItem="string" Title="Total" />
-            <RadzenDataGridColumn TItem="string" Title="Fecha"  FormatString="{0:d}"/>
+            <RadzenDataGridColumn TItem="Facturaciones" Property="FacturacionId" Title="ID"   Filterable="false"/>
+            <RadzenDataGridColumn TItem="Facturaciones" Property="ClienteId" Title="Cliente" Filterable="false" Width="200px"   Frozen="true">
+                    <Template Context="Facturacion">
+                        @Facturacion.ClienteId @(clientesBLL.Buscar(Facturacion.ClienteId)?.Nombre) 
+                    </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Facturaciones" Property="Total" Title="Total" FormatString="{0:c}"/>
+            <RadzenDataGridColumn TItem="Facturaciones" Property="Fecha" Title="Fecha"  FormatString="{0:d}"/>
+            <RadzenDataGridColumn TItem="Facturaciones" Filterable="false" Width="50px"   >
+                    <Template Context="Facturacion">
+                        <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Facturacion/{Facturacion.FacturacionId}")" />
+                    </Template>
+            </RadzenDataGridColumn>
         </Columns> 
         </RadzenDataGrid>  
           
@@ -22,5 +33,10 @@
 
 
 @code{
-    List<String> lista = new List<String>();
+    List<Facturaciones> lista = new List<Facturaciones>();
+
+    protected override void OnInitialized()
+    {
+        lista = facturacionesBLL.GetList(f => f.Eliminado==false);
+    }
 }

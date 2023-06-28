@@ -169,7 +169,7 @@ public class VentasBLL
 
     public Ventas? Buscar(int VentaId){
      return _Contexto.Ventas
-           .Where(o => o.VentaId== VentaId)
+           .Where(o => o.VentaId== VentaId && o.Eliminado == false)
            .Include(o =>  o.detallesVentas)
            .AsNoTracking()
            .SingleOrDefault();

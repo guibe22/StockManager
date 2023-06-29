@@ -179,4 +179,6 @@ public class VentasBLL
         return _Contexto.Ventas.AsNoTracking().Where(criterio).Include(o =>  o.detallesVentas).ToList();
    }
 
+  
+
 }

@@ -169,7 +169,7 @@ public class VentasBLL
 
     public Ventas? Buscar(int VentaId){
      return _Contexto.Ventas
-           .Where(o => o.VentaId== VentaId)
+           .Where(o => o.VentaId== VentaId && o.Eliminado == false)
            .Include(o =>  o.detallesVentas)
            .AsNoTracking()
            .SingleOrDefault();
@@ -178,5 +178,7 @@ public class VentasBLL
    public List<Ventas> GetList(Expression<Func<Ventas,bool>>criterio){
         return _Contexto.Ventas.AsNoTracking().Where(criterio).Include(o =>  o.detallesVentas).ToList();
    }
+
+  
 
 }

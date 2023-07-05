@@ -1,11 +1,15 @@
 @page "/R_Facturacion"
+@page "/R_Facturacion/{FacturacionId:int}"
+@inject ClientesBLL clientesBLL
+@inject FacturacionesBLL facturacionesBLL
+
 
 
 
 <div class="d-flex justify-content-end ">
     <div class="zoom">
-        <RadzenTextBox Placeholder="Buscar Facturacion..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
-        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" />
+        <RadzenNumeric Placeholder="Buscar Facturacion..."  Style=" width: 250px;  height: 40px; font-size: 16px;" @bind-Value="FacturacionId"/>
+        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" Click="Buscar" />
     </div>
 </div>
 
@@ -18,45 +22,48 @@
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
-                    <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;"/>
+                    <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;" @bind-Value="facturacion.Fecha"/>
                 </RadzenColumn>
-                <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Descripción:</RadzenText>
-                    <RadzenDropDown TValue="string" class="w-100 zoom" Data="@DescripcionUsada" AllowClear="true"></RadzenDropDown>
-                </RadzenColumn>
+               
             </RadzenRow>
-            <RadzenRow RowGap="5">
-                <RadzenColumn SizeSM="6"> 
+            
+             <RadzenRow>
+                   <RadzenColumn SizeSM="6"> 
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cliente:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown1 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@clientes TextProperty="Nombre" ValueProperty="ClienteId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                        
+                        @bind-Value="facturacion.ClienteId" 
                     />
                 </RadzenColumn>
-                <div  class=" d-flex align-items-end justify-content-end">
-                    
-                        <RadzenColumn SizeSM="5" >
-                            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
-                            <RadzenTextBox  class="w-150 zoom " />
-                        </RadzenColumn>
-                    
-                    <RadzenColumn SizeSM="4"  >
-                        <RadzenButton Icon="add"  Style=" width: 30px;  height: 30px; font-size: 8px; zoom;" />
-                    </RadzenColumn>
-               </div>
-            </RadzenRow>
-
-             <RadzenRow>
-                <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
-                    <RadzenTextBox  class="w-150 zoom " />
+                
+                 <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Descripción:</RadzenText>
+                    <RadzenDropDown TValue="string" class="w-100 zoom" Data="@DescripcionUsada" AllowClear="true"
+                    @bind-Value="@detalleFacturacion.Descripcion"
+                    ></RadzenDropDown>
                 </RadzenColumn>
              </RadzenRow>
+            <RadzenRow RowGap="5">
+                <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Precio:</RadzenText>
+                    <RadzenNumeric  class="w-100 zoom " @bind-Value="detalleFacturacion.Precio" />
+                </RadzenColumn>
+                  
+                <RadzenColumn SizeSM="6" >
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3" >Cantidad:</RadzenText>
+                     <div class="input-group zoom">
+                    <RadzenNumeric @bind-Value="detalleFacturacion.Cantidad" Style=" width: 185px;" />
+                    <RadzenButton Icon="add"  Style=" width: 30px;  height: 30px; font-size: 16px; zoom;" Click="Agregar" />
+                    </div>
+                </RadzenColumn>
+            </RadzenRow>
+
             <RadzenRow RowGap="5">
               <table class="table">
                 <thead>
                      <tr>
+                            <th>Descripción</th>
                             <th>Cantidad</th>
                             <th>Precio</th>
                             <th>SubTotal</th>
@@ -64,29 +71,49 @@
                      </tr>
                 </thead>
                  <tbody>
+                    @foreach (var detalle in facturacion.detalleFacturaciones)
+                    { 
+                    <tr>
+                        <td>@detalle.Descripcion</td> 
+                        <td>@detalle.Cantidad</td>
+                        <td>$@detalle.Precio.ToString("N2")</td>
+                        <td>$@detalle.SubTotal.ToString("N2")</td>
+                        <td> <button name="Btn" id="Btn" class="btn btn-danger mr-2" type="button"
+                                 @onclick=@(() =>  EliminarDetalle(detalle))> 
+                                    <span class="oi oi-trash"></span>
+                            </button>
+                        </td>
+                         </tr>
+                    }
                   
                  </tbody>
                     
               </table>
             </RadzenRow>
              <RadzenRow RowGap="5">
-               <RadzenLabel Text="Total: 0.00$" Style=" font-size: 20px; font-weight: bold; margin-bottom: 10px;" />
+               <RadzenLabel Style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">
+                    Total: @(facturacion.Total.ToString("N2"))$
+                </RadzenLabel>
              </RadzenRow>
 
 
         </RadzenCard>
         <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0" >
-            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" />
-            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" />
-            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete"/>
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" OnClickHandler="Nuevo" />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" OnClickHandler="Guardar"/>
+            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete" OnClickHandler="Eliminar"/>
         </RadzenStack>
     </RadzenCard>
 </RadzenStack>
 
 @code {
 
+[Parameter]
+public int FacturacionId { get; set; }
+public Facturaciones facturacion { get; set; } = new Facturaciones();
+public DetalleFacturacion detalleFacturacion { get; set; }= new DetalleFacturacion();
 List<Clientes> clientes = new List<Clientes>();
-List<Productos> productos = new List<Productos>();
+
 List<string> DescripcionUsada = new List<string>()
 {
     "Pago de servicios",
@@ -104,11 +131,76 @@ List<string> DescripcionUsada = new List<string>()
 
     string? searchTextStatus;
     RadzenDropDown<string>? radzenDropDown;
+     RadzenDropDown<int>? radzenDropDown1;
+        
 
     protected override void OnInitialized()
     {   
+        clientes = clientesBLL.GetList(c => c.Eliminado == false);
+        if(FacturacionId != 0)
+        {
+            facturacion = facturacionesBLL.Buscar(FacturacionId);
+        }
+        else
+        {
+            facturacion.Fecha = DateTime.Now;
+        }
+       
     }
+     void Guardar()
+    {
+        if(!Validar()){return;}
+        if(facturacionesBLL.Guardar(facturacion)){
+            Nuevo();
+        }
+    }
+     bool Validar()
+    {
+        bool validacion = true;
+        if(facturacion.ClienteId<=0){validacion=false;}
+      
+        return validacion;
+    }
+     void Nuevo(){
+        facturacion = new Facturaciones();
+        detalleFacturacion = new DetalleFacturacion();
+        facturacion.Fecha = DateTime.Today;
+        FacturacionId=0;
+    }
+    void Eliminar()
+    {
+        if(facturacionesBLL.Existe(facturacion.FacturacionId))
+        {
+            facturacionesBLL.Eliminar(facturacion);
+            Nuevo();
+        } 
+    }
+    void Buscar()
+    {
+        var encontrado = facturacionesBLL.Buscar(FacturacionId);
+        if(encontrado!=null){
+            facturacion= encontrado;
+        }
+    }
+    void Agregar()
+    {
+        if(detalleFacturacion.Cantidad<=0){return;}
+        if(detalleFacturacion.Precio<=0){return;}
+        if(String.IsNullOrEmpty(detalleFacturacion.Descripcion)){return;}
+        detalleFacturacion.SubTotal = detalleFacturacion.Cantidad * detalleFacturacion.Precio;
+        facturacion.detalleFacturaciones.Add(detalleFacturacion);
+        facturacion.Total += detalleFacturacion.SubTotal;
 
+        detalleFacturacion = new DetalleFacturacion();
+
+        StateHasChanged();
+    }
+    void EliminarDetalle(DetalleFacturacion detalle)
+    {
+        facturacion.detalleFacturaciones.Remove(detalle);
+        facturacion.Total -= detalle.SubTotal;
+        StateHasChanged();
+    }
      void searchTextChanged(string text)
     {
         searchTextStatus = $"Search text: {text}";

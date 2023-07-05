@@ -1,6 +1,6 @@
 @page "/C_Ventas"
 @inject VentasBLL ventasBLL
-
+@inject ClientesBLL clientesBLL
 
 <RadzenCard Class=" bordes" style="background-image: linear-gradient(90deg, #818182cc 16%, #eaa04bc0 100%);">
     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0">    
@@ -10,15 +10,20 @@
          <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
             Data="@lista"  LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"  >
         <Columns>
-            <RadzenDataGridColumn TItem="string" Title="ID"   Filterable="false"/>
-            <RadzenDataGridColumn TItem="string" Title="Cliente" />
-            <RadzenDataGridColumn TItem="string" Title="Tipo" />    
-            <RadzenDataGridColumn TItem="string" Title="Producto" />
-            <RadzenDataGridColumn TItem="string" Title="Cantidad" />
-            <RadzenDataGridColumn TItem="string" Title="Fecha"  FormatString="{0:d}"/>
-              <Template Context="venta">
-                       @*<RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Ventas/{Ventas.}")" />*@
+            <RadzenDataGridColumn TItem="Ventas" Property="VentaId" Title="ID"   Filterable="false"/>
+            <RadzenDataGridColumn TItem="Ventas" Property="ClienteId" Title="Cliente" Filterable="false" Width="200px"   Frozen="true">
+                    <Template Context="Venta">
+                        @Venta.ClienteId @(clientesBLL.Buscar(Venta.ClienteId)?.Nombre) 
                     </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Ventas" Property="Total" Title="Total" />
+            <RadzenDataGridColumn TItem="Ventas" Property="Tipo" Title="Tipo" />
+            <RadzenDataGridColumn TItem="Ventas" Property="Fecha" Title="Fecha"  FormatString="{0:d}"/>
+             <RadzenDataGridColumn TItem="Ventas" Filterable="false" Width="50px"   >
+                    <Template Context="Venta">
+                        <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Ventas/{Venta.VentaId}")" />
+                    </Template>
+            </RadzenDataGridColumn>
         </Columns> 
         </RadzenDataGrid>  
           
@@ -30,10 +35,13 @@
 
 @code{
     List<Ventas> lista = new List<Ventas>();
-
     protected override void OnInitialized()
     {
-        lista = ventasBLL.GetList(o=> o.Eliminado==false);
+        lista = ventasBLL.GetList(v=> v.Eliminado == false);
+        foreach (var item in lista)
+        {
+           
+           Console.WriteLine(item.Tipo);
+        }
     }
-
 }

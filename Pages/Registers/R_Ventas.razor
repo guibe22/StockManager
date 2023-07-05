@@ -62,7 +62,7 @@
                 </RadzenColumn>
               
                 <RadzenColumn SizeSM="6" >
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3" @bind-Value="detalleVenta.Cantidad">Cantidad:</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3" >Cantidad:</RadzenText>
                      <div class="input-group zoom">
                     <RadzenNumeric @bind-Value="detalleVenta.Cantidad" Style=" width: 185px;" />
                     <RadzenButton Icon="add"  Style=" width: 30px;  height: 30px; font-size: 16px; zoom;" Click="Agregar" />
@@ -128,6 +128,7 @@
     List<string> Tipos = new List<string>(){"Contado","Credito",};
     string? searchTextStatus;
     RadzenDropDown<int>? radzenDropDown;
+    PdfGenerator pdfGenerator = new PdfGenerator();
 
 
 
@@ -140,7 +141,7 @@
 
         clientes = clientesBLL.GetList(c=>true);
         if(VentaId>0){
-            //Buscar();
+            Buscar();
         }
         else{
             venta.Fecha = DateTime.Today;
@@ -150,6 +151,7 @@
     {
         if(!Validar()){return;}
         if(ventasBLL.Guardar(venta)){
+           // pdfGenerator.GeneratePdf(venta, "C:\\Users\\galve\\OneDrive\\TAREAS\\PROYECTO APLICADO\\venta.pdf");
            
             Nuevo();
         }

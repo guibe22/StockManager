@@ -132,6 +132,7 @@ public class VentasBLL
         {
             return this.Modificar(venta);
         }
+        
     }
 
     public bool Eliminar(Ventas venta)

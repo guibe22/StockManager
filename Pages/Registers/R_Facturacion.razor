@@ -2,7 +2,7 @@
 @page "/R_Facturacion/{FacturacionId:int}"
 @inject ClientesBLL clientesBLL
 @inject FacturacionesBLL facturacionesBLL
-
+@inject NotificationService notificationService
 
 
 
@@ -107,37 +107,34 @@
 </RadzenStack>
 
 @code {
+    [Parameter]
+    public int FacturacionId { get; set; }
+    public Facturaciones facturacion { get; set; } = new Facturaciones();
+    public DetalleFacturacion detalleFacturacion { get; set; } = new DetalleFacturacion();
+    List<Clientes> clientes = new List<Clientes>();
 
-[Parameter]
-public int FacturacionId { get; set; }
-public Facturaciones facturacion { get; set; } = new Facturaciones();
-public DetalleFacturacion detalleFacturacion { get; set; }= new DetalleFacturacion();
-List<Clientes> clientes = new List<Clientes>();
-
-List<string> DescripcionUsada = new List<string>()
-{
-    "Pago de servicios",
-    "Compra de productos",
-    "Reembolso de gastos",
-    "Devolución de mercancía",
-    "Cancelación de contrato",
-    "Descuento por promoción",
-    "Facturación por honorarios",
-    "Corrección de factura anterior",
-    "Facturación de abono",
-    "Otros"
-};
-
+    List<string> DescripcionUsada = new List<string>()
+    {
+        "Pago de servicios",
+        "Compra de productos",
+        "Reembolso de gastos",
+        "Devolución de mercancía",
+        "Cancelación de contrato",
+        "Descuento por promoción",
+        "Facturación por honorarios",
+        "Corrección de factura anterior",
+        "Facturación de abono",
+        "Otros"
+    };
 
     string? searchTextStatus;
     RadzenDropDown<string>? radzenDropDown;
-     RadzenDropDown<int>? radzenDropDown1;
-        
+    RadzenDropDown<int>? radzenDropDown1;
 
     protected override void OnInitialized()
-    {   
+    {
         clientes = clientesBLL.GetList(c => c.Eliminado == false);
-        if(FacturacionId != 0)
+        if (FacturacionId != 0)
         {
             facturacion = facturacionesBLL.Buscar(FacturacionId);
         }
@@ -145,48 +142,118 @@ List<string> DescripcionUsada = new List<string>()
         {
             facturacion.Fecha = DateTime.Now;
         }
-       
     }
-     void Guardar()
+
+    void Guardar()
     {
-        if(!Validar()){return;}
-        if(facturacionesBLL.Guardar(facturacion)){
+        if (!Validar())
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error de validación",
+                Detail = "Por favor, asegúrate de seleccionar un cliente válido."
+            });
+
+            return;
+        }
+
+        if (facturacionesBLL.Guardar(facturacion))
+        {
             Nuevo();
+
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
+        }
+        else
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al guardar",
+                Detail = "No se pudo guardar la facturación. Por favor, intenta nuevamente."
+            });
         }
     }
-     bool Validar()
+
+    bool Validar()
     {
         bool validacion = true;
-        if(facturacion.ClienteId<=0){validacion=false;}
-      
+        if (facturacion.ClienteId <= 0)
+        {
+            validacion = false;
+        }
+
         return validacion;
     }
-     void Nuevo(){
+
+    void Nuevo()
+    {
         facturacion = new Facturaciones();
         detalleFacturacion = new DetalleFacturacion();
         facturacion.Fecha = DateTime.Today;
-        FacturacionId=0;
+        FacturacionId = 0;
     }
+
     void Eliminar()
     {
-        if(facturacionesBLL.Existe(facturacion.FacturacionId))
+        if (facturacionesBLL.Existe(facturacion.FacturacionId))
         {
             facturacionesBLL.Eliminar(facturacion);
             Nuevo();
-        } 
+
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Eliminado correctamente"
+            });
+        }
+        else
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al eliminar",
+                Detail = "No se pudo eliminar la facturación. Por favor, intenta nuevamente."
+            });
+        }
     }
+
     void Buscar()
     {
         var encontrado = facturacionesBLL.Buscar(FacturacionId);
-        if(encontrado!=null){
-            facturacion= encontrado;
+        if (encontrado != null)
+        {
+            facturacion = encontrado;
+        }
+        else
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error de búsqueda",
+                Detail = "La facturación no se encontró."
+            });
         }
     }
+
     void Agregar()
     {
-        if(detalleFacturacion.Cantidad<=0){return;}
-        if(detalleFacturacion.Precio<=0){return;}
-        if(String.IsNullOrEmpty(detalleFacturacion.Descripcion)){return;}
+        if (detalleFacturacion.Cantidad <= 0)
+        {
+            return;
+        }
+        if (detalleFacturacion.Precio <= 0)
+        {
+            return;
+        }
+        if (String.IsNullOrEmpty(detalleFacturacion.Descripcion))
+        {
+            return;
+        }
         detalleFacturacion.SubTotal = detalleFacturacion.Cantidad * detalleFacturacion.Precio;
         facturacion.detalleFacturaciones.Add(detalleFacturacion);
         facturacion.Total += detalleFacturacion.SubTotal;
@@ -195,19 +262,23 @@ List<string> DescripcionUsada = new List<string>()
 
         StateHasChanged();
     }
+
     void EliminarDetalle(DetalleFacturacion detalle)
     {
         facturacion.detalleFacturaciones.Remove(detalle);
         facturacion.Total -= detalle.SubTotal;
         StateHasChanged();
     }
-     void searchTextChanged(string text)
+
+    void searchTextChanged(string text)
     {
         searchTextStatus = $"Search text: {text}";
         StateHasChanged();
     }
 
-
-  
+    void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+    }
 }
 

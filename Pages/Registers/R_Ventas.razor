@@ -4,6 +4,7 @@
 @inject ClientesBLL clientesBLL
 @inject VentasBLL ventasBLL
 @inject InventariosBLL inventariosBLL
+@inject NotificationService notificationService
 
 
 <div class="d-flex justify-content-end ">
@@ -117,7 +118,8 @@
     </RadzenCard>
 </RadzenStack>
 
-@code {
+
+   @code {
     [Parameter]
     public int VentaId { get; set; }
     public Ventas venta { get; set; } = new Ventas();
@@ -130,97 +132,161 @@
     RadzenDropDown<int>? radzenDropDown;
     PdfGenerator pdfGenerator = new PdfGenerator();
 
-
-
     protected override void OnInitialized()
     {   
         inventarios = inventariosBLL.GetList(i => i.Cantidad > 0);
         var inventarioIds = inventarios.Select(i => i.ProductoId).ToList();
         productos = productosBLL.GetList(p => inventarioIds.Contains(p.ProductoId));
 
-
-        clientes = clientesBLL.GetList(c=>true);
-        if(VentaId>0){
+        clientes = clientesBLL.GetList(c => true);
+        if (VentaId > 0)
+        {
             Buscar();
         }
-        else{
+        else
+        {
             venta.Fecha = DateTime.Today;
         }
     }
+
     void Guardar()
     {
-        if(!Validar()){return;}
-        if(ventasBLL.Guardar(venta)){
-           // pdfGenerator.GeneratePdf(venta, "C:\\Users\\galve\\OneDrive\\TAREAS\\PROYECTO APLICADO\\venta.pdf");
-           
-            Nuevo();
-        }
-    }
-    bool Validar()
-    {
-        bool validacion = true;
-        if(venta.ClienteId<=0){validacion=false;}
-        if(String.IsNullOrEmpty(venta.Tipo)){validacion= false;}
-      
-        return validacion;
-    }
-     void Nuevo(){
-        venta = new Ventas();
-        detalleVenta = new DetallesVenta();
-        venta.Fecha = DateTime.Today;
-        VentaId=0;
-        inventarios = inventariosBLL.GetList(i => i.Cantidad > 0);
-        var inventarioIds = inventarios.Select(i => i.ProductoId).ToList();
-        productos = productosBLL.GetList(p => inventarioIds.Contains(p.ProductoId));
-       
-    }
-    void Eliminar()
-    {
-        if(ventasBLL.Existe(venta.VentaId))
+        if (!Validar())
         {
-            ventasBLL.Eliminar(venta);
-            Nuevo();
-        } 
-    }
-    void Buscar()
-    {
-        var encontrado = ventasBLL.Buscar(VentaId);
-        if(encontrado!=null){
-            venta= encontrado;
-        }
-    }
-    void Agregar()
-    {
-        if(detalleVenta.ProductoId==0){ return;}
-        if(detalleVenta.Cantidad<=0){return;}
-        if(inventarios?.FirstOrDefault(o=> o.ProductoId== detalleVenta.ProductoId)?.Cantidad< detalleVenta.Cantidad)
-        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error de validación",
+                Detail = "Por favor, asegúrate de seleccionar un cliente y un tipo de venta válidos."
+            });
+
             return;
         }
 
-        var producto= productosBLL.Buscar(detalleVenta.ProductoId);
-        if(producto!=null)
+        if (ventasBLL.Guardar(venta))
         {
-             detalleVenta.Precio = producto.Precio;
-             detalleVenta.SubTotal = detalleVenta.Cantidad * detalleVenta.Precio;
+            Nuevo();
+
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
         }
-        inventarios.FirstOrDefault(o=> o.ProductoId== detalleVenta.ProductoId ).Cantidad-=detalleVenta.Cantidad;
+        else
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al guardar",
+                Detail = "No se pudo guardar la venta. Por favor, intenta nuevamente."
+            });
+        }
+    }
 
-        venta.Total+=detalleVenta.SubTotal;
+    bool Validar()
+    {
+        bool validacion = true;
+        if (venta.ClienteId <= 0)
+        {
+            validacion = false;
+        }
+        if (String.IsNullOrEmpty(venta.Tipo))
+        {
+            validacion = false;
+        }
+
+        return validacion;
+    }
+
+    void Nuevo()
+    {
+        venta = new Ventas();
+        detalleVenta = new DetallesVenta();
+        venta.Fecha = DateTime.Today;
+        VentaId = 0;
+        inventarios = inventariosBLL.GetList(i => i.Cantidad > 0);
+        var inventarioIds = inventarios.Select(i => i.ProductoId).ToList();
+        productos = productosBLL.GetList(p => inventarioIds.Contains(p.ProductoId));
+    }
+
+    void Eliminar()
+    {
+        if (ventasBLL.Existe(venta.VentaId))
+        {
+            ventasBLL.Eliminar(venta);
+            Nuevo();
+        }
+        else
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error de existencia",
+                Detail = "La venta seleccionada no existe."
+            });
+        }
+    }
+
+    void Buscar()
+    {
+        var encontrado = ventasBLL.Buscar(VentaId);
+        if (encontrado != null)
+        {
+            venta = encontrado;
+        }
+    }
+
+    void Agregar()
+    {
+        if (detalleVenta.ProductoId == 0)
+        {
+            return;
+        }
+        if (detalleVenta.Cantidad <= 0)
+        {
+            return;
+        }
+        if (inventarios?.FirstOrDefault(o => o.ProductoId == detalleVenta.ProductoId)?.Cantidad < detalleVenta.Cantidad)
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error de inventario",
+                Detail = "No hay suficiente inventario para agregar la cantidad especificada."
+            });
+
+            return;
+        }
+
+        var producto = productosBLL.Buscar(detalleVenta.ProductoId);
+        if (producto != null)
+        {
+            detalleVenta.Precio = producto.Precio;
+            detalleVenta.SubTotal = detalleVenta.Cantidad * detalleVenta.Precio;
+        }
+        inventarios.FirstOrDefault(o => o.ProductoId == detalleVenta.ProductoId).Cantidad -= detalleVenta.Cantidad;
+
+        venta.Total += detalleVenta.SubTotal;
         venta.detallesVentas.Add(detalleVenta);
-        detalleVenta= new DetallesVenta();
+        detalleVenta = new DetallesVenta();
         StateHasChanged();
     }
-    void EliminarDetalle(DetallesVenta detalle){
-        inventarios.FirstOrDefault(o=> o.ProductoId== detalle.ProductoId ).Cantidad+=detalle.Cantidad;
-        venta.detallesVentas.Remove(detalle);
-        venta.Total-=detalle.SubTotal;
-        StateHasChanged();
 
-    }
+   void EliminarDetalle(DetallesVenta detalle)
+{
+    inventarios.FirstOrDefault(o => o.ProductoId == detalle.ProductoId).Cantidad += detalle.Cantidad;
+    venta.detallesVentas.Remove(detalle);
+    venta.Total -= detalle.SubTotal;
+    StateHasChanged();
 
-
-
+    ShowNotification(new NotificationMessage
+    {
+        Severity = NotificationSeverity.Success,
+        Summary = "Detalle eliminado",
+        Detail = "El detalle se eliminó correctamente."
+    });
+}
 
     void searchTextChanged(string text)
     {
@@ -228,7 +294,8 @@
         StateHasChanged();
     }
 
-
-  
+    void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+    }
 }
-

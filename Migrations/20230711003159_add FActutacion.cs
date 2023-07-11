@@ -49,7 +49,7 @@ namespace StockManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Facturacion",
+                name: "Facturaciones",
                 columns: table => new
                 {
                     FacturacionId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -61,7 +61,7 @@ namespace StockManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Facturacion", x => x.FacturacionId);
+                    table.PrimaryKey("PK_Facturaciones", x => x.FacturacionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,12 +88,12 @@ namespace StockManager.Migrations
                 {
                     OrdenDeCompraId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Consepto = table.Column<string>(type: "TEXT", nullable: true),
+                    Concepto = table.Column<string>(type: "TEXT", nullable: true),
                     CantidadTotal = table.Column<int>(type: "INTEGER", nullable: true),
                     CostoTotal = table.Column<decimal>(type: "TEXT", nullable: true),
                     Detalle = table.Column<string>(type: "TEXT", nullable: true),
                     Eliminado = table.Column<bool>(type: "INTEGER", nullable: false),
-                    status = table.Column<bool>(type: "INTEGER", nullable: false)
+                    filtrado = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,10 +109,10 @@ namespace StockManager.Migrations
                     CodigoBarra = table.Column<string>(type: "TEXT", nullable: true),
                     CodigoProducto = table.Column<string>(type: "TEXT", nullable: true),
                     Nombre = table.Column<string>(type: "TEXT", nullable: false),
-                    Precio = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Precio = table.Column<double>(type: "REAL", nullable: false),
                     Descripcion = table.Column<string>(type: "TEXT", nullable: true),
                     CategoriaId = table.Column<int>(type: "INTEGER", nullable: false),
-                    margen = table.Column<decimal>(type: "TEXT", nullable: false),
+                    margen = table.Column<double>(type: "REAL", nullable: false),
                     Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Eliminado = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
@@ -198,6 +198,7 @@ namespace StockManager.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     FacturacionId = table.Column<int>(type: "INTEGER", nullable: false),
                     Descripcion = table.Column<string>(type: "TEXT", nullable: true),
+                    Cantidad = table.Column<double>(type: "REAL", nullable: false),
                     SubTotal = table.Column<double>(type: "REAL", nullable: false),
                     Precio = table.Column<double>(type: "REAL", nullable: false),
                     Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -207,9 +208,9 @@ namespace StockManager.Migrations
                 {
                     table.PrimaryKey("PK_DetalleFacturacion", x => x.DetalleFacturacionId);
                     table.ForeignKey(
-                        name: "FK_DetalleFacturacion_Facturacion_FacturacionId",
+                        name: "FK_DetalleFacturacion_Facturaciones_FacturacionId",
                         column: x => x.FacturacionId,
-                        principalTable: "Facturacion",
+                        principalTable: "Facturaciones",
                         principalColumn: "FacturacionId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -224,7 +225,9 @@ namespace StockManager.Migrations
                     ProductoId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProveedorId = table.Column<int>(type: "INTEGER", nullable: false),
                     Cantidad = table.Column<int>(type: "INTEGER", nullable: false),
+                    Costo = table.Column<decimal>(type: "TEXT", nullable: false),
                     CostoTotal = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Aprobado = table.Column<bool>(type: "INTEGER", nullable: false),
                     Eliminado = table.Column<bool>(type: "INTEGER", nullable: false),
                     Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
                     OrdenDeComprasOrdenDeCompraId = table.Column<int>(type: "INTEGER", nullable: true)
@@ -245,13 +248,13 @@ namespace StockManager.Migrations
                 {
                     DetalleVentaId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    VentaId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductoId = table.Column<int>(type: "INTEGER", nullable: false),
                     Cantidad = table.Column<int>(type: "INTEGER", nullable: false),
                     SubTotal = table.Column<double>(type: "REAL", nullable: false),
                     Precio = table.Column<double>(type: "REAL", nullable: false),
                     Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Eliminado = table.Column<bool>(type: "INTEGER", nullable: false),
-                    VentaId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Eliminado = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -260,7 +263,8 @@ namespace StockManager.Migrations
                         name: "FK_DetallesVenta_Ventas_VentaId",
                         column: x => x.VentaId,
                         principalTable: "Ventas",
-                        principalColumn: "VentaId");
+                        principalColumn: "VentaId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -315,21 +319,21 @@ namespace StockManager.Migrations
                 columns: new[] { "ClienteId", "Apellido", "Balance", "Cedula", "Direccion", "Eliminado", "Fecha", "Nombre", "Telefono" },
                 values: new object[,]
                 {
-                    { 1, "Doe", 0.0, "1234567890", "123 Main St", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4901), "John", "555-1234" },
-                    { 2, "Smith", 0.0, "0987654321", "456 Elm St", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4903), "Jane", "555-5678" },
-                    { 3, "Johnson", 0.0, "9876543210", "789 Oak St", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4905), "Michael", "555-9012" },
-                    { 4, "Brown", 0.0, "0123456789", "321 Pine St", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4906), "Emily", "555-3456" },
-                    { 5, "Miller", 0.0, "4567890123", "654 Cedar St", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4908), "David", "555-7890" },
-                    { 6, "Davis", 0.0, "3210987654", "987 Maple Ave", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4909), "Sarah", "555-2345" },
-                    { 7, "Wilson", 0.0, "6789012345", "654 Oakwood Dr", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4911), "Christopher", "555-6789" },
-                    { 8, "Taylor", 0.0, "3456789012", "321 Elmwood Ln", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4913), "Jessica", "555-0123" },
-                    { 9, "Anderson", 0.0, "8901234567", "789 Birchwood Rd", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4914), "Matthew", "555-4567" },
-                    { 10, "Thompson", 0.0, "5678901234", "123 Cedarwood Ave", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4916), "Olivia", "555-8901" },
-                    { 11, "Martinez", 0.0, "4321098765", "456 Pine Lane", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4917), "Daniel", "555-3456" },
-                    { 12, "Garcia", 0.0, "5678901234", "789 Maple Rd", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4918), "Sophia", "555-7890" },
-                    { 13, "Lopez", 0.0, "8901234567", "321 Oakwood Dr", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4920), "Ethan", "555-0123" },
-                    { 14, "Rodriguez", 0.0, "6789012345", "654 Elmwood Ln", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4921), "Ava", "555-4567" },
-                    { 15, "Hernandez", 0.0, "3210987654", "987 Birchwood Ave", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4923), "Benjamin", "555-8901" }
+                    { 1, "Doe", 0.0, "1234567890", "123 Main St", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6289), "John", "555-1234" },
+                    { 2, "Smith", 0.0, "0987654321", "456 Elm St", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6292), "Jane", "555-5678" },
+                    { 3, "Johnson", 0.0, "9876543210", "789 Oak St", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6294), "Michael", "555-9012" },
+                    { 4, "Brown", 0.0, "0123456789", "321 Pine St", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6297), "Emily", "555-3456" },
+                    { 5, "Miller", 0.0, "4567890123", "654 Cedar St", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6301), "David", "555-7890" },
+                    { 6, "Davis", 0.0, "3210987654", "987 Maple Ave", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6303), "Sarah", "555-2345" },
+                    { 7, "Wilson", 0.0, "6789012345", "654 Oakwood Dr", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6305), "Christopher", "555-6789" },
+                    { 8, "Taylor", 0.0, "3456789012", "321 Elmwood Ln", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6307), "Jessica", "555-0123" },
+                    { 9, "Anderson", 0.0, "8901234567", "789 Birchwood Rd", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6309), "Matthew", "555-4567" },
+                    { 10, "Thompson", 0.0, "5678901234", "123 Cedarwood Ave", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6311), "Olivia", "555-8901" },
+                    { 11, "Martinez", 0.0, "4321098765", "456 Pine Lane", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6313), "Daniel", "555-3456" },
+                    { 12, "Garcia", 0.0, "5678901234", "789 Maple Rd", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6315), "Sophia", "555-7890" },
+                    { 13, "Lopez", 0.0, "8901234567", "321 Oakwood Dr", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6317), "Ethan", "555-0123" },
+                    { 14, "Rodriguez", 0.0, "6789012345", "654 Elmwood Ln", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6318), "Ava", "555-4567" },
+                    { 15, "Hernandez", 0.0, "3210987654", "987 Birchwood Ave", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6320), "Benjamin", "555-8901" }
                 });
 
             migrationBuilder.InsertData(
@@ -337,21 +341,21 @@ namespace StockManager.Migrations
                 columns: new[] { "ProductoId", "CategoriaId", "CodigoBarra", "CodigoProducto", "Descripcion", "Eliminado", "Fecha", "Nombre", "Precio", "margen" },
                 values: new object[,]
                 {
-                    { 1, 1, "123456789", "ABC123", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4822), "Martillo", 0m, 0m },
-                    { 2, 2, "987654321", "XYZ789", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4832), "Taladro", 0m, 0m },
-                    { 3, 1, "789123456", "DEF456", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4834), "Destornillador", 0m, 0m },
-                    { 4, 2, "654789123", "GHI789", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4836), "Sierra Circular", 0m, 0m },
-                    { 5, 20, "246813579", "JKL321", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4837), "Cinta Métrica", 0m, 0m },
-                    { 6, 4, "135792468", "MNO987", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4839), "Pintura Blanca", 0m, 0m },
-                    { 7, 9, "369258147", "PQR654", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4840), "Llave Ajustable", 0m, 0m },
-                    { 8, 2, "258741369", "STU321", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4842), "Broca para Madera", 0m, 0m },
-                    { 9, 10, "987123654", "VWX987", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4843), "Guantes de Trabajo", 0m, 0m },
-                    { 10, 28, "741852963", "XYZ123", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4845), "Aspiradora Robot", 0m, 0m },
-                    { 11, 6, "963258741", "BCD789", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4846), "Pistola de Calor", 0m, 0m },
-                    { 12, 7, "147852369", "EFG987", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4847), "Cerradura de Seguridad", 0m, 0m },
-                    { 13, 5, "369741852", "HIJ321", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4848), "Tubería de PVC", 0m, 0m },
-                    { 14, 21, "852963741", "KLM654", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4850), "Rodillo de Pintura", 0m, 0m },
-                    { 15, 3, "963741852", "NOP789", null, false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4851), "Cinta de Doble Cara", 0m, 0m }
+                    { 1, 1, "123456789", "ABC123", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6105), "Martillo", 10.99, 0.0 },
+                    { 2, 2, "987654321", "XYZ789", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6127), "Taladro", 99.989999999999995, 0.0 },
+                    { 3, 1, "789123456", "DEF456", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6175), "Destornillador", 5.9900000000000002, 0.0 },
+                    { 4, 2, "654789123", "GHI789", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6178), "Sierra Circular", 79.989999999999995, 0.0 },
+                    { 5, 20, "246813579", "JKL321", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6180), "Cinta Métrica", 7.9900000000000002, 0.0 },
+                    { 6, 4, "135792468", "MNO987", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6182), "Pintura Blanca", 19.989999999999998, 0.0 },
+                    { 7, 9, "369258147", "PQR654", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6184), "Llave Ajustable", 12.99, 0.0 },
+                    { 8, 2, "258741369", "STU321", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6186), "Broca para Madera", 6.9900000000000002, 0.0 },
+                    { 9, 10, "987123654", "VWX987", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6188), "Guantes de Trabajo", 9.9900000000000002, 0.0 },
+                    { 10, 28, "741852963", "XYZ123", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6190), "Aspiradora Robot", 149.99000000000001, 0.0 },
+                    { 11, 6, "963258741", "BCD789", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6192), "Pistola de Calor", 39.990000000000002, 0.0 },
+                    { 12, 7, "147852369", "EFG987", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6193), "Cerradura de Seguridad", 29.989999999999998, 0.0 },
+                    { 13, 5, "369741852", "HIJ321", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6196), "Tubería de PVC", 3.9900000000000002, 0.0 },
+                    { 14, 21, "852963741", "KLM654", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6198), "Rodillo de Pintura", 14.99, 0.0 },
+                    { 15, 3, "963741852", "NOP789", null, false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6200), "Cinta de Doble Cara", 2.9900000000000002, 0.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -359,21 +363,21 @@ namespace StockManager.Migrations
                 columns: new[] { "ProveedorId", "Direccion", "Eliminado", "Fecha", "Nombre", "RNC", "Telefono" },
                 values: new object[,]
                 {
-                    { 1, "123 Main Street", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4938), "ElectroSuministros S.A.", "123456789", "555-1234" },
-                    { 2, "456 Oak Avenue", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4940), "ConstruMateriales C. por A.", "987654321", "555-5678" },
-                    { 3, "789 Pine Lane", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4941), "Herramientas Profesionales SRL", "456789123", "555-9012" },
-                    { 4, "987 Elmwood Drive", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4942), "Productos Químicos Industriales SA", "321098765", "555-3456" },
-                    { 5, "543 Maple Avenue", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4944), "Suministros Industriales del Este", "654321098", "555-7890" },
-                    { 6, "321 Cedar Street", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4945), "Ferretería La Construcción", "876543210", "555-2345" },
-                    { 7, "654 Oakwood Avenue", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4946), "Suministros Eléctricos García", "210987654", "555-6789" },
-                    { 8, "987 Elm Street", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4948), "Herramientas Martínez", "543210987", "555-0123" },
-                    { 9, "123 Pine Avenue", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4949), "Materiales y Acabados Modernos", "876543219", "555-4567" },
-                    { 10, "543 Maple Street", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4950), "Suministros Industriales del Oeste", "219876543", "555-8901" },
-                    { 11, "789 Oakwood Avenue", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4951), "Ferretería González", "765432109", "555-1234" },
-                    { 12, "987 Cedar Street", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4953), "Distribuidora Industrial Rodríguez", "109876543", "555-5678" },
-                    { 13, "456 Elm Street", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4954), "Materiales de Construcción Hernández", "432109876", "555-9012" },
-                    { 14, "210 Maple Avenue", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4955), "Suministros Eléctricos Sánchez", "321098765", "555-3456" },
-                    { 15, "654 Pine Street", false, new DateTime(2023, 6, 26, 0, 0, 46, 399, DateTimeKind.Local).AddTicks(4957), "Herramientas y Equipos Jiménez", "654321098", "555-7890" }
+                    { 1, "123 Main Street", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6351), "ElectroSuministros S.A.", "123456789", "555-1234" },
+                    { 2, "456 Oak Avenue", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6355), "ConstruMateriales C. por A.", "987654321", "555-5678" },
+                    { 3, "789 Pine Lane", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6357), "Herramientas Profesionales SRL", "456789123", "555-9012" },
+                    { 4, "987 Elmwood Drive", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6359), "Productos Químicos Industriales SA", "321098765", "555-3456" },
+                    { 5, "543 Maple Avenue", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6362), "Suministros Industriales del Este", "654321098", "555-7890" },
+                    { 6, "321 Cedar Street", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6364), "Ferretería La Construcción", "876543210", "555-2345" },
+                    { 7, "654 Oakwood Avenue", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6366), "Suministros Eléctricos García", "210987654", "555-6789" },
+                    { 8, "987 Elm Street", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6368), "Herramientas Martínez", "543210987", "555-0123" },
+                    { 9, "123 Pine Avenue", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6370), "Materiales y Acabados Modernos", "876543219", "555-4567" },
+                    { 10, "543 Maple Street", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6372), "Suministros Industriales del Oeste", "219876543", "555-8901" },
+                    { 11, "789 Oakwood Avenue", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6374), "Ferretería González", "765432109", "555-1234" },
+                    { 12, "987 Cedar Street", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6376), "Distribuidora Industrial Rodríguez", "109876543", "555-5678" },
+                    { 13, "456 Elm Street", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6378), "Materiales de Construcción Hernández", "432109876", "555-9012" },
+                    { 14, "210 Maple Avenue", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6380), "Suministros Eléctricos Sánchez", "321098765", "555-3456" },
+                    { 15, "654 Pine Street", false, new DateTime(2023, 7, 10, 20, 31, 59, 263, DateTimeKind.Local).AddTicks(6382), "Herramientas y Equipos Jiménez", "654321098", "555-7890" }
                 });
 
             migrationBuilder.InsertData(
@@ -448,7 +452,7 @@ namespace StockManager.Migrations
                 name: "Ubicaciones");
 
             migrationBuilder.DropTable(
-                name: "Facturacion");
+                name: "Facturaciones");
 
             migrationBuilder.DropTable(
                 name: "OrdenDeCompras");

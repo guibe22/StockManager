@@ -4,6 +4,7 @@
 @inject UbicacionesBLL ubicacionesBLL
 @inject ProductosBLL productosBLL
 @inject ProveedoresBLL proveedoresBLL
+@inject NotificationService notificationService
 
     @*<EditForm Model="inventario" OnValidSubmit="Guardar"></EditForm>*@
 
@@ -90,11 +91,11 @@
     </RadzenCard>
 </RadzenStack>
 
-@code{
+@code {
     [Parameter]
     public int InventarioId { get; set; }
-    public int prueba{ get; set; } = 7;
-    
+    public int prueba { get; set; } = 7;
+
     List<string> razonesInventario = new List<string>()
     {
         "Compra de nuevos productos",
@@ -103,7 +104,7 @@
         "Actualización de inventario físico",
     };
 
-    public Inventarios inventario { get; set; } = new Inventarios();  
+    public Inventarios inventario { get; set; } = new Inventarios();
     List<Productos> productos = new List<Productos>();
     List<Ubicaciones> ubicaciones = new List<Ubicaciones>();
     List<Proveedores> proveedores = new List<Proveedores>();
@@ -113,69 +114,142 @@
 
     protected override void OnInitialized()
     {
-        productos =  productosBLL.GetList(o=> o.Eliminado==false);
-        ubicaciones = ubicacionesBLL.GetList(o=> o.Eliminado==false && o.Ocupado==false);
-        proveedores = proveedoresBLL.GetList(o=> o.Eliminado==false);
-        inventarios = InventariosBLL.GetList(o=> o.Eliminado==false);
-        if(InventarioId>0){
+        productos = productosBLL.GetList(o => o.Eliminado == false);
+        ubicaciones = ubicacionesBLL.GetList(o => o.Eliminado == false && o.Ocupado == false);
+        proveedores = proveedoresBLL.GetList(o => o.Eliminado == false);
+        inventarios = InventariosBLL.GetList(o => o.Eliminado == false);
+        if (InventarioId > 0)
+        {
             Buscar();
-
         }
-        else{
+        else
+        {
             inventario.Fecha = DateTime.Now;
         }
-        
-
     }
 
-     void searchTextChanged(string text)
+    void searchTextChanged(string text)
     {
         searchTextStatus = $"Search text: {text}";
         StateHasChanged();
     }
 
-    void Guardar(){
-        if(!Validar()){return;}
+    void Guardar()
+    {
+        if (!Validar())
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error de validación",
+                Detail = "Por favor, asegúrate de seleccionar un producto y una ubicación válidos."
+            });
 
-        if(InventariosBLL.Guardar(inventario)){
-            
-            Nuevo();
-            inventarios = InventariosBLL.GetList(o=> o.Eliminado==false);
+            return;
         }
-       
+
+        if (InventariosBLL.Guardar(inventario))
+        {
+            Nuevo();
+            inventarios = InventariosBLL.GetList(o => o.Eliminado == false);
+
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
+        }
+        else
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al guardar",
+                Detail = "No se pudo guardar el inventario. Por favor, intenta nuevamente."
+            });
+        }
     }
 
-    void Nuevo(){
+    void Nuevo()
+    {
         inventario = new Inventarios();
         StateHasChanged();
     }
 
-    void Eliminar(){
-        if(InventariosBLL.Existe(inventario.InventarioId)){
+    void Eliminar()
+    {
+        if (InventariosBLL.Existe(inventario.InventarioId))
+        {
+            if (InventariosBLL.Eliminar(inventario))
+            {
+                Nuevo();
 
-         if(InventariosBLL.Eliminar(inventario)){
-            Nuevo();
+                ShowNotification(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Eliminado correctamente"
+                });
+            }
+            else
+            {
+                ShowNotification(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Error al eliminar",
+                    Detail = "No se pudo eliminar el inventario. Por favor, intenta nuevamente."
+                });
+            }
+        }
+        else
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error de existencia",
+                Detail = "El inventario seleccionado no existe."
+            });
         }
     }
-    }
 
-    bool Validar(){
+    bool Validar()
+    {
         bool esValido = true;
 
-        if(inventario.ProductoId==0){esValido = false;}
-        if(inventario.UbicacionId==0){esValido = false;}
-        
+        if (inventario.ProductoId == 0)
+        {
+            esValido = false;
+        }
+        if (inventario.UbicacionId == 0)
+        {
+            esValido = false;
+        }
+
         return esValido;
     }
 
-    void Buscar(){
+    void Buscar()
+    {
         var inventarioFound = InventariosBLL.Buscar(this.InventarioId);
-        if(inventarioFound!=null){
+        if (inventarioFound != null)
+        {
             inventario = inventarioFound;
         }
+        else
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error de búsqueda",
+                Detail = "El inventario no se encontró."
+            });
+        }
+
         Console.WriteLine(inventario.ProductoId);
         Console.WriteLine(inventario.UbicacionId);
-        
-        
+    }
+
+    void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
     }
 }

@@ -1,5 +1,7 @@
 @page "/R_Productos"
 @page "/R_Productos/{ProductoId:int}"
+@inject NotificationService notificationService
+
 
 @inject CategoriasBLL categoriasBLL
 @inject ProductosBLL productosBLL
@@ -106,28 +108,83 @@
     {
         searchTextStatus = $"Search text: {text}";
         StateHasChanged();
-    }
-    void Guardar(){
-        if(!Validar()){return;}
-        if(productosBLL.Guardar(producto)){
-            Nuevo();
-            productos = productosBLL.GetList(o=> o.Eliminado==false);
-        }
-    }
+    } 
     void Nuevo(){
         producto = new Productos();
         producto.Fecha = DateTime.Now;
         StateHasChanged();
     }
-   
-      void Eliminar(){
-        if(productosBLL.Existe(producto.ProductoId)){
+    void Guardar()
+{
+    if (!Validar())
+    {
+        ShowNotification(new NotificationMessage
+        {
+            Severity = NotificationSeverity.Error,
+            Summary = "Error de validación",
+            Detail = "Por favor, asegúrate de seleccionar una categoría válida."
+        });
 
-         if(productosBLL.Eliminar(producto)){
+        return;
+    }
+
+    if (productosBLL.Guardar(producto))
+    {
+        Nuevo();
+        productos = productosBLL.GetList(o => o.Eliminado == false);
+
+        ShowNotification(new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Summary = "Guardado correctamente"
+        });
+    }
+    else
+    {
+        ShowNotification(new NotificationMessage
+        {
+            Severity = NotificationSeverity.Error,
+            Summary = "Error al guardar",
+            Detail = "No se pudo guardar el producto. Por favor, intenta nuevamente."
+        });
+    }
+}
+
+void Eliminar()
+{
+    if (productosBLL.Existe(producto.ProductoId))
+    {
+        if (productosBLL.Eliminar(producto))
+        {
             Nuevo();
+
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Eliminado correctamente"
+            });
+        }
+        else
+        {
+            ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al eliminar",
+                Detail = "No se pudo eliminar el producto. Por favor, intenta nuevamente."
+            });
+        }
     }
+    else
+    {
+        ShowNotification(new NotificationMessage
+        {
+            Severity = NotificationSeverity.Error,
+            Summary = "Error de existencia",
+            Detail = "El producto seleccionado no existe."
+        });
     }
-    }
+}
+
 
     bool Validar(){
         bool esValido = true;
@@ -142,6 +199,10 @@
             producto = productoFound;
         }
         Console.WriteLine(producto.ProductoId);
+    }
+     void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
     }
 }
 

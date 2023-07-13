@@ -1,4 +1,5 @@
 @page "/R_Compras"
+@page "/R_Compras/{OrdenDeCompraId:int}"
 @inject ProveedoresBLL proveedoresBLL
 @inject ProductosBLL productosBLL
 @inject RelacionBLL relacionBLL
@@ -132,7 +133,13 @@
         inventarios = inventariosBLL.GetList(i => i.Eliminado== false);
         var inventarioIds = inventarios.Select(i => i.ProductoId).ToList();
         productos = productosBLL.GetList(p => inventarioIds.Contains(p.ProductoId));
-           OrdenDeCompra.Fecha = DateTime.Now;
+        if(OrdenDeCompraId>0){
+            Buscar();
+        }
+        else{
+            OrdenDeCompra.Fecha = DateTime.Now;
+        }
+           
 
       
     }

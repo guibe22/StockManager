@@ -12,8 +12,6 @@
             Data="@lista" LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" TItem="OrdenDeCompras"
              Scrollable="true" style="max-width: 1300px;  left: 50%; transform: translate( -50%);" >
             <Columns>
-             
-
                 <RadzenDataGridColumn TItem="OrdenDeCompras" Property="OrdenDeCompraId" Title="OrdenDeCompraId" Filterable="false" Width="200px"   Frozen="true">
                     <Template Context="Inventario">
                         @ordenDeCompras.OrdenDeCompraId  @(ordenComprasBLL.Buscar(ordenDeCompras.OrdenDeCompraId)?.Concepto) 
@@ -22,8 +20,29 @@
                 <RadzenDataGridColumn TItem="OrdenDeCompras" Property="Concepto" Title="Concepto"  Width="200px" />
                 <RadzenDataGridColumn TItem="OrdenDeCompras" Property="CantidadTotal" Title="CantidadTotal"  Width="200px" />
                 <RadzenDataGridColumn TItem="OrdenDeCompras" Property="CostoTotal" Title="CostoTotal"  Width="200px" />
-                <RadzenDataGridColumn TItem="OrdenDeCompras" Property="Detalle" Title="Detalle"  Width="200px" />
-            <RadzenDataGridColumn TItem="OrdenDeCompras" Title="Fecha" Property="Fecha"  FormatString="{0:d}"/>
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Title="Filtrado" Filterable="false" Width="100px"   >
+                    <Template Context="OrdenDeCompra">
+                        @if(OrdenDeCompra.filtrado==true){
+                            <RadzenLabel>Filtrado</RadzenLabel>
+                        }
+                        @if(OrdenDeCompra.filtrado==false){
+                            <RadzenLabel> No Filtrado</RadzenLabel>
+                        }
+                        
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Title="Fecha" Property="Fecha"  FormatString="{0:d}"/>
+
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Filterable="false" Width="50px"   >
+                    <Template Context="OrdenDeCompra">
+                        <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Compras/{OrdenDeCompra.OrdenDeCompraId}")" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Filterable="false" Width="100px"   >
+                    <Template Context="OrdenDeCompra">
+                        <RadzenLink  Text="FILTRAR" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Compras/{OrdenDeCompra.OrdenDeCompraId}")" />
+                    </Template>
+                </RadzenDataGridColumn>
             </Columns> 
         </RadzenDataGrid>  
     </RadzenStack>

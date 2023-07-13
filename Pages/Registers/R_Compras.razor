@@ -1,10 +1,14 @@
 @page "/R_Compras"
 @inject ProveedoresBLL proveedoresBLL
 @inject ProductosBLL productosBLL
+@inject RelacionBLL relacionBLL
+@inject OrdenComprasBLL ordenComprasBLL
+@inject InventariosBLL inventariosBLL
+@inject NotificationService notificationService
 <div class="d-flex justify-content-end ">
     <div class="zoom">
-        <RadzenTextBox Placeholder="Buscar Compra..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
-        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" />
+        <RadzenNumeric @bind-Value="OrdenDeCompraId" Placeholder="Buscar Compra..."  Style=" width: 250px;  height: 40px; font-size: 16px;" />
+        <RadzenButton Icon="search"  Style=" width: 40px;  height: 39px; font-size: 16px;" Click="Buscar" />
     </div>
 </div>
 
@@ -15,48 +19,46 @@
         </RadzenStack>
         <RadzenCard class=" rz-shadow-0 rz-border-radius-0 rz-p-8 " style="margin: 1rem calc(-1 * var(--rz-card-padding)); background-image: linear-gradient(173deg, #ce9051ac 0%, #fbfff1 100%);">
             <RadzenRow RowGap="5">
-                <RadzenColumn SizeSM="6">
+                <RadzenColumn SizeSM="6" >
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Fecha:</RadzenText>
-                    <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;"/>
+                    <RadzenDatePicker TValue="DateTime"   class=" zoom "  style="width: 190px;" @bind-Value="OrdenDeCompra.Fecha"/>
+                </RadzenColumn>
+                 <RadzenColumn SizeSM="6">
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3" >Concepto:</RadzenText>
+                    <RadzenTextBox  class="w-200 zoom " @bind-Value="OrdenDeCompra.Concepto"/>
+                  
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow RowGap="5">
                 <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
-                    <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
+                     <RadzenDropDown TValue="int"  class="w-200 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data=@proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                        
+                        Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        @bind-Value="@DetalleOrdenDeCompra.ProductoId"  Change="@(args => BuscarProveedores(DetalleOrdenDeCompra.ProductoId))"
                     />
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Concepto:</RadzenText>
-                    <RadzenTextBox  class="w-200 zoom " />
-                </RadzenColumn>
-            </RadzenRow>
-            <RadzenRow RowGap="1">
-                 <div style="margin-right: 50px;">
-                <RadzenColumn SizeSM="5">
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Producto:</RadzenText>
-                     <RadzenDropDown TValue="string"  class="w-200 zoom " @ref=@radzenDropDown 
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Proveedor:</RadzenText>
+                    <RadzenDropDown TValue="int"  class="w-200 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        Data=@proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
+                        @bind-Value="@DetalleOrdenDeCompra.ProveedorId" 
                         
                     />
                 </RadzenColumn>
-                </div>
-                <div  class=" d-flex align-items-end justify-content-end">
-                    <div style="margin-right: 15px;">
-                        <RadzenColumn SizeSM="5" >
-                            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Cantidad:</RadzenText>
-                            <RadzenTextBox  class="w-150 zoom " />
-                        </RadzenColumn>
-                    </div>
-                    <RadzenColumn SizeSM="4"  >
-                        <RadzenButton Icon="add"  Style=" width: 20px;  height: 30px; font-size: 16px; zoom;" />
-                    </RadzenColumn>
-               </div>
+               
             </RadzenRow>
+            <RadzenRow RowGap="5" JustifyContent="JustifyContent.End">
+                <RadzenColumn SizeSM="6" >
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3" >Cantidad:</RadzenText>
+                     <div class="input-group zoom">
+                    <RadzenNumeric @bind-Value="@DetalleOrdenDeCompra.Cantidad" style= "width: 185px;" />
+                    <RadzenButton Icon="add"  Style=" width: 30px;  height: 30px; font-size: 16px; zoom;" Click="Agregar"  />
+                    </div>
+                </RadzenColumn>
+                
+            </RadzenRow> 
 
             <RadzenRow RowGap="5">
               <table class="table">
@@ -65,44 +67,82 @@
                            <th>Producto</th>
                            <th>Proveedor</th>
                            <th>Cantidad</th>
-                            <th>Precio</th>
+                            <th>Costo</th>
                             <th>Subtotal</th>
                             <th></th>
                      </tr>
                 </thead>
                  <tbody>
+                    @foreach (var detalle in OrdenDeCompra.DetalleOrdenDeCompras)
+                    { 
+                    <tr>
+                        <td>@productosBLL.Buscar(detalle.ProductoId)?.Nombre</td> 
+                        <td>@proveedoresBLL.Buscar(detalle.ProveedorId)?.Nombre</td> 
+                        <td>@detalle.Cantidad</td>
+                        <td>$@detalle.Costo.ToString("N2")</td>
+                        <td>$@detalle.CostoTotal.ToString("N2")</td>
+                        <td> <button name="Btn" id="Btn" class="btn btn-danger mr-2" type="button"
+                                 @onclick=@(() =>  EliminarDetalle(detalle))> 
+                                    <span class="oi oi-trash"></span>
+                            </button>
+                        </td>
+                         </tr>
+                    }
                   
                  </tbody>
                     
               </table>
             </RadzenRow>
              <RadzenRow RowGap="5">
-               <RadzenLabel Text="Total: 0.00$" Style=" font-size: 25px; font-weight: bold; margin-bottom: 10px;" />
+               <RadzenLabel Style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">
+                    Costo Total: @(OrdenDeCompra.CostoTotal.ToString("N2"))$
+                </RadzenLabel>
+                <RadzenLabel Style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">
+                    Cantidad Total: @(OrdenDeCompra.CantidadTotal)
+                </RadzenLabel>
              </RadzenRow>
 
 
         </RadzenCard>
-        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0" >
-            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" />
-            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" />
-            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete"/>
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" >
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="NUEVO" IconParameter="add" OnClickHandler="Nuevo" />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="GUARDAR" IconParameter="save" OnClickHandler="Guardar" />
+            <ButtonTemplate ColorParameter="#dc3545" TextParameter="ELIMINAR" IconParameter="delete" OnClickHandler="Eliminar"/>
         </RadzenStack>
     </RadzenCard>
 </RadzenStack>
 
 @code {
+    [Parameter]
+    public int  OrdenDeCompraId {get; set;}
+    public OrdenDeCompras OrdenDeCompra { get; set; } =new OrdenDeCompras();
+    public DetalleOrdenDeCompras DetalleOrdenDeCompra { get; set; }= new  DetalleOrdenDeCompras();
+   
 
-    List<Proveedores> proveedores = new List<Proveedores>();
-        List<Productos> productos = new List<Productos>();
+    public List<Proveedores> proveedores = new List<Proveedores>();
+    public List<Productos> productos = new List<Productos>();
+    public List<Inventarios> inventarios = new List<Inventarios>();
+    public List<RelacionProductoProveedor> relaciones = new List<RelacionProductoProveedor>();
+   
+    
     
     string? searchTextStatus;
-    RadzenDropDown<string>? radzenDropDown;
+    RadzenDropDown<int>? radzenDropDown;
 
     protected override void OnInitialized()
     {
-        productos =  productosBLL.GetList(o=> o.Eliminado==false);
+        inventarios = inventariosBLL.GetList(i => i.Eliminado== false);
+        var inventarioIds = inventarios.Select(i => i.ProductoId).ToList();
+        productos = productosBLL.GetList(p => inventarioIds.Contains(p.ProductoId));
+           OrdenDeCompra.Fecha = DateTime.Now;
 
-        proveedores = proveedoresBLL.GetList(o=> o.Eliminado==false);
+      
+    }
+
+    void BuscarProveedores(int ProductoId){
+        relaciones = relacionBLL.GetList(i => i.Eliminado== false && i.ProductoId==ProductoId);
+        var ProovedoresIds = relaciones.Select(i => i.ProveedorId).ToList();
+        proveedores = proveedoresBLL.GetList(p => ProovedoresIds.Contains(p.ProveedorId));
     }
 
      void searchTextChanged(string text)
@@ -112,6 +152,88 @@
 
         StateHasChanged();
     }
+    bool Validar()
+    {
+        if(String.IsNullOrEmpty(OrdenDeCompra.Concepto)){
+            return false;
+            }
+        else{
+            return true;
+        }
+        
+    }
+
+    void Guardar(){
+
+        if(!Validar()){
+             ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error de validación",
+                Detail = "Por favor, asegúrate de seleccionar un cliente y un tipo de venta válidos."
+            });
+
+            return;}
+       
+
+        if(ordenComprasBLL.Guardar(OrdenDeCompra)){
+            Nuevo();
+        }
+    }
+
+    void Nuevo(){
+        OrdenDeCompra= new OrdenDeCompras();
+        OrdenDeCompra.Fecha = DateTime.Now;
+        DetalleOrdenDeCompra= new DetalleOrdenDeCompras();
+
+    }
+
+    void Eliminar(){
+        if(ordenComprasBLL.Existe(OrdenDeCompraId)){
+            if(ordenComprasBLL.Eliminar(OrdenDeCompra)){
+                Nuevo();
+            }
+        }
+    }
+
+    void Buscar(){
+        var orden = ordenComprasBLL.Buscar(OrdenDeCompraId);
+        if(orden!= null){
+            OrdenDeCompra= orden;
+        }
+    }
+
+    void Agregar(){
+        if(DetalleOrdenDeCompra.Cantidad<=0){ return;}
+        if(DetalleOrdenDeCompra.ProductoId<=0){ return;}
+        if(DetalleOrdenDeCompra.ProveedorId<=0){ return;}
+
+         var relacion = relacionBLL.GetList(o=> true ).FirstOrDefault( o=> o.ProductoId== DetalleOrdenDeCompra.ProductoId
+          && o.ProveedorId==DetalleOrdenDeCompra.ProveedorId);
+
+          if(relacion!=null){
+            DetalleOrdenDeCompra.Costo= relacion.costo;
+            DetalleOrdenDeCompra.CostoTotal= DetalleOrdenDeCompra.Costo* DetalleOrdenDeCompra.Cantidad;
+            OrdenDeCompra.DetalleOrdenDeCompras.Add(DetalleOrdenDeCompra);
+            OrdenDeCompra.CostoTotal+=DetalleOrdenDeCompra.CostoTotal;
+            OrdenDeCompra.CantidadTotal+= DetalleOrdenDeCompra.Cantidad;
+            DetalleOrdenDeCompra= new DetalleOrdenDeCompras();
+          }
+        
+
+    }
+
+      void EliminarDetalle(DetalleOrdenDeCompras detalle){
+        OrdenDeCompra.CantidadTotal-= detalle.Cantidad;
+        OrdenDeCompra.CostoTotal-=detalle.CostoTotal;
+        OrdenDeCompra.DetalleOrdenDeCompras.Remove(detalle);
+      }
+
+       void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+    }
+
 
 
   

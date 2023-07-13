@@ -29,7 +29,7 @@
                      <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@productos TextProperty="Nombre" ValueProperty="ProductoId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                        
+                        @bind-Value="@relacionProductoProveedor.ProductoId"
                     />
                 </RadzenColumn>
                   <RadzenColumn SizeSM="6">
@@ -37,7 +37,7 @@
                     <RadzenDropDown TValue="int"  class="w-100 zoom " @ref=@radzenDropDown 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
                         Data=@Proveedores TextProperty="Nombre" ValueProperty="ProveedorId" AllowClear="true" SearchTextChanged="@(args => searchTextChanged(args))"
-                        
+                        @bind-Value="@relacionProductoProveedor.ProveedorId"
                     />
                 </RadzenColumn>
             </RadzenRow>
@@ -50,7 +50,7 @@
                 </RadzenColumn>
                 <RadzenColumn SizeSM="6">
                     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Costo:</RadzenText>
-                    <RadzenNumeric class="w-100 zoom" @bind-Value="relacionProductoProveedor.costo"/>
+                    <RadzenNumeric class="w-100 zoom" @bind-Value="@relacionProductoProveedor.costo"/>
                 </RadzenColumn>
             </RadzenRow>
             
@@ -181,7 +181,7 @@
     {
         bool esValido = true;
 
-        if (relacionProductoProveedor.ProductoId == 0 && relacionProductoProveedor.ProveedorId == 0)
+        if (relacionProductoProveedor.ProductoId <=0 || relacionProductoProveedor.ProveedorId <=0 )
         {
             esValido = false;
         }

@@ -13,6 +13,7 @@ public class Contexto : DbContext
     public DbSet<Inventarios> Inventarios { get; set; }
     public DbSet<RelacionProductoProveedor> RelacionProductoProveedor { get; set; }
     public DbSet<Facturaciones> Facturaciones { get; set; }
+    
 
 
 

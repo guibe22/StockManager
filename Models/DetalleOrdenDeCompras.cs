@@ -12,8 +12,8 @@ public class DetalleOrdenDeCompras
     public int ProveedorId { get; set; }
     [Required(ErrorMessage = "Campo obligatorio.")]
     public int Cantidad { get; set; }
-    public decimal Costo { get; set; }
-    public decimal CostoTotal { get; set; }
+    public double Costo { get; set; }
+    public double CostoTotal { get; set; }
     public bool Aprobado { get; set; } = false;
     public bool Eliminado { get; set; } = false;
     [Required(ErrorMessage = "Debe especificar la  fecha.")]

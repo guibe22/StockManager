@@ -24,6 +24,9 @@
                 <RadzenDataGridColumn TItem="OrdenDeCompras" Property="CostoTotal" Title="CostoTotal"  Width="200px" />
                 <RadzenDataGridColumn TItem="OrdenDeCompras" Property="Detalle" Title="Detalle"  Width="200px" />
             <RadzenDataGridColumn TItem="OrdenDeCompras" Title="Fecha" Property="Fecha"  FormatString="{0:d}"/>
+                    <Template Context="OrdenDeCompras">
+                        <RadzenLink  Icon="edit" ButtonStyle="ButtonStyle.Dark"  Path="@($"/R_Compras/{ordenDeCompras.OrdenDeCompraId}")" />
+                    </Template>
             </Columns> 
         </RadzenDataGrid>  
     </RadzenStack>

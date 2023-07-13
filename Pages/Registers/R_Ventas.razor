@@ -165,7 +165,9 @@
 
         if (ventasBLL.Guardar(venta))
         {
+            pdfGenerator.GeneratePdf(venta,"C:\\Users\\galve\\OneDrive\\TAREAS\\PROYECTO APLICADO\\StockManager\\venta.pdf");
             Nuevo();
+           
 
             ShowNotification(new NotificationMessage
             {

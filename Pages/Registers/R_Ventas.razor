@@ -6,6 +6,8 @@
 @inject InventariosBLL inventariosBLL
 @inject NotificationService notificationService
 
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment _environment;
+
 
 <div class="d-flex justify-content-end ">
     <div class="zoom">
@@ -165,9 +167,17 @@
 
         if (ventasBLL.Guardar(venta))
         {
-            pdfGenerator.GeneratePdf(venta,"C:\\Users\\galve\\OneDrive\\TAREAS\\PROYECTO APLICADO\\StockManager\\venta.pdf");
+            string nombreArchivo = "venta" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
+            string carpetaLogFacturas = Path.Combine(_environment.ContentRootPath, "LogFacturas");
+            string rutaArchivo = Path.Combine(carpetaLogFacturas, nombreArchivo);
+            
+            if (!Directory.Exists(carpetaLogFacturas))
+            {
+                Directory.CreateDirectory(carpetaLogFacturas);
+            }
+            
+            pdfGenerator.GeneratePdf(venta, rutaArchivo);
             Nuevo();
-           
 
             ShowNotification(new NotificationMessage
             {

@@ -25,22 +25,26 @@ public class PdfGenerator
                 using (Document document = new Document(pdf))
                 {
                     Image logo = new Image(ImageDataFactory.Create(logoPath));
-                    logo.SetHeight(50);
-                    logo.SetWidth(200); 
+                    logo.SetHeight(100);
+                    logo.SetWidth(100);
+                    logo.SetHorizontalAlignment(HorizontalAlignment.CENTER);
                     document.Add(logo);
 
-                    document.Add(new Paragraph($"Venta ID: {venta.VentaId}"));
-                    document.Add(new Paragraph($"Cliente ID: {clientesBLL.Buscar(venta.ClienteId)?.Nombre}"));
-                    document.Add(new Paragraph($"Tipo: {venta.Tipo}"));
-                    document.Add(new Paragraph($"Total: {venta.Total}"));
-                    document.Add(new Paragraph($"Fecha: {venta.Fecha}"));
-                    document.Add(new Paragraph("Detalles:"));
+
+                    document.Add(new Paragraph($"Venta ID: {venta.VentaId}").SetTextAlignment(TextAlignment.CENTER));
+                    document.Add(new Paragraph($"Cliente : {clientesBLL.Buscar(venta.ClienteId)?.Nombre} {clientesBLL.Buscar(venta.ClienteId)?.Apellido}").SetTextAlignment(TextAlignment.CENTER));
+                    document.Add(new Paragraph($"Tipo: {venta.Tipo}").SetTextAlignment(TextAlignment.CENTER));
+                    document.Add(new Paragraph($"Total: {venta.Total}").SetTextAlignment(TextAlignment.CENTER));
+                    document.Add(new Paragraph($"Fecha: {venta.Fecha}").SetTextAlignment(TextAlignment.CENTER));
+                    document.Add(new Paragraph("Detalles:").SetTextAlignment(TextAlignment.CENTER));
 
                     Table table = new Table(4);
-                    table.AddHeaderCell("Producto ID");
-                    table.AddHeaderCell("Cantidad");
-                    table.AddHeaderCell("Subtotal");
-                    table.AddHeaderCell("Precio");
+                    table.SetWidth(UnitValue.CreatePercentValue(100));
+
+                    table.AddHeaderCell("Producto ID").SetTextAlignment(TextAlignment.CENTER);
+                    table.AddHeaderCell("Cantidad").SetTextAlignment(TextAlignment.CENTER);
+                    table.AddHeaderCell("Subtotal").SetTextAlignment(TextAlignment.CENTER);
+                    table.AddHeaderCell("Precio").SetTextAlignment(TextAlignment.CENTER);
 
                     foreach (DetallesVenta detalle in venta.detallesVentas)
                     {

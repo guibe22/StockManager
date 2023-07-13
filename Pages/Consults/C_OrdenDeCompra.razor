@@ -1,0 +1,39 @@
+@page "/C_OrdenDeCompra"
+@inject OrdenComprasBLL ordenComprasBLL
+
+<RadzenCard Class=" bordes" style="background-image: linear-gradient(90deg, #ced1d6cc 10%, #c1872bbf 100%);">
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0">
+        <RadzenLabel Text="CONSULTA DE ORDEN DE COMPRA" Style="font-size: 25px; font-weight: bold; font-style: italic; margin-bottom: 10px; color:rgb(58, 58, 58); font-family: 'Times new roman', serif; " />
+    </RadzenStack>
+
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" 
+     >
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true"  AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Center" ShowPagingSummary="true"
+            Data="@lista" LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" TItem="OrdenDeCompras"
+             Scrollable="true" style="max-width: 1300px;  left: 50%; transform: translate( -50%);" >
+            <Columns>
+             
+
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Property="OrdenDeCompraId" Title="OrdenDeCompraId" Filterable="false" Width="200px"   Frozen="true">
+                    <Template Context="Inventario">
+                        @ordenDeCompras.OrdenDeCompraId  @(ordenComprasBLL.Buscar(ordenDeCompras.OrdenDeCompraId)?.Concepto) 
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Property="Concepto" Title="Concepto"  Width="200px" />
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Property="CantidadTotal" Title="CantidadTotal"  Width="200px" />
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Property="CostoTotal" Title="CostoTotal"  Width="200px" />
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Property="Detalle" Title="Detalle"  Width="200px" />
+            <RadzenDataGridColumn TItem="OrdenDeCompras" Title="Fecha" Property="Fecha"  FormatString="{0:d}"/>
+            </Columns> 
+        </RadzenDataGrid>  
+    </RadzenStack>
+</RadzenCard>
+
+@code{
+    List<OrdenDeCompras> lista = new List<OrdenDeCompras>();
+    OrdenDeCompras ordenDeCompras = new OrdenDeCompras();
+    protected override void OnInitialized()
+    {
+        lista = ordenComprasBLL.GetList(o=> o.Eliminado==false);
+    }
+}

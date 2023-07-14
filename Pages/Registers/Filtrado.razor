@@ -1,0 +1,80 @@
+@page "/Filtrado/{OrdenDeCompraId:int}"
+@inject OrdenComprasBLL ordenComprasBLL
+@inject ProductosBLL productosBLL
+@inject ProveedoresBLL proveedoresBLL
+@inject NavigationManager NavigationManager
+@inject NotificationService notificationService
+
+<RadzenCard Class=" bordes" style="background-image: linear-gradient(90deg, #818182cc 16%, #eaa04bc0 100%); width: 60%; margin: 0 auto;" >
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0">    
+        <RadzenLabel Text="FILTRADO" Style="font-size: 25px; font-weight: bold; font-style: italic; margin-bottom: 10px; color:rgb(147, 112, 77); font-family: 'Times new roman', serif;" />
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="0" Class="rz-p-0 "  >
+         <RadzenDataGrid Data="@OrdenDeCompra.DetalleOrdenDeCompras">
+            <Columns>
+                <RadzenDataGridColumn TItem="DetalleOrdenDeCompras" Property="ProductoId" Title="Producto"  >
+                    <Template Context="Detalle">
+                        @(productosBLL.Buscar(Detalle.ProductoId)?.Nombre) 
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="DetalleOrdenDeCompras" Property="ProveedorId" Title="Proveedor"   >
+                    <Template Context="Detalle">
+                        @(proveedoresBLL.Buscar(Detalle.ProveedorId)?.Nombre) 
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="DetalleOrdenDeCompras" Title="Cantidad" Property="Cantidad" />
+                <RadzenDataGridColumn TItem="DetalleOrdenDeCompras" Title="Costo" Property="Costo"  />
+                <RadzenDataGridColumn TItem="DetalleOrdenDeCompras" Title="Costo Total" Property="CostoTotal"  />
+                <RadzenDataGridColumn TItem="DetalleOrdenDeCompras" Title="Filtrar">
+                    <Template Context="detalle">
+                        <input type="checkbox" @bind="@detalle.Aprobado" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns> 
+        </RadzenDataGrid>  
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="5" style="margin-top:10px" >
+            <ButtonTemplate ColorParameter="#007bff" TextParameter="REGRESAR" OnClickHandler="Regresar"   />
+            <ButtonTemplate ColorParameter="#28a745" TextParameter="FILTRAR"  OnClickHandler="Filtrar" />
+
+    </RadzenStack>
+ </RadzenCard>
+
+
+ @code{
+    [Parameter]
+    public int OrdenDeCompraId { get; set; }
+    public OrdenDeCompras OrdenDeCompra = new OrdenDeCompras();
+
+    protected override void OnInitialized()
+    {
+        if(OrdenDeCompraId>0){
+            var orden = ordenComprasBLL.Buscar(OrdenDeCompraId);
+            if(orden!=null){
+                OrdenDeCompra= orden;
+            }
+        }
+    }
+    void Regresar(){
+        NavigationManager.NavigateTo("/C_OrdenDeCompra");
+    }
+    void Filtrar(){
+        OrdenDeCompra.filtrado=true;
+         if(ordenComprasBLL.Filtrar(OrdenDeCompra))
+        {
+             ShowNotification(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Filtrado correctamente"
+            });
+        }  
+    }
+    void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+    }
+ }
+
+
+
+

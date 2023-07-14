@@ -104,10 +104,12 @@ class OrdenComprasBLL
 
                     _Contexto.Entry(inventario).State = EntityState.Modified;
                     _Contexto.Entry(Producto).State = EntityState.Modified;
+                    _Contexto.Entry(detalle).State = EntityState.Modified;
 
                     _Contexto.SaveChanges();
                     _Contexto.Entry(inventario).State = EntityState.Detached;
                     _Contexto.Entry(Producto).State = EntityState.Detached;
+                    _Contexto.Entry(detalle).State = EntityState.Detached;
 
                 }
             }
@@ -163,10 +165,13 @@ class OrdenComprasBLL
 
                     _Contexto.Entry(inventario).State = EntityState.Modified;
                     _Contexto.Entry(Producto).State = EntityState.Modified;
+                    _Contexto.Entry(detalle).State = EntityState.Modified;
+
 
                     _Contexto.SaveChanges();
                     _Contexto.Entry(inventario).State = EntityState.Detached;
                     _Contexto.Entry(Producto).State = EntityState.Detached;
+                     _Contexto.Entry(detalle).State = EntityState.Detached;
 
                 }
             }

@@ -59,7 +59,8 @@
         NavigationManager.NavigateTo("/C_OrdenDeCompra");
     }
     void Filtrar(){
-        OrdenDeCompra.filtrado=true;
+
+         OrdenDeCompra.filtrado=true;
          if(ordenComprasBLL.Filtrar(OrdenDeCompra))
         {
              ShowNotification(new NotificationMessage

@@ -12,11 +12,7 @@
             Data="@lista" LogicalFilterOperator="LogicalFilterOperator.Or" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" TItem="OrdenDeCompras"
              Scrollable="true" style="max-width: 1300px;  left: 50%; transform: translate( -50%);" >
             <Columns>
-                <RadzenDataGridColumn TItem="OrdenDeCompras" Property="OrdenDeCompraId" Title="OrdenDeCompraId" Filterable="false" Width="200px"   Frozen="true">
-                    <Template Context="Inventario">
-                        @ordenDeCompras.OrdenDeCompraId  @(ordenComprasBLL.Buscar(ordenDeCompras.OrdenDeCompraId)?.Concepto) 
-                    </Template>
-                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="OrdenDeCompras" Property="OrdenDeCompraId" Title="OrdenDeCompraId"  Width="200px" />
                 <RadzenDataGridColumn TItem="OrdenDeCompras" Property="Concepto" Title="Concepto"  Width="200px" />
                 <RadzenDataGridColumn TItem="OrdenDeCompras" Property="CantidadTotal" Title="CantidadTotal"  Width="200px" />
                 <RadzenDataGridColumn TItem="OrdenDeCompras" Property="CostoTotal" Title="CostoTotal"  Width="200px" />

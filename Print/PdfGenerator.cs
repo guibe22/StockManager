@@ -72,7 +72,7 @@ public class PdfGenerator
                         .SetTextAlignment(TextAlignment.LEFT)
                         .SetBold());
                         document.Add(table);
-                    document.Add(new Paragraph($"Venta ID: {venta.VentaId}").SetTextAlignment(TextAlignment.LEFT));
+                    document.Add(new Paragraph($"Factura No: {venta.VentaId}").SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph($"Tipo: {venta.Tipo}").SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph($"Total: {venta.Total}")
                         .SetTextAlignment(TextAlignment.LEFT));

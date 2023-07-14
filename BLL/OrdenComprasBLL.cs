@@ -78,11 +78,12 @@ class OrdenComprasBLL
     {
         if (ordenCompra.filtrado == true)
         {
-            return InsertarFiltrado(ordenCompra);
+            return ModificarFiltrado(ordenCompra);
+
         }
         else
         {
-            return ModificarFiltrado(ordenCompra);
+            return InsertarFiltrado(ordenCompra);
         }
 
     }
@@ -100,7 +101,7 @@ class OrdenComprasBLL
                 if (inventario != null && Producto != null && ProductoProveedor != null)
                 {
                     inventario.Cantidad += detalle.Cantidad;
-                    Producto.Precio = ProductoProveedor.costo * (1 + Producto.margen);
+                    Producto.Precio = ProductoProveedor.costo * (1 + (Producto.margen / 100));
 
                     _Contexto.Entry(inventario).State = EntityState.Modified;
                     _Contexto.Entry(Producto).State = EntityState.Modified;
@@ -161,19 +162,22 @@ class OrdenComprasBLL
                 if (inventario != null && Producto != null && ProductoProveedor != null)
                 {
                     inventario.Cantidad += detalle.Cantidad;
-                    Producto.Precio = ProductoProveedor.costo * (1 + Producto.margen);
+                    Producto.Precio = ProductoProveedor.costo * (1 + (Producto.margen / 100));
 
                     _Contexto.Entry(inventario).State = EntityState.Modified;
                     _Contexto.Entry(Producto).State = EntityState.Modified;
-                    _Contexto.Entry(detalle).State = EntityState.Modified;
+                    
 
 
                     _Contexto.SaveChanges();
                     _Contexto.Entry(inventario).State = EntityState.Detached;
                     _Contexto.Entry(Producto).State = EntityState.Detached;
-                     _Contexto.Entry(detalle).State = EntityState.Detached;
+                    
 
                 }
+                _Contexto.Entry(detalle).State = EntityState.Modified;
+                _Contexto.SaveChanges();
+                _Contexto.Entry(detalle).State = EntityState.Detached;
             }
         }
 

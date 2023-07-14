@@ -13,7 +13,7 @@ public class Contexto : DbContext
     public DbSet<Inventarios> Inventarios { get; set; }
     public DbSet<RelacionProductoProveedor> RelacionProductoProveedor { get; set; }
     public DbSet<Facturaciones> Facturaciones { get; set; }
-    
+
 
 
 
@@ -67,23 +67,28 @@ public class Contexto : DbContext
            new Categorias { CategoriaId = 40, Nombre = "Herramientas de jardín eléctricas", Descripcion = "Herramientas eléctricas para el cuidado del jardín, como cortasetos y sopladores." }
        );
 
-        modelBuilder.Entity<Productos>().HasData(
-            new Productos { ProductoId = 1, CodigoBarra = "123456789", CodigoProducto = "ABC123", Nombre = "Martillo", CategoriaId = 1, Fecha = DateTime.Now, Eliminado = false, Precio = 10.99 },
-            new Productos { ProductoId = 2, CodigoBarra = "987654321", CodigoProducto = "XYZ789", Nombre = "Taladro", CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false, Precio = 99.99 },
-            new Productos { ProductoId = 3, CodigoBarra = "789123456", CodigoProducto = "DEF456", Nombre = "Destornillador", CategoriaId = 1, Fecha = DateTime.Now, Eliminado = false, Precio = 5.99 },
-            new Productos { ProductoId = 4, CodigoBarra = "654789123", CodigoProducto = "GHI789", Nombre = "Sierra Circular", CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false, Precio = 79.99 },
-            new Productos { ProductoId = 5, CodigoBarra = "246813579", CodigoProducto = "JKL321", Nombre = "Cinta Métrica", CategoriaId = 20, Fecha = DateTime.Now, Eliminado = false, Precio = 7.99 },
-            new Productos { ProductoId = 6, CodigoBarra = "135792468", CodigoProducto = "MNO987", Nombre = "Pintura Blanca", CategoriaId = 4, Fecha = DateTime.Now, Eliminado = false, Precio = 19.99 },
-            new Productos { ProductoId = 7, CodigoBarra = "369258147", CodigoProducto = "PQR654", Nombre = "Llave Ajustable", CategoriaId = 9, Fecha = DateTime.Now, Eliminado = false, Precio = 12.99 },
-            new Productos { ProductoId = 8, CodigoBarra = "258741369", CodigoProducto = "STU321", Nombre = "Broca para Madera", CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false, Precio = 6.99 },
-            new Productos { ProductoId = 9, CodigoBarra = "987123654", CodigoProducto = "VWX987", Nombre = "Guantes de Trabajo", CategoriaId = 10, Fecha = DateTime.Now, Eliminado = false, Precio = 9.99 },
-            new Productos { ProductoId = 10, CodigoBarra = "741852963", CodigoProducto = "XYZ123", Nombre = "Aspiradora Robot", CategoriaId = 28, Fecha = DateTime.Now, Eliminado = false, Precio = 149.99 },
-            new Productos { ProductoId = 11, CodigoBarra = "963258741", CodigoProducto = "BCD789", Nombre = "Pistola de Calor", CategoriaId = 6, Fecha = DateTime.Now, Eliminado = false, Precio = 39.99 },
-            new Productos { ProductoId = 12, CodigoBarra = "147852369", CodigoProducto = "EFG987", Nombre = "Cerradura de Seguridad", CategoriaId = 7, Fecha = DateTime.Now, Eliminado = false, Precio = 29.99 },
-            new Productos { ProductoId = 13, CodigoBarra = "369741852", CodigoProducto = "HIJ321", Nombre = "Tubería de PVC", CategoriaId = 5, Fecha = DateTime.Now, Eliminado = false, Precio = 3.99 },
-            new Productos { ProductoId = 14, CodigoBarra = "852963741", CodigoProducto = "KLM654", Nombre = "Rodillo de Pintura", CategoriaId = 21, Fecha = DateTime.Now, Eliminado = false, Precio = 14.99 },
-            new Productos { ProductoId = 15, CodigoBarra = "963741852", CodigoProducto = "NOP789", Nombre = "Cinta de Doble Cara", CategoriaId = 3, Fecha = DateTime.Now, Eliminado = false, Precio = 2.99 }
-  );
+    /*   modelBuilder.Entity<Productos>().HasData(
+      new Productos { ProductoId = 1, CodigoBarra = "123456789", CodigoProducto = "ABC123", Nombre = "Martillo", CategoriaId = 1, Fecha = DateTime.Now, Eliminado = false, margen = 30 },
+      new Productos { ProductoId = 2, CodigoBarra = "987654321", CodigoProducto = "XYZ789", Nombre = "Taladro", CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false, margen = 25 },
+      new Productos { ProductoId = 3, CodigoBarra = "789123456", CodigoProducto = "DEF456", Nombre = "Destornillador", CategoriaId = 1, Fecha = DateTime.Now, Eliminado = false, margen = 40 },
+      new Productos { ProductoId = 4, CodigoBarra = "654789123", CodigoProducto = "GHI789", Nombre = "Sierra Circular", CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false, margen = 20 },
+      new Productos { ProductoId = 5, CodigoBarra = "246813579", CodigoProducto = "JKL321", Nombre = "Cinta Métrica", CategoriaId = 20, Fecha = DateTime.Now, Eliminado = false, margen = 15 },
+      new Productos { ProductoId = 6, CodigoBarra = "135792468", CodigoProducto = "MNO987", Nombre = "Pintura Blanca", CategoriaId = 4, Fecha = DateTime.Now, Eliminado = false, margen = 35 },
+      new Productos { ProductoId = 7, CodigoBarra = "369258147", CodigoProducto = "PQR654", Nombre = "Llave Ajustable", CategoriaId = 9, Fecha = DateTime.Now, Eliminado = false, margen = 30 },
+      new Productos { ProductoId = 8, CodigoBarra = "258741369", CodigoProducto = "STU321", Nombre = "Broca para Madera", CategoriaId = 2, Fecha = DateTime.Now, Eliminado = false, margen = 25 },
+      new Productos { ProductoId = 9, CodigoBarra = "987123654", CodigoProducto = "VWX987", Nombre = "Guantes de Trabajo", CategoriaId = 10, Fecha = DateTime.Now, Eliminado = false, margen = 20 },
+      new Productos { ProductoId = 10, CodigoBarra = "741852963", CodigoProducto = "XYZ123", Nombre = "Aspiradora Robot", CategoriaId = 28, Fecha = DateTime.Now, Eliminado = false, margen = 30 },
+      new Productos { ProductoId = 11, CodigoBarra = "369852147", CodigoProducto = "BCD789", Nombre = "Pistola de Calor", CategoriaId = 6, Fecha = DateTime.Now, Eliminado = false, margen = 25 },
+      new Productos { ProductoId = 12, CodigoBarra = "147852369", CodigoProducto = "EFG987", Nombre = "Cerradura de Seguridad", CategoriaId = 7, Fecha = DateTime.Now, Eliminado = false, margen = 20 },
+      new Productos { ProductoId = 13, CodigoBarra = "369741852", CodigoProducto = "HIJ321", Nombre = "Tubería de PVC", CategoriaId = 5, Fecha = DateTime.Now, Eliminado = false, margen = 15 },
+      new Productos { ProductoId = 14, CodigoBarra = "852963741", CodigoProducto = "KLM654", Nombre = "Rodillo de Pintura", CategoriaId = 21, Fecha = DateTime.Now, Eliminado = false, margen = 30 },
+      new Productos { ProductoId = 15, CodigoBarra = "963741852", CodigoProducto = "NOP789", Nombre = "Cinta de Doble Cara", CategoriaId = 3, Fecha = DateTime.Now, Eliminado = false, margen = 25 },
+      new Productos { ProductoId = 16, CodigoBarra = "741258963", CodigoProducto = "QRS987", Nombre = "Escalera de Aluminio", CategoriaId = 11, Fecha = DateTime.Now, Eliminado = false, margen = 20 },
+      new Productos { ProductoId = 17, CodigoBarra = "963258741", CodigoProducto = "TUV321", Nombre = "Destornillador de Precisión", CategoriaId = 1, Fecha = DateTime.Now, Eliminado = false, margen = 30 },
+      new Productos { ProductoId = 18, CodigoBarra = "852741963", CodigoProducto = "WXY987", Nombre = "Candado de Acero", CategoriaId = 7, Fecha = DateTime.Now, Eliminado = false, margen = 25 },
+      new Productos { ProductoId = 19, CodigoBarra = "369147852", CodigoProducto = "ZAB321", Nombre = "Llave Inglesa", CategoriaId = 9, Fecha = DateTime.Now, Eliminado = false, margen = 20 },
+      new Productos { ProductoId = 20, CodigoBarra = "741963852", CodigoProducto = "CDE789", Nombre = "Pala de Jardín", CategoriaId = 12, Fecha = DateTime.Now, Eliminado = false, margen = 30 }
+  );*/
 
         modelBuilder.Entity<Clientes>().HasData(
             new Clientes { ClienteId = 1, Nombre = "John", Apellido = "Doe", Direccion = "123 Main St", Telefono = "555-1234", Cedula = "1234567890", Fecha = DateTime.Now, Eliminado = false },

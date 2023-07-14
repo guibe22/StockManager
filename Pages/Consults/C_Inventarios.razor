@@ -18,9 +18,9 @@
             <Columns>
              
 
-                <RadzenDataGridColumn TItem="Inventarios" Property="ProductoId" Title="ProductoId" Filterable="false" Width="200px"   Frozen="true">
+                <RadzenDataGridColumn TItem="Inventarios" Property="ProductoId" Title="Producto" Filterable="false" Width="200px"   Frozen="true">
                     <Template Context="Inventario">
-                        @Inventario.ProductoId  @(productosBLL.Buscar(Inventario.ProductoId)?.Nombre) 
+                    @(productosBLL.Buscar(Inventario.ProductoId)?.Nombre) 
                     </Template>
                 </RadzenDataGridColumn>
                 

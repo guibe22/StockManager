@@ -16,9 +16,9 @@
             <RadzenDataGridColumn TItem="Productos" Title="Nombre" Property="Nombre"  />
             <RadzenDataGridColumn TItem="Productos" Title="Precio" Property="Precio"  />
             <RadzenDataGridColumn TItem="Productos" Title="Descripción" Property="Descripcion"  />
-            <RadzenDataGridColumn TItem="Productos" Property="CategoriaId" Title="CategoriaId" Filterable="false" Width="300px" >
+            <RadzenDataGridColumn TItem="Productos" Property="CategoriaId" Title="Categoria" Filterable="false" Width="300px" >
                      <Template Context="producto">
-                        @producto.CategoriaId  @(categoriasBLL.Buscar(producto.CategoriaId  )?.Nombre) 
+                        @(categoriasBLL.Buscar(producto.CategoriaId)?.Nombre) 
                     </Template>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="Productos" Title="Margen" Property="margen"  />

@@ -57,7 +57,7 @@
                                   
                                     int ProductoId=context.ProductoId;
                                   
-                                    <div>@context.Nombre, Precio: @context.Precio, Cantidad: @inventarios.FirstOrDefault(x => x.ProductoId == ProductoId).Cantidad</div>
+                                    <div>@context.Nombre, Precio: @context.Precio, Cantidad: @inventarios.FirstOrDefault(x => x.ProductoId == ProductoId).Cantidad.ToString("N2")</div>
                                 }
                             }
                         </Template>

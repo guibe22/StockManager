@@ -26,11 +26,11 @@ public class PdfGenerator
                 {
                     Image logo = new Image(ImageDataFactory.Create(logoPath));
                     logo.SetHeight(50);
-                    logo.SetWidth(200); 
+                    logo.SetWidth(200);
                     document.Add(logo);
                     document.Add(new Paragraph("FACTURA FINAL PARA CONSUMIDOR").SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph("--------------------------------------------------"));
-/*---------------------------------------------------------*/
+                    /*---------------------------------------------------------*/
                     document.Add(new Paragraph("StockManager")
                         .SetTextAlignment(TextAlignment.LEFT)
                         .SetBold());
@@ -43,14 +43,14 @@ public class PdfGenerator
                     document.Add(new Paragraph("Email: StockManager@empresa.com")
                         .SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph("--------------------------------------------------"));
-/*---------------------------------------------------------*/
+                    /*---------------------------------------------------------*/
                     document.Add(new Paragraph("Cliente:")
                         .SetTextAlignment(TextAlignment.LEFT)
                         .SetBold());
                     document.Add(new Paragraph($"Cliente : {clientesBLL.Buscar(venta.ClienteId)?.Nombre} {clientesBLL.Buscar(venta.ClienteId)?.Apellido}").SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph($"Dirección: {clientesBLL.Buscar(venta.ClienteId)?.Direccion}").SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph($"Telefono: {clientesBLL.Buscar(venta.ClienteId)?.Telefono}").SetTextAlignment(TextAlignment.LEFT));
-/*---------------------------------------------------------*/
+                    /*---------------------------------------------------------*/
                     Table table = new Table(4);
                     table.SetWidth(UnitValue.CreatePercentValue(100));
 
@@ -62,23 +62,23 @@ public class PdfGenerator
                     foreach (DetallesVenta detalle in venta.detallesVentas)
                     {
                         table.AddCell(new Paragraph(productosBLL.Buscar(detalle.ProductoId)?.Nombre));
-                        table.AddCell(new Paragraph(detalle.Cantidad.ToString()));
-                        table.AddCell(new Paragraph(detalle.Precio.ToString()));
-                        table.AddCell(new Paragraph(detalle.SubTotal.ToString()));
+                        table.AddCell(new Paragraph(detalle.Cantidad.ToString("N2")));
+                        table.AddCell(new Paragraph(detalle.Precio.ToString("N2")));
+                        table.AddCell(new Paragraph(detalle.SubTotal.ToString("N2"))); 
                     }
                     document.Add(new Paragraph("--------------------------------------------------"));
                     /*---------------------------------------------------------*/
                     document.Add(new Paragraph("Detalle:")
                         .SetTextAlignment(TextAlignment.LEFT)
                         .SetBold());
-                        document.Add(table);
+                    document.Add(table);
                     document.Add(new Paragraph($"Factura No: {venta.VentaId}").SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph($"Tipo: {venta.Tipo}").SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph($"Total: {venta.Total}")
                         .SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph($"Fecha: {venta.Fecha}").SetTextAlignment(TextAlignment.LEFT));
                     document.Add(new Paragraph("--------------------------------------------------"));
-/*---------------------------------------------------------*/
+                    /*---------------------------------------------------------*/
                     document.Add(new Paragraph("Términos y condiciones:")
                         .SetTextAlignment(TextAlignment.LEFT)
                         .SetBold());

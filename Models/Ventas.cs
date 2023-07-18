@@ -15,10 +15,10 @@ public class Ventas
     public String? Tipo { get; set; }
     [Required]
     public double Total { get; set; }
- 
+
     public DateTime Fecha { get; set; }
- public bool Eliminado { get; set; } = false;
+    public bool Eliminado { get; set; } = false;
     [ForeignKey("VentaId")]
     public virtual List<DetallesVenta> detallesVentas { get; set; } = new List<DetallesVenta>();
-   
+
 }

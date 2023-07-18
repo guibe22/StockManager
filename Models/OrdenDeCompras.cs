@@ -14,6 +14,7 @@ public class OrdenDeCompras
     public bool Eliminado { get; set; } = false;
     public bool filtrado { get; set; } = false;
     public DateTime Fecha { get; set; }
+    [ForeignKey("OrdenDeCompraId")]
 
      public virtual List<DetalleOrdenDeCompras> DetalleOrdenDeCompras { get; set; } = new List<DetalleOrdenDeCompras>();
 
